@@ -1,0 +1,13 @@
+junk_data
+.pypi-token
+__pycache__/
+**/__pycache__/
+**/.mypy_cache/
+**/.pytest_cache/
+
+build/
+dist/
+zanj.egg-info/
+
+# setup_build.sh
+
