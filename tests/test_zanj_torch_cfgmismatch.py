@@ -1,13 +1,13 @@
 from typing import Any
 
 import torch
-
 from muutils.json_serialize import (
     SerializableDataclass,
     serializable_dataclass,
     serializable_field,
 )
-from muutils.zanj.torchutil import (
+
+from zanj.torchutil import (
     ConfigMismatchException,
     ConfiguredModel,
     assert_model_cfg_equality,

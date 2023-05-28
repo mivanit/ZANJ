@@ -1,14 +1,14 @@
 from pathlib import Path
 
 import numpy as np
-
 from muutils.json_serialize import (
     SerializableDataclass,
     serializable_dataclass,
     serializable_field,
 )
 from muutils.tensor_utils import compare_state_dicts
-from muutils.zanj import ZANJ
+
+from zanj import ZANJ
 
 np.random.seed(0)
 
@@ -18,7 +18,7 @@ TEST_DATA_PATH: Path = Path("tests/junk_data")
 def test_torch_configmodel():
     import torch
 
-    from muutils.zanj.torchutil import ConfiguredModel, set_config_class
+    from zanj.torchutil import ConfiguredModel, set_config_class
 
     @serializable_dataclass
     class MyGPTConfig(SerializableDataclass):

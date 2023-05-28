@@ -21,7 +21,6 @@ from typing import Any, Union
 
 import numpy as np
 import pandas as pd  # type: ignore[import]
-
 from muutils.json_serialize.array import ArrayMode, arr_metadata
 from muutils.json_serialize.json_serialize import (
     JsonSerializer,
@@ -30,12 +29,10 @@ from muutils.json_serialize.json_serialize import (
 )
 from muutils.json_serialize.util import ErrorMode, JSONitem, MonoTuple
 from muutils.sysinfo import SysInfo
-from muutils.zanj.externals import ZANJ_MAIN, ZANJ_META, ExternalItem, _ZANJ_pre
-from muutils.zanj.loading import LOADER_MAP, LoadedZANJ, load_item_recursive
-from muutils.zanj.serializing import (
-    DEFAULT_SERIALIZER_HANDLERS_ZANJ,
-    EXTERNAL_STORE_FUNCS,
-)
+
+from zanj.externals import ZANJ_MAIN, ZANJ_META, ExternalItem, _ZANJ_pre
+from zanj.loading import LOADER_MAP, LoadedZANJ, load_item_recursive
+from zanj.serializing import DEFAULT_SERIALIZER_HANDLERS_ZANJ, EXTERNAL_STORE_FUNCS
 
 # pylint: disable=protected-access, unused-import, dangerous-default-value, line-too-long
 

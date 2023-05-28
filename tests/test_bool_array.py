@@ -2,9 +2,9 @@ from pathlib import Path
 
 import numpy as np
 import torch
-
 from muutils.json_serialize import SerializableDataclass, serializable_dataclass
-from muutils.zanj import ZANJ
+
+from zanj import ZANJ
 
 TEST_DATA_PATH: Path = Path("tests/junk_data")
 

@@ -3,14 +3,14 @@ import zipfile
 from pathlib import Path
 
 import numpy as np
-
 from muutils.json_serialize import (
     SerializableDataclass,
     serializable_dataclass,
     serializable_field,
 )
-from muutils.zanj import ZANJ
-from muutils.zanj.loading import LOADER_MAP
+
+from zanj import ZANJ
+from zanj.loading import LOADER_MAP
 
 np.random.seed(0)
 

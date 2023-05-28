@@ -5,7 +5,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd  # type: ignore
 
-from muutils.zanj import ZANJ
+from zanj import ZANJ
 
 np.random.seed(0)
 

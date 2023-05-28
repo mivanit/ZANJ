@@ -1,13 +1,13 @@
 from pathlib import Path
 
 import numpy as np
-
 from muutils.json_serialize import (
     SerializableDataclass,
     serializable_dataclass,
     serializable_field,
 )
-from muutils.zanj import ZANJ
+
+from zanj import ZANJ
 
 np.random.seed(0)
 

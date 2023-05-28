@@ -3,13 +3,13 @@ from pathlib import Path
 import numpy as np
 import pandas as pd  # type: ignore[import]
 import torch
-
 from muutils.json_serialize import (
     SerializableDataclass,
     serializable_dataclass,
     serializable_field,
 )
-from muutils.zanj import ZANJ
+
+from zanj import ZANJ
 
 np.random.seed(0)
 

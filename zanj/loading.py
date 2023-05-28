@@ -9,7 +9,6 @@ from typing import Any, Callable
 import numpy as np
 import pandas as pd  # type: ignore[import]
 import torch
-
 from muutils.json_serialize.array import load_array
 from muutils.json_serialize.json_serialize import ObjectPath
 from muutils.json_serialize.util import (
@@ -20,7 +19,8 @@ from muutils.json_serialize.util import (
     string_as_lines,
 )
 from muutils.tensor_utils import DTYPE_MAP, TORCH_DTYPE_MAP
-from muutils.zanj.externals import (
+
+from zanj.externals import (
     GET_EXTERNAL_LOAD_FUNC,
     ZANJ_MAIN,
     ZANJ_META,
@@ -145,7 +145,7 @@ LOADER_MAP: dict[str, LoaderHandler] = {
             ),
             load=lambda json_item, path=None, z=None: np.array(load_array(json_item), dtype=DTYPE_MAP[json_item["dtype"]]),  # type: ignore[misc]
             uid="numpy.ndarray",
-            source_pckg="muutils.zanj",
+            source_pckg="zanj",
             desc="numpy.ndarray loader",
         ),
         LoaderHandler(
@@ -158,7 +158,7 @@ LOADER_MAP: dict[str, LoaderHandler] = {
             ),
             load=lambda json_item, path=None, z=None: torch.tensor(load_array(json_item), dtype=TORCH_DTYPE_MAP[json_item["dtype"]]),  # type: ignore[misc]
             uid="torch.Tensor",
-            source_pckg="muutils.zanj",
+            source_pckg="zanj",
             desc="torch.Tensor loader",
         ),
         # pandas
@@ -172,7 +172,7 @@ LOADER_MAP: dict[str, LoaderHandler] = {
             ),
             load=lambda json_item, path=None, z=None: pd.DataFrame(json_item["data"]),  # type: ignore[misc]
             uid="pandas.DataFrame",
-            source_pckg="muutils.zanj",
+            source_pckg="zanj",
             desc="pandas.DataFrame loader",
         ),
         # list/tuple external
@@ -188,7 +188,7 @@ LOADER_MAP: dict[str, LoaderHandler] = {
                 load_item_recursive(x, path, z) for x in json_item["data"]
             ],
             uid="list",
-            source_pckg="muutils.zanj",
+            source_pckg="zanj",
             desc="list loader, for externals",
         ),
         LoaderHandler(
@@ -203,7 +203,7 @@ LOADER_MAP: dict[str, LoaderHandler] = {
                 [load_item_recursive(x, path, z) for x in json_item["data"]]
             ),
             uid="tuple",
-            source_pckg="muutils.zanj",
+            source_pckg="zanj",
             desc="tuple loader, for externals",
         ),
     ]

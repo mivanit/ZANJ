@@ -4,7 +4,6 @@ import json
 from typing import IO, Any, Callable, Literal, NamedTuple, get_args
 
 import numpy as np
-
 from muutils.json_serialize.json_serialize import ObjectPath
 from muutils.json_serialize.util import JSONitem
 

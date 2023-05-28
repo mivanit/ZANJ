@@ -22,7 +22,7 @@ a file `<filename>.zanj` is a zip file containing:
 
 ## `ZANJ`
 
-> located in `muutils.zanj.zanj`
+> located in `zanj.zanj`
 
 main class for saving and loading zanj files
 

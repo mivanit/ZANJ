@@ -4,7 +4,6 @@ from typing import IO, Any, Callable, Iterable, Sequence
 
 import numpy as np
 import pandas as pd  # type: ignore[import]
-
 from muutils.json_serialize.array import arr_metadata
 from muutils.json_serialize.json_serialize import (  # JsonSerializer,
     DEFAULT_HANDLERS,
@@ -13,7 +12,8 @@ from muutils.json_serialize.json_serialize import (  # JsonSerializer,
 )
 from muutils.json_serialize.util import JSONdict, JSONitem, MonoTuple
 from muutils.tensor_utils import NDArray
-from muutils.zanj.externals import ExternalItem, ExternalItemType, _ZANJ_pre
+
+from zanj.externals import ExternalItem, ExternalItemType, _ZANJ_pre
 
 # pylint: disable=unused-argument, protected-access, unexpected-keyword-arg
 # for some reason pylint complains about kwargs to ZANJSerializerHandler
@@ -168,7 +168,7 @@ DEFAULT_SERIALIZER_HANDLERS_ZANJ: MonoTuple[ZANJSerializerHandler] = tuple(
                 self, obj, path, item_type="npy", _format="numpy.ndarray:external"
             ),
             uid="numpy.ndarray:external",
-            source_pckg="muutils.zanj",
+            source_pckg="zanj",
             desc="external numpy array",
         ),
         ZANJSerializerHandler(
@@ -180,7 +180,7 @@ DEFAULT_SERIALIZER_HANDLERS_ZANJ: MonoTuple[ZANJSerializerHandler] = tuple(
                 self, obj, path, item_type="npy", _format="torch.Tensor:external"
             ),
             uid="torch.Tensor:external",
-            source_pckg="muutils.zanj",
+            source_pckg="zanj",
             desc="external torch tensor",
         ),
         ZANJSerializerHandler(
@@ -190,7 +190,7 @@ DEFAULT_SERIALIZER_HANDLERS_ZANJ: MonoTuple[ZANJSerializerHandler] = tuple(
                 self, obj, path, item_type="jsonl", _format="list:external"
             ),
             uid="list:external",
-            source_pckg="muutils.zanj",
+            source_pckg="zanj",
             desc="external list",
         ),
         ZANJSerializerHandler(
@@ -200,7 +200,7 @@ DEFAULT_SERIALIZER_HANDLERS_ZANJ: MonoTuple[ZANJSerializerHandler] = tuple(
                 self, obj, path, item_type="jsonl", _format="tuple:external"
             ),
             uid="tuple:external",
-            source_pckg="muutils.zanj",
+            source_pckg="zanj",
             desc="external tuple",
         ),
         ZANJSerializerHandler(
@@ -210,7 +210,7 @@ DEFAULT_SERIALIZER_HANDLERS_ZANJ: MonoTuple[ZANJSerializerHandler] = tuple(
                 self, obj, path, item_type="jsonl", _format="pandas.DataFrame:external"
             ),
             uid="pandas.DataFrame:external",
-            source_pckg="muutils.zanj",
+            source_pckg="zanj",
             desc="external pandas DataFrame",
         ),
         # ZANJSerializerHandler(
@@ -220,7 +220,7 @@ DEFAULT_SERIALIZER_HANDLERS_ZANJ: MonoTuple[ZANJSerializerHandler] = tuple(
         #         self, obj, path,
         #     ),
         #     uid="torch.nn.Module",
-        #     source_pckg="muutils.zanj",
+        #     source_pckg="zanj",
         #     desc="fallback torch serialization",
         # ),
     ]

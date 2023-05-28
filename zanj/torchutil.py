@@ -4,12 +4,12 @@ import warnings
 from typing import Any, Type, TypeVar
 
 import torch
-
 from muutils.json_serialize import SerializableDataclass
 from muutils.json_serialize.json_serialize import ObjectPath
 from muutils.json_serialize.util import safe_getsource, string_as_lines
-from muutils.zanj import ZANJ, register_loader_handler
-from muutils.zanj.loading import LoaderHandler, load_item_recursive
+
+from zanj import ZANJ, register_loader_handler
+from zanj.loading import LoaderHandler, load_item_recursive
 
 # pylint: disable=protected-access
 
@@ -196,7 +196,7 @@ class ConfiguredModel(
             load=lambda json_item, path=None, z=None: cls.load(json_item, path, z),  # type: ignore
             uid=cls_name,
             source_pckg=cls.__module__,
-            desc=f"{cls.__module__} {cls_name} loader via muutils.zanj.torchutil.ConfiguredModel",
+            desc=f"{cls.__module__} {cls_name} loader via zanj.torchutil.ConfiguredModel",
         )
 
     def num_params(self) -> int:
