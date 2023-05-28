@@ -1,5 +1,11 @@
 # ZANJ
 
+# installation
+PyPi: https://pypi.org/project/zanj/
+
+```
+pip install zanj
+```
 
 # Overview
 
