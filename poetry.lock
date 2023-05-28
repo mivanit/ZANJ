@@ -280,21 +280,21 @@ files = [
 
 [[package]]
 name = "muutils"
-version = "0.4.0"
+version = "0.4.1"
 description = "A collection of miscellaneous python utilities"
 category = "main"
 optional = false
 python-versions = ">=3.10,<4.0"
 files = [
-    {file = "muutils-0.4.0-py3-none-any.whl", hash = "sha256:07647c37e8c875237fad12a01d8507141d3679dde1ac6c56c0e7a61ee1fd325b"},
-    {file = "muutils-0.4.0.tar.gz", hash = "sha256:a8f1062710fcc1c5d85c0a57351f2bac9cee73b182557b10ab3ccac724b95b63"},
+    {file = "muutils-0.4.1-py3-none-any.whl", hash = "sha256:c300cb1a83cf8e4fcb31420cb8248adb39e15a861bc95c19e580a3301d506a59"},
+    {file = "muutils-0.4.1.tar.gz", hash = "sha256:c4b9de72e65343d6b64a10dcc323b322e45c7fd826bf750abe69891dd6142616"},
 ]
 
 [package.dependencies]
 jaxtyping = ">=0.2.12,<0.3.0"
 numpy = ">=1.22.4,<2.0.0"
 pandas = ">=1.5.3,<2.0.0"
-torch = ">=1.12.1"
+torch = ">=1.13.1"
 
 [[package]]
 name = "mypy"
@@ -975,4 +975,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "607265893fc8510052453b310abc376b4d01f7979936c8a2bd124a60c491265d"
+content-hash = "cc2303ee9ef21342983eca5fe1e8efd40607efc1a6cfa74bbe55d24ef492f5ec"
