@@ -391,6 +391,24 @@ gmpy = ["gmpy2 (>=2.1.0a4)"]
 tests = ["pytest (>=4.6)"]
 
 [[package]]
+name = "muutils"
+version = "0.4.0"
+description = "A collection of miscellaneous python utilities"
+category = "main"
+optional = false
+python-versions = ">=3.10,<4.0"
+files = [
+    {file = "muutils-0.4.0-py3-none-any.whl", hash = "sha256:07647c37e8c875237fad12a01d8507141d3679dde1ac6c56c0e7a61ee1fd325b"},
+    {file = "muutils-0.4.0.tar.gz", hash = "sha256:a8f1062710fcc1c5d85c0a57351f2bac9cee73b182557b10ab3ccac724b95b63"},
+]
+
+[package.dependencies]
+jaxtyping = ">=0.2.12,<0.3.0"
+numpy = ">=1.22.4,<2.0.0"
+pandas = ">=1.5.3,<2.0.0"
+torch = ">=1.12.1"
+
+[[package]]
 name = "mypy"
 version = "1.3.0"
 description = "Optional static typing for Python"
@@ -1005,4 +1023,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "4129aa8f1e3f9e8362b7110b92d12eb71b398dd227bcab83d47b3d7de155197e"
+content-hash = "8e4692123ed6ecd16bcc2b301c0b08952af6b6fc503e53d3cf2e6dd94503f3af"
