@@ -128,7 +128,6 @@ clean:
 	rm -rf .mypy_cache
 	rm -rf .pytest_cache
 	rm -rf .coverage
-	rm -rf htmlcov
 	rm -rf dist
 	rm -rf build
 	rm -rf $(PACKAGE_NAME).egg-info

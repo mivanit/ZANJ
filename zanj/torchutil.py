@@ -35,15 +35,18 @@ def num_params(m: torch.nn.Module, only_trainable: bool = True):
     return sum(p.numel() for p in unique)
 
 
-def get_device(
+def get_module_device(
     m: torch.nn.Module,
-) -> tuple[bool, torch.device | dict[str, torch.device],]:
+) -> tuple[bool, torch.device | dict[str, torch.device]]:
     """get the current devices"""
 
     devs: dict[str, torch.device] = {name: p.device for name, p in m.named_parameters()}
 
-    # check if all devices are the same
-    dev_uni: torch.device = list(devs.values())[0]
+    if len(devs) == 0:
+        return False, devs
+
+    # check if all devices are the same by getting one device
+    dev_uni: torch.device = next(iter(devs.values()))
 
     if all(dev == dev_uni for dev in devs.values()):
         return True, dev_uni
