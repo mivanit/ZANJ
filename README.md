@@ -29,8 +29,6 @@ This library was originally a module in [muutils](https://github.com/mivanit/muu
 
 # Usage
 
-# Usage
-
 ## Saving a basic object
 
 Any serializable dataclass of basic types can be saved as zanj:
@@ -204,7 +202,7 @@ The on-disk format is a file `<filename>.zanj` is a zip file containing:
 | Numpy (npy,npz)         | ✅   | ?         | ?            | ❌                 | ✅             | ❌          | ❌       |
 | SafeTensors             | ✅   | ✅        | ✅           | ✅                 | ✅             | ❌          | ✅       |
 | exdir                   | ✅   | ?         | ?            | ?                  | ?              | ✅          | ❌       |
-| ZANJ                    | ✅   | ?         | ❌*          | ✅                 | ✅             | ✅          | ❌       |
+| ZANJ                    | ✅   | ❌        | ❌*          | ✅                 | ✅             | ✅          | ❌*      |
 
 
 - Safe: Can I use a file randomly downloaded and expect not to run arbitrary code ?
@@ -215,5 +213,6 @@ The on-disk format is a file `<filename>.zanj` is a zip file containing:
 - Flexibility: Can I save custom code in the format and be able to use it later with zero extra code ? (~ means we can store more than pure tensors, but no custom code)
 - Bfloat16: Does the format support native bfloat16 (meaning no weird workarounds are necessary)? This is becoming increasingly important in the ML world.
 
+`*` denotes this feature may be coming at a future date :)
 
 (This table was stolen from [safetensors](https://github.com/huggingface/safetensors/blob/main/README.md))
