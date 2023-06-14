@@ -1,3 +1,14 @@
+[![PyPI](https://img.shields.io/pypi/v/zanj)](https://pypi.org/project/zanj/)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/zanj)
+
+[![Checks](https://github.com/mivanit/zanj/actions/workflows/checks.yml/badge.svg)](https://github.com/mivanit/zanj/actions/workflows/checks.yml)
+[![Coverage](docs/coverage/coverage.svg)](docs/coverage/coverage.txt)
+
+<!-- ![GitHub commit activity](https://img.shields.io/github/commit-activity/t/mivanit/zanj)
+![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/mivanit/zanj) -->
+![code size, bytes](https://img.shields.io/github/languages/code-size/mivanit/zanj)
+<!-- ![Lines of code](https://img.shields.io/tokei/lines/github.com/mivanit/zanj) -->
+
 # ZANJ
 
 # installation
