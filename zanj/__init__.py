@@ -1,4 +1,4 @@
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 
 from zanj.loading import register_loader_handler
 from zanj.zanj import ZANJ

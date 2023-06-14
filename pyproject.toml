@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "zanj"
-version = "0.1.2"
+version = "0.1.3"
 description = "save and load complex objects to disk without pickling"
 license = "GPL-3.0-only"
 authors = ["mivanit <mivanits@umich.edu>"]
