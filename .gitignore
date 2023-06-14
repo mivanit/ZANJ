@@ -9,5 +9,8 @@ build/
 dist/
 zanj.egg-info/
 
+.coverage
+htmlcov/
+
 # setup_build.sh
 

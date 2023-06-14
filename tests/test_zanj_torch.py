@@ -9,6 +9,7 @@ from muutils.json_serialize import (
 from muutils.tensor_utils import compare_state_dicts
 
 from zanj import ZANJ
+from zanj.torchutil import assert_model_exact_equality
 
 np.random.seed(0)
 
@@ -99,6 +100,7 @@ def test_torch_configmodel():
     assert model.training_records == model2.training_records
 
     compare_state_dicts(model.state_dict(), model2.state_dict())
+    assert_model_exact_equality(model, model2)
 
     model3: MyGPT = ZANJ().read(fname)
     print(f"loaded model from {fname}")
@@ -108,3 +110,4 @@ def test_torch_configmodel():
     assert model.training_records == model3.training_records
 
     compare_state_dicts(model.state_dict(), model3.state_dict())
+    assert_model_exact_equality(model, model3)
