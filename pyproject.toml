@@ -16,12 +16,8 @@ repository = "https://github.com/mivanit/ZANJ"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-muutils = "^0.5.0"
-torch = ">=1.13.1"
-numpy = "^1.22.4"
-jaxtyping = "^0.2.12"
+muutils = {version = "^0.5.1", extras = ["array"]}
 pandas = "^1.5.3"
-
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.2.1"
@@ -33,6 +29,11 @@ mypy = "^1.0.1"
 pytest-cov = "^4.1.0"
 coverage-badge = "^1.1.0"
 ipykernel = "^6.23.2"
+
+[[tool.poetry.source]]
+name = "torch_cpu"
+url = "https://download.pytorch.org/whl/cpu"
+priority = "explicit"
 
 [build-system]
 requires = ["poetry-core"]

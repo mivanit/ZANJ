@@ -352,13 +352,13 @@ files = [
 
 [[package]]
 name = "dill"
-version = "0.3.6"
-description = "serialize all of python"
+version = "0.3.7"
+description = "serialize all of Python"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "dill-0.3.6-py3-none-any.whl", hash = "sha256:a07ffd2351b8c678dfc4a856a3005f8067aea51d6ba6c700796a4d9e280f39f0"},
-    {file = "dill-0.3.6.tar.gz", hash = "sha256:e5db55f3687856d8fbdab002ed78544e1c4559a130302693d839dfe8f93f2373"},
+    {file = "dill-0.3.7-py3-none-any.whl", hash = "sha256:76b122c08ef4ce2eedcd4d1abd8e641114bfc6c2867f49f3c41facf65bf19f5e"},
+    {file = "dill-0.3.7.tar.gz", hash = "sha256:cc1c8b182eb3013e24bd475ff2e9295af86c1a38eb1aff128dac8962a9ce3c03"},
 ]
 
 [package.extras]
@@ -795,20 +795,22 @@ tests = ["pytest (>=4.6)"]
 
 [[package]]
 name = "muutils"
-version = "0.5.0"
+version = "0.5.1"
 description = "A collection of miscellaneous python utilities"
 optional = false
 python-versions = ">=3.10,<4.0"
 files = [
-    {file = "muutils-0.5.0-py3-none-any.whl", hash = "sha256:70073b60fe77bb7be5f7ac052ca58a2488bc65fe4fbfcb34f08009f9d9aa3724"},
-    {file = "muutils-0.5.0.tar.gz", hash = "sha256:ac8d210a0e98f29a7d9e774fd2ab261440b601acc13635fa4cf753a3310656c0"},
+    {file = "muutils-0.5.1-py3-none-any.whl", hash = "sha256:9c4c94f263e7fe05a42ca1468f81725371300646bc66f00411502c49013f273b"},
+    {file = "muutils-0.5.1.tar.gz", hash = "sha256:498981918bb49926a03e0499869aaa73f8f65db34943105a1f3ef0939de81d61"},
 ]
 
 [package.dependencies]
-numpy = ">=1.22.4,<2.0.0"
+jaxtyping = {version = ">=0.2.12,<0.3.0", optional = true, markers = "extra == \"array\""}
+numpy = {version = ">=1.22.4,<2.0.0", optional = true, markers = "extra == \"array\""}
+torch = {version = ">=1.13.1", optional = true, markers = "extra == \"array\""}
 
 [package.extras]
-torch = ["jaxtyping (>=0.2.12,<0.3.0)", "torch (>=1.13.1,<2.0.0)"]
+array = ["jaxtyping (>=0.2.12,<0.3.0)", "numpy (>=1.22.4,<2.0.0)", "torch (>=1.13.1)"]
 
 [[package]]
 name = "mypy"
@@ -1734,4 +1736,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "f310b7c568797bb7f01da9e479274865543bf1fb0e15d2fdb6584a7a83dc61c9"
+content-hash = "0f975b88f8a035f3a08b59cd3616abbffb741b1effe4d4daef34af39a37353a3"
