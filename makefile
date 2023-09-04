@@ -1,14 +1,15 @@
 PACKAGE_NAME := zanj
 
-VERSION_INFO_LOCATION := $(PACKAGE_NAME)/__init__.py
 PUBLISH_BRANCH := main
 PYPI_TOKEN_FILE := .pypi-token
 LAST_VERSION_FILE := .lastversion
 COVERAGE_REPORTS_DIR := docs/coverage
+PYPROJECT := pyproject.toml
 
-VERSION := $(shell grep -oP '__version__ = "\K.*?(?=")' $(VERSION_INFO_LOCATION))
+VERSION := $(shell python -c "import tomllib; print(tomllib.load(open('$(PYPROJECT)', 'rb'))['tool']['poetry']['version'])")
 LAST_VERSION := $(shell cat $(LAST_VERSION_FILE))
 PYPOETRY := poetry run python
+
 # note that the commands at the end:
 # 1) format the git log
 # 2) replace backticks with single quotes, to avoid funny business
@@ -33,6 +34,43 @@ version:
 		exit 1; \
 	fi
 
+
+# formatting
+# --------------------------------------------------
+.PHONY: format
+format:
+	python -m pycln --config $(PYPROJECT) --all .
+	python -m isort format .
+	python -m black .
+
+.PHONY: check-format
+check-format:
+	@echo "run format check"
+	python -m pycln --check --config $(PYPROJECT) .
+	python -m isort --check-only .
+	python -m black --check .
+
+# coverage reports
+# --------------------------------------------------
+# whether to run pytest with coverage report generation
+COV ?= 1
+
+ifeq ($(COV),1)
+    PYTEST_OPTIONS=--cov=.
+else
+    PYTEST_OPTIONS=
+endif
+
+.PHONY: cov
+cov:
+	@echo "generate coverage reports"
+	$(PYPOETRY) -m coverage report -m > $(COVERAGE_REPORTS_DIR)/coverage.txt
+	$(PYPOETRY) -m coverage_badge -f -o $(COVERAGE_REPORTS_DIR)/coverage.svg
+	$(PYPOETRY) -m coverage html
+
+# tests
+# --------------------------------------------------
+
 # at some point, need to add back --check-untyped-defs to mypy call
 # but it complains when we specify arguments by keyword where positional is fine
 # not sure how to fix this
@@ -40,49 +78,14 @@ version:
 # python -m pylint tests/
 .PHONY: lint
 lint: clean
-	$(PYPOETRY) -m mypy --config-file pyproject.toml $(PACKAGE_NAME)/
-	$(PYPOETRY) -m mypy --config-file pyproject.toml tests/
-
-# formatting
-# --------------------------------------------------
-.PHONY: format
-format:
-	python -m pycln --config pyproject.toml --all .
-	python -m isort format .
-	python -m black .
-
-.PHONY: check-format
-check-format:
-	@echo "run format check"
-	python -m pycln --check --config pyproject.toml .
-	python -m isort --check-only .
-	python -m black --check .
-
-# coverage reports
-# --------------------------------------------------
-.PHONY: cov
-cov:
-	@echo "generate text coverage report"
-	$(PYPOETRY) -m coverage report -m > $(COVERAGE_REPORTS_DIR)/coverage.txt
-	$(PYPOETRY) -m coverage_badge -f -o $(COVERAGE_REPORTS_DIR)/coverage.svg
-
-.PHONY: cov-html
-cov-html:
-	@echo "generate html coverage report"
-	$(PYPOETRY) -m coverage html	
-
-# tests
-# --------------------------------------------------
+	$(PYPOETRY) -m mypy --config-file $(PYPROJECT) $(PACKAGE_NAME)/
+	$(PYPOETRY) -m mypy --config-file $(PYPROJECT) tests/
 
 .PHONY: test
 test: clean
 	@echo "running tests"
 	$(PYPOETRY) -m pytest --cov=. tests
 
-.PHONY: test-nocov
-test-nocov: clean
-	@echo "running tests, without code coverage"
-	$(PYPOETRY) -m pytest tests
 
 .PHONY: check
 check: check-format clean test lint cov
