@@ -165,7 +165,10 @@ class ZANJ(JsonSerializer):
             file_path += ".zanj"
 
         # make directory
-        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        dir_path: str = os.path.dirname(file_path)
+        if dir_path != "":
+            if not os.path.exists(dir_path):
+                os.makedirs(dir_path, exist_ok=False)
 
         # clear the externals!
         self._externals = dict()
