@@ -127,9 +127,9 @@ class AdvCfgHolder(SerializableDataclass):
     tokenizer: CustomCfg | None = serializable_field(
         default=None,
         serialization_fn=lambda x: repr(x) if x is not None else None,
-        loading_fn=lambda data: None
-        if data["tokenizer"] is None
-        else NotImplementedError,
+        loading_fn=lambda data: (
+            None if data["tokenizer"] is None else NotImplementedError
+        ),
     )
 
 
