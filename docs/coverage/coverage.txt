@@ -9,11 +9,11 @@ tests\test_zanj_sdc_modelcfg.py                87      0   100%
 tests\test_zanj_serializable_dataclass.py     122      0   100%
 tests\test_zanj_torch.py                       55      3    95%   44, 55, 74
 tests\test_zanj_torch_cfgmismatch.py           58      3    95%   41, 105, 141
-zanj\__init__.py                                4      0   100%
+zanj\__init__.py                                3      0   100%
 zanj\externals.py                              20      1    95%   46
 zanj\loading.py                               118     21    82%   43, 50-53, 58, 60-64, 112-119, 233, 321-324, 357-358
 zanj\serializing.py                            57      4    93%   112, 114, 132, 145
 zanj\torchutil.py                             112     13    88%   54, 88, 90, 120-122, 140, 185-188, 206, 213, 275-276
-zanj\zanj.py                                   78      5    94%   106, 127, 165, 220, 222
+zanj\zanj.py                                   81      5    94%   106, 127, 165, 223, 225
 -------------------------------------------------------------------------
-TOTAL                                         884     59    93%
+TOTAL                                         886     59    93%
