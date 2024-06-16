@@ -3,7 +3,6 @@ from dataclasses import dataclass
 from typing import IO, Any, Callable, Iterable, Sequence
 
 import numpy as np
-import pandas as pd  # type: ignore[import]
 from muutils.json_serialize.array import arr_metadata
 from muutils.json_serialize.json_serialize import (  # JsonSerializer,
     DEFAULT_HANDLERS,
@@ -133,16 +132,19 @@ def zanj_external_serialize(
         # get metadata
         output.update(arr_metadata(data))
     elif item_type.startswith("jsonl"):
-        if isinstance(data, pd.DataFrame):
+        # check via mro to avoid importing pandas
+        if any("pandas.core.frame.DataFrame" in str(t) for t in data.__class__.__mro__):
             output["columns"] = data.columns.tolist()
             data_new = data.to_dict(orient="records")
-        elif isinstance(data, (list, tuple, Iterable)):
+        elif isinstance(data, (list, tuple, Iterable, Sequence)):
             data_new = [
                 jser.json_serialize(item, tuple(path) + (i,))
                 for i, item in enumerate(data)
             ]
         else:
-            raise TypeError(f"expected list or pd.DataFrame, got {type(data)}")
+            raise TypeError(
+                f"expected list or pandas.DataFrame for jsonl, got {type(data)}"
+            )
 
         if all([isinstance(item, dict) for item in data_new]):
             output.update(jsonl_metadata(data_new))
@@ -204,8 +206,13 @@ DEFAULT_SERIALIZER_HANDLERS_ZANJ: MonoTuple[ZANJSerializerHandler] = tuple(
             desc="external tuple",
         ),
         ZANJSerializerHandler(
-            check=lambda self, obj, path: isinstance(obj, pd.DataFrame)
-            and len(obj) >= self.external_list_threshold,
+            check=lambda self, obj, path: (
+                any(
+                    "pandas.core.frame.DataFrame" in str(t)
+                    for t in obj.__class__.__mro__
+                )
+                and len(obj) >= self.external_list_threshold
+            ),
             serialize_func=lambda self, obj, path: zanj_external_serialize(
                 self, obj, path, item_type="jsonl", _format="pandas.DataFrame:external"
             ),

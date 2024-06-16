@@ -7,7 +7,18 @@ from pathlib import Path
 from typing import Any, Callable
 
 import numpy as np
-import pandas as pd  # type: ignore[import]
+
+try:
+    import pandas as pd  # type: ignore[import]
+
+    pandas_DataFrame = pd.DataFrame
+except ImportError:
+
+    class pandas_DataFrame:
+        def __init__(self, *args, **kwargs):
+            raise ImportError("cannot load pandas DataFrame, pandas is not installed")
+
+
 import torch
 from muutils.json_serialize.array import load_array
 from muutils.json_serialize.json_serialize import ObjectPath
@@ -170,7 +181,7 @@ LOADER_MAP: dict[str, LoaderHandler] = {
                 and "data" in json_item
                 and isinstance(json_item["data"], typing.Sequence)
             ),
-            load=lambda json_item, path=None, z=None: pd.DataFrame(json_item["data"]),  # type: ignore[misc]
+            load=lambda json_item, path=None, z=None: pandas_DataFrame(json_item["data"]),  # type: ignore[misc]
             uid="pandas.DataFrame",
             source_pckg="zanj",
             desc="pandas.DataFrame loader",

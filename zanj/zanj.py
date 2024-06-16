@@ -20,7 +20,6 @@ from pathlib import Path
 from typing import Any, Union
 
 import numpy as np
-import pandas as pd  # type: ignore[import]
 from muutils.json_serialize.array import ArrayMode, arr_metadata
 from muutils.json_serialize.json_serialize import (
     JsonSerializer,
@@ -39,7 +38,7 @@ from zanj.serializing import DEFAULT_SERIALIZER_HANDLERS_ZANJ, EXTERNAL_STORE_FU
 ZANJitem = Union[
     JSONitem,
     np.ndarray,
-    pd.DataFrame,
+    "pd.DataFrame",  # type: ignore
 ]
 
 
