@@ -11,10 +11,10 @@ import numpy as np
 try:
     import pandas as pd  # type: ignore[import]
 
-    pandas_DataFrame = pd.DataFrame
+    pandas_DataFrame = pd.DataFrame  # type: ignore[no-redef]
 except ImportError:
 
-    class pandas_DataFrame:
+    class pandas_DataFrame:  # type: ignore[no-redef]
         def __init__(self, *args, **kwargs):
             raise ImportError("cannot load pandas DataFrame, pandas is not installed")
 
