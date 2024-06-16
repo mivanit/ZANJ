@@ -31,9 +31,11 @@ jobs:
           - python: "3.10"
             torch: "1.13.1"
           - python: "3.10"
-            torch: "2.0.1"
+            torch: "2.3.1"
           - python: "3.11"
-            torch: "2.0.1"
+            torch: "2.3.1"
+          - python: "3.12"
+            torch: "2.3.1"
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -41,7 +43,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: ${{ matrix.versions.python }}
 
       - name: Install dependencies
         run: |
