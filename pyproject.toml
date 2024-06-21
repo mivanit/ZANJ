@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "zanj"
-version = "0.2.2"
+version = "0.2.3"
 description = "save and load complex objects to disk without pickling"
 license = "GPL-3.0-only"
 authors = ["mivanit <mivanits@umich.edu>"]
@@ -16,7 +16,7 @@ repository = "https://github.com/mivanit/ZANJ"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-muutils = {version = "^0.5.1", extras = ["array"]}
+muutils = {version = ">=0.5.1,<0.7.0", extras = ["array"]}
 pandas = {version = ">=1.5.3", optional = true}
 
 [tool.poetry.extras]
