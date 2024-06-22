@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 import numpy as np
+import torch
 from muutils.json_serialize import (
     SerializableDataclass,
     serializable_dataclass,
@@ -11,7 +12,11 @@ from muutils.json_serialize import (
 from muutils.tensor_utils import compare_state_dicts
 
 from zanj import ZANJ
-from zanj.torchutil import assert_model_exact_equality
+from zanj.torchutil import (
+    ConfiguredModel,
+    assert_model_exact_equality,
+    set_config_class,
+)
 
 np.random.seed(0)
 
