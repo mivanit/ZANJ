@@ -1,6 +1,9 @@
+from __future__ import annotations
+
 from pathlib import Path
 
 import numpy as np
+import torch
 from muutils.json_serialize import (
     SerializableDataclass,
     serializable_dataclass,
@@ -9,11 +12,65 @@ from muutils.json_serialize import (
 from muutils.tensor_utils import compare_state_dicts
 
 from zanj import ZANJ
-from zanj.torchutil import assert_model_exact_equality
+from zanj.torchutil import (
+    ConfiguredModel,
+    assert_model_exact_equality,
+    set_config_class,
+)
 
 np.random.seed(0)
 
 TEST_DATA_PATH: Path = Path("tests/junk_data")
+
+
+def test_torch_configmodel_minimal():
+    @serializable_dataclass
+    class MyNNConfig(SerializableDataclass):
+        n_layers: int
+
+    @set_config_class(MyNNConfig)
+    class MyNN(ConfiguredModel[MyNNConfig]):
+
+        def __init__(self, config: MyNNConfig):
+            super().__init__(config)
+
+            self.layer = torch.nn.Linear(config.n_layers, 1)
+
+        def forward(self, x):
+            return self.layer(x)
+
+    config: MyNNConfig = MyNNConfig(
+        n_layers=2,
+    )
+
+    model: MyNN = MyNN(config)
+
+    fname: Path = TEST_DATA_PATH / "test_torch_configmodel.zanj"
+    ZANJ().save(model, fname)
+
+    print(f"saved model to {fname}")
+    print(f"{model.zanj_model_config = }")
+
+    # try to load the model
+    model2: MyNN = MyNN.read(fname)
+    print(f"loaded model from {fname}")
+    print(f"{model2.zanj_model_config = }")
+
+    assert model.zanj_model_config == model2.zanj_model_config
+    assert model.training_records == model2.training_records
+
+    compare_state_dicts(model.state_dict(), model2.state_dict())
+    assert_model_exact_equality(model, model2)
+
+    model3: MyNN = ZANJ().read(fname)
+    print(f"loaded model from {fname}")
+    print(f"{model3.zanj_model_config = }")
+
+    assert model.zanj_model_config == model3.zanj_model_config
+    assert model.training_records == model3.training_records
+
+    compare_state_dicts(model.state_dict(), model3.state_dict())
+    assert_model_exact_equality(model, model3)
 
 
 def test_torch_configmodel():

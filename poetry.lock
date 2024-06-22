@@ -875,22 +875,25 @@ tests = ["pytest (>=4.6)"]
 
 [[package]]
 name = "muutils"
-version = "0.5.12"
-description = "A collection of miscellaneous python utilities"
+version = "0.6.0"
+description = "miscellaneous python utilities"
 optional = false
-python-versions = "<4.0,>=3.10"
+python-versions = "<4.0,>=3.8"
 files = [
-    {file = "muutils-0.5.12-py3-none-any.whl", hash = "sha256:e11bdd0643f630b5d425fee926cc577791628a4f931ab27d74b2aad2008bbe9a"},
-    {file = "muutils-0.5.12.tar.gz", hash = "sha256:bb7e1d24523549499cc6c4e11c51fed99f061ee05c14ebb1e81ef8c2034310d9"},
+    {file = "muutils-0.6.0-py3-none-any.whl", hash = "sha256:9581a79289639cbad537ed7eaca65d6a56f8bc94bdf9ac6cb29619345c1f96fd"},
+    {file = "muutils-0.6.0.tar.gz", hash = "sha256:d1a350aed479a285780d7388f4f0049a1377903f455d0315da6c26025d0822cd"},
 ]
 
 [package.dependencies]
-jaxtyping = {version = ">=0.2.12,<0.3.0", optional = true, markers = "extra == \"array\""}
-numpy = {version = ">=1.22.4,<2.0.0", optional = true, markers = "extra == \"array\""}
+jaxtyping = {version = ">=0.2.12,<0.3.0", optional = true, markers = "extra == \"array\" or extra == \"array-no-torch\""}
+numpy = {version = ">=1.26.4,<2.0.0", optional = true, markers = "python_version >= \"3.9\" and (extra == \"array\" or extra == \"array-no-torch\")"}
 torch = {version = ">=1.13.1", optional = true, markers = "extra == \"array\""}
 
 [package.extras]
-array = ["jaxtyping (>=0.2.12,<0.3.0)", "numpy (>=1.22.4,<2.0.0)", "torch (>=1.13.1)"]
+array = ["jaxtyping (>=0.2.12,<0.3.0)", "numpy (>=1.24.4,<2.0.0)", "numpy (>=1.26.4,<2.0.0)", "torch (>=1.13.1)"]
+array-no-torch = ["jaxtyping (>=0.2.12,<0.3.0)", "numpy (>=1.24.4,<2.0.0)", "numpy (>=1.26.4,<2.0.0)"]
+notebook = ["ipython (>=8.20.0,<9.0.0)"]
+zanj = ["zanj (>=0.2.3,<0.3.0)"]
 
 [[package]]
 name = "mypy"
@@ -2077,4 +2080,4 @@ pandas = ["pandas"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "872d0742399a851f21b5f58cf1cb3d03585019e77beaaf4bd9042a362013b2e9"
+content-hash = "fefc1bb42b76c2dea382801b9164f7e69ccc0e17b1b84f847b596b9927c4529a"
