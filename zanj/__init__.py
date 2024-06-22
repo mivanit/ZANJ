@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from zanj.loading import register_loader_handler
 from zanj.zanj import ZANJ
 
