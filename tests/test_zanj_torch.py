@@ -30,7 +30,6 @@ def test_torch_configmodel_minimal():
 
     @set_config_class(MyNNConfig)
     class MyNN(ConfiguredModel[MyNNConfig]):
-
         def __init__(self, config: MyNNConfig):
             super().__init__(config)
 
