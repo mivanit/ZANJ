@@ -2203,4 +2203,4 @@ pandas = ["pandas"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "390ea5ae80531e71bb45f88e25687b499d9bed4870f76d024c0e3099f521a2cf"
+content-hash = "14042088df4ef0062dd10967a1c0a776c0a84fc09ba49efd2635622b07a46d4d"
