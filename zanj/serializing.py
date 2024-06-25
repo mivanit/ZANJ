@@ -74,15 +74,15 @@ class ZANJSerializerHandler(SerializerHandler):
     """a handler for ZANJ serialization"""
 
     # unique identifier for the handler, saved in __format__ field
-    uid: str
+    # uid: str
     # source package of the handler -- note that this might be overridden by ZANJ
     source_pckg: str
     # (self_config, object) -> whether to use this handler
-    check: Callable[[_ZANJ_pre, Any, ObjectPath], bool]
+    # check: Callable[[_ZANJ_pre, Any, ObjectPath], bool]
     # (self_config, object, path) -> serialized object
-    serialize_func: Callable[[_ZANJ_pre, Any, ObjectPath], JSONitem]
+    # serialize_func: Callable[[_ZANJ_pre, Any, ObjectPath], JSONitem]
     # optional description of how this serializer works
-    desc: str = "(no description)"
+    # desc: str = "(no description)"
 
 
 def zanj_external_serialize(

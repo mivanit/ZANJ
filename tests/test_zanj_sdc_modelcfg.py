@@ -128,8 +128,8 @@ class BaseGPTConfig(SerializableDataclass):
 
 @serializable_dataclass(kw_only=SUPPORTS_KW_ONLY)
 class AdvCfgHolder(SerializableDataclass):
-    name: str = serializable_field(default="default")
     model_cfg: BaseGPTConfig
+    name: str = serializable_field(default="default")
     tokenizer: CustomCfg | None = serializable_field(
         default=None,
         serialization_fn=lambda x: repr(x) if x is not None else None,

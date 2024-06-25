@@ -22,10 +22,10 @@ except ImportError:
 
 
 import torch
+from muutils.errormode import ErrorMode
 from muutils.json_serialize.array import load_array
 from muutils.json_serialize.json_serialize import ObjectPath
 from muutils.json_serialize.util import (
-    ErrorMode,
     JSONdict,
     JSONitem,
     safe_getsource,
@@ -234,7 +234,7 @@ def get_item_loader(
     json_item: JSONitem,
     path: ObjectPath,
     zanj: _ZANJ_pre | None = None,
-    error_mode: ErrorMode = "warn",
+    error_mode: ErrorMode = ErrorMode.WARN,
     # lh_map: dict[str, LoaderHandler] = LOADER_MAP,
 ) -> LoaderHandler | None:
     """get the loader for a json item"""
@@ -262,7 +262,7 @@ def load_item_recursive(
     json_item: JSONitem,
     path: ObjectPath,
     zanj: _ZANJ_pre | None = None,
-    error_mode: ErrorMode = "warn",
+    error_mode: ErrorMode = ErrorMode.WARN,
     allow_not_loading: bool = True,
 ) -> Any:
     lh: LoaderHandler | None = get_item_loader(

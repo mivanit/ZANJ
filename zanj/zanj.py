@@ -22,13 +22,14 @@ from pathlib import Path
 from typing import Any, Union
 
 import numpy as np
+from muutils.errormode import ErrorMode
 from muutils.json_serialize.array import ArrayMode, arr_metadata
 from muutils.json_serialize.json_serialize import (
     JsonSerializer,
     SerializerHandler,
     json_serialize,
 )
-from muutils.json_serialize.util import ErrorMode, JSONitem, MonoTuple
+from muutils.json_serialize.util import JSONitem, MonoTuple
 from muutils.sysinfo import SysInfo
 
 from zanj.externals import ZANJ_MAIN, ZANJ_META, ExternalItem, _ZANJ_pre
@@ -50,7 +51,7 @@ ZANJitem = Union[
 
 @dataclass(**KW_ONLY_KWARGS)
 class _ZANJ_GLOBAL_DEFAULTS_CLASS:
-    error_mode: ErrorMode = "except"
+    error_mode: ErrorMode = ErrorMode.EXCEPT,
     internal_array_mode: ArrayMode = "array_list_meta"
     external_array_threshold: int = 256
     external_list_threshold: int = 256
