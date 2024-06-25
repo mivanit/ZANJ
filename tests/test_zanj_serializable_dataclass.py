@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -18,6 +19,8 @@ np.random.seed(0)
 # pylint: disable=missing-function-docstring,missing-class-docstring
 
 TEST_DATA_PATH: Path = Path("tests/junk_data")
+
+SUPPORTS_KW_ONLY: bool = sys.version_info >= (3, 10)
 
 
 @serializable_dataclass
@@ -163,7 +166,7 @@ def test_sdc_with_df():
     assert instance == recovered
 
 
-@serializable_dataclass(kw_only=True)
+@serializable_dataclass(kw_only=SUPPORTS_KW_ONLY)
 class sdc_complicated(SerializableDataclass):
     name: str
     arr1: np.ndarray

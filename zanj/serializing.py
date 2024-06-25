@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import sys
 from dataclasses import dataclass
 from typing import IO, Any, Callable, Iterable, Sequence
 
@@ -15,6 +16,8 @@ from muutils.json_serialize.util import JSONdict, JSONitem, MonoTuple
 from muutils.tensor_utils import NDArray
 
 from zanj.externals import ExternalItem, ExternalItemType, _ZANJ_pre
+
+SUPPORTS_KW_ONLY: bool = sys.version_info >= (3, 10)
 
 # pylint: disable=unused-argument, protected-access, unexpected-keyword-arg
 # for some reason pylint complains about kwargs to ZANJSerializerHandler
@@ -64,7 +67,7 @@ EXTERNAL_STORE_FUNCS: dict[
 }
 
 
-@dataclass(kw_only=True)
+@dataclass(kw_only=SUPPORTS_KW_ONLY)
 class ZANJSerializerHandler(SerializerHandler):
     """a handler for ZANJ serialization"""
 

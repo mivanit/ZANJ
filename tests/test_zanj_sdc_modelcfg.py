@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import sys
 import typing
 from pathlib import Path
 
@@ -21,6 +22,9 @@ np.random.seed(0)
 TEST_DATA_PATH: Path = Path("tests/junk_data")
 
 
+SUPPORTS_KW_ONLY: bool = sys.version_info >= (3, 10)
+
+
 @serializable_dataclass
 class MyModelCfg(SerializableDataclass):
     name: str
@@ -29,7 +33,7 @@ class MyModelCfg(SerializableDataclass):
     dropout: float
 
 
-@serializable_dataclass(kw_only=True)
+@serializable_dataclass(kw_only=SUPPORTS_KW_ONLY)
 class TrainCfg(SerializableDataclass):
     name: str
     weight_decay: float
@@ -64,7 +68,7 @@ class CustomCfg:
         )
 
 
-@serializable_dataclass(kw_only=True)
+@serializable_dataclass(kw_only=SUPPORTS_KW_ONLY)
 class BasicCfgHolder(SerializableDataclass):
     model: MyModelCfg
     optimizer: TrainCfg
@@ -113,7 +117,7 @@ def test_config_holder_zanj():
     assert instance_basic == recovered
 
 
-@serializable_dataclass(kw_only=True)
+@serializable_dataclass(kw_only=SUPPORTS_KW_ONLY)
 class BaseGPTConfig(SerializableDataclass):
     name: str
     act_fn: str
@@ -122,7 +126,7 @@ class BaseGPTConfig(SerializableDataclass):
     n_layers: int
 
 
-@serializable_dataclass(kw_only=True)
+@serializable_dataclass(kw_only=SUPPORTS_KW_ONLY)
 class AdvCfgHolder(SerializableDataclass):
     name: str = serializable_field(default="default")
     model_cfg: BaseGPTConfig
