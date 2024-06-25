@@ -15,7 +15,6 @@ from __future__ import annotations
 
 import json
 import os
-import sys
 import time
 import zipfile
 from dataclasses import dataclass
@@ -34,9 +33,11 @@ from muutils.sysinfo import SysInfo
 
 from zanj.externals import ZANJ_MAIN, ZANJ_META, ExternalItem, _ZANJ_pre
 from zanj.loading import LOADER_MAP, LoadedZANJ, load_item_recursive
-from zanj.serializing import DEFAULT_SERIALIZER_HANDLERS_ZANJ, EXTERNAL_STORE_FUNCS
-
-SUPPORTS_KW_ONLY: bool = sys.version_info >= (3, 10)
+from zanj.serializing import (
+    DEFAULT_SERIALIZER_HANDLERS_ZANJ,
+    EXTERNAL_STORE_FUNCS,
+    KW_ONLY_KWARGS,
+)
 
 # pylint: disable=protected-access, unused-import, dangerous-default-value, line-too-long
 
@@ -47,7 +48,7 @@ ZANJitem = Union[
 ]
 
 
-@dataclass(kw_only=SUPPORTS_KW_ONLY)
+@dataclass(**KW_ONLY_KWARGS)
 class _ZANJ_GLOBAL_DEFAULTS_CLASS:
     error_mode: ErrorMode = "except"
     internal_array_mode: ArrayMode = "array_list_meta"

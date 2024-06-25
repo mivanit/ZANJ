@@ -22,7 +22,7 @@ np.random.seed(0)
 TEST_DATA_PATH: Path = Path("tests/junk_data")
 
 
-SUPPORTS_KW_ONLY: bool = sys.version_info >= (3, 10)
+SUPPORTS_KW_ONLY: bool = bool(sys.version_info >= (3, 10))
 
 
 @serializable_dataclass

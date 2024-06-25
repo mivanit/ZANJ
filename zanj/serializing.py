@@ -17,7 +17,9 @@ from muutils.tensor_utils import NDArray
 
 from zanj.externals import ExternalItem, ExternalItemType, _ZANJ_pre
 
-SUPPORTS_KW_ONLY: bool = sys.version_info >= (3, 10)
+KW_ONLY_KWARGS: dict = dict()
+if sys.version_info >= (3, 10):
+    KW_ONLY_KWARGS["kw_only"] = True
 
 # pylint: disable=unused-argument, protected-access, unexpected-keyword-arg
 # for some reason pylint complains about kwargs to ZANJSerializerHandler
@@ -67,18 +69,18 @@ EXTERNAL_STORE_FUNCS: dict[
 }
 
 
-@dataclass(kw_only=SUPPORTS_KW_ONLY)
+@dataclass(**KW_ONLY_KWARGS)
 class ZANJSerializerHandler(SerializerHandler):
     """a handler for ZANJ serialization"""
 
-    # (self_config, object) -> whether to use this handler
-    check: Callable[[_ZANJ_pre, Any, ObjectPath], bool]
-    # (self_config, object, path) -> serialized object
-    serialize_func: Callable[[_ZANJ_pre, Any, ObjectPath], JSONitem]
     # unique identifier for the handler, saved in __format__ field
     uid: str
     # source package of the handler -- note that this might be overridden by ZANJ
     source_pckg: str
+    # (self_config, object) -> whether to use this handler
+    check: Callable[[_ZANJ_pre, Any, ObjectPath], bool]
+    # (self_config, object, path) -> serialized object
+    serialize_func: Callable[[_ZANJ_pre, Any, ObjectPath], JSONitem]
     # optional description of how this serializer works
     desc: str = "(no description)"
 
