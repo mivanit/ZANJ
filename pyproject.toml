@@ -18,7 +18,7 @@ classifiers=[
 repository = "https://github.com/mivanit/ZANJ"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.8"
 muutils = {version = "^0.6.0", extras = ["array"]}
 pandas = {version = ">=1.5.3", optional = true}
 
