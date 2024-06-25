@@ -51,7 +51,7 @@ ZANJitem = Union[
 
 @dataclass(**KW_ONLY_KWARGS)
 class _ZANJ_GLOBAL_DEFAULTS_CLASS:
-    error_mode: ErrorMode = ErrorMode.EXCEPT,
+    error_mode: ErrorMode = ErrorMode.EXCEPT
     internal_array_mode: ArrayMode = "array_list_meta"
     external_array_threshold: int = 256
     external_list_threshold: int = 256
