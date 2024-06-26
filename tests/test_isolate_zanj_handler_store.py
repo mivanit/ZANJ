@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import typing
 import zipfile
 from pathlib import Path
 
@@ -25,7 +26,7 @@ TEST_DATA_PATH: Path = Path("tests/junk_data")
 class Basic(SerializableDataclass):
     a: str
     q: int = 42
-    c: list[int] = serializable_field(default_factory=list)
+    c: typing.List[int] = serializable_field(default_factory=list)
 
 
 def test_Basic():

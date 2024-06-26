@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import sys
+import typing
 from pathlib import Path
 
 import numpy as np
@@ -27,7 +28,7 @@ SUPPORTS_KW_ONLY: bool = bool(sys.version_info >= (3, 10))
 class BasicZanj(SerializableDataclass):
     a: str
     q: int = 42
-    c: list[int] = serializable_field(default_factory=list)
+    c: typing.List[int] = serializable_field(default_factory=list)
 
 
 def test_Basic():
@@ -62,7 +63,7 @@ class Nested_with_container(SerializableDataclass):
     name: str
     basic: BasicZanj
     val: float
-    container: list[Nested] = serializable_field(
+    container: typing.List[Nested] = serializable_field(
         default_factory=list,
         serialization_fn=lambda c: [n.serialize() for n in c],
         loading_fn=lambda data: [Nested.load(n) for n in data["container"]],
@@ -173,7 +174,7 @@ class sdc_complicated(SerializableDataclass):
     arr2: np.ndarray
     iris_data: pd.DataFrame
     brain_data: pd.DataFrame
-    container: list[Nested]
+    container: typing.List[Nested]
 
     tensor: torch.Tensor
 
@@ -206,7 +207,7 @@ def test_sdc_complicated():
 @serializable_dataclass
 class sdc_container_explicit(SerializableDataclass):
     name: str
-    container: list[Nested] = serializable_field(
+    container: typing.List[Nested] = serializable_field(
         default_factory=list,
         serialization_fn=lambda c: [n.serialize() for n in c],
         loading_fn=lambda data: [Nested.load(n) for n in data["container"]],

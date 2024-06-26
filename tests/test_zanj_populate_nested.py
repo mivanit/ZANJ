@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import typing
 from pathlib import Path
 
 import numpy as np
@@ -27,7 +28,7 @@ class InnerClassWithArray(SerializableDataclass):
 @serializable_dataclass
 class OuterClassWithNestedList(SerializableDataclass):
     name: str
-    lst_basic: list[InnerClassWithArray] = serializable_field(
+    lst_basic: typing.List[InnerClassWithArray] = serializable_field(
         serialization_fn=lambda x: [b.serialize() for b in x],
         loading_fn=lambda x: [InnerClassWithArray.load(b) for b in x["lst_basic"]],
     )

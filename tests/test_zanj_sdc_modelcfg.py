@@ -42,7 +42,7 @@ class TrainCfg(SerializableDataclass):
         serialization_fn=lambda x: x.__name__,
         loading_fn=lambda data: getattr(torch.optim, data["optimizer"]),
     )
-    optimizer_kwargs: dict[str, typing.Any] = serializable_field(  # type: ignore
+    optimizer_kwargs: typing.Dict[str, typing.Any] = serializable_field(  # type: ignore
         default_factory=lambda: dict(lr=0.000001)
     )
 
@@ -72,7 +72,7 @@ class CustomCfg:
 class BasicCfgHolder(SerializableDataclass):
     model: MyModelCfg
     optimizer: TrainCfg
-    custom: CustomCfg | None = serializable_field(
+    custom: typing.Optional[CustomCfg] = serializable_field(
         default=None,
         serialization_fn=lambda x: x.serialize(),
         loading_fn=lambda data: CustomCfg.load(data["custom"]),
@@ -130,7 +130,7 @@ class BaseGPTConfig(SerializableDataclass):
 class AdvCfgHolder(SerializableDataclass):
     model_cfg: BaseGPTConfig
     name: str = serializable_field(default="default")
-    tokenizer: CustomCfg | None = serializable_field(
+    tokenizer: typing.Optional[CustomCfg] = serializable_field(
         default=None,
         serialization_fn=lambda x: repr(x) if x is not None else None,
         loading_fn=lambda data: (
