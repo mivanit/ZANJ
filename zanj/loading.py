@@ -156,9 +156,9 @@ LOADER_MAP: dict[str, LoaderHandler] = {
                 # and json_item["data"].dtype.name == json_item["dtype"]
                 # and tuple(json_item["data"].shape) == tuple(json_item["shape"])
             ),
-            load=lambda json_item, path=None, z=None: np.array(
+            load=lambda json_item, path=None, z=None: np.array(  # type: ignore[misc]
                 load_array(json_item), dtype=DTYPE_MAP[json_item["dtype"]]
-            ),  # type: ignore[misc]
+            ),
             uid="numpy.ndarray",
             source_pckg="zanj",
             desc="numpy.ndarray loader",
@@ -171,9 +171,9 @@ LOADER_MAP: dict[str, LoaderHandler] = {
                 # and json_item["data"].dtype.name == json_item["dtype"]
                 # and tuple(json_item["data"].shape) == tuple(json_item["shape"])
             ),
-            load=lambda json_item, path=None, z=None: torch.tensor(
+            load=lambda json_item, path=None, z=None: torch.tensor(  # type: ignore[misc]
                 load_array(json_item), dtype=TORCH_DTYPE_MAP[json_item["dtype"]]
-            ),  # type: ignore[misc]
+            ),
             uid="torch.Tensor",
             source_pckg="zanj",
             desc="torch.Tensor loader",
@@ -187,9 +187,9 @@ LOADER_MAP: dict[str, LoaderHandler] = {
                 and "data" in json_item
                 and isinstance(json_item["data"], typing.Sequence)
             ),
-            load=lambda json_item, path=None, z=None: pandas_DataFrame(
+            load=lambda json_item, path=None, z=None: pandas_DataFrame(  # type: ignore[misc]
                 json_item["data"]
-            ),  # type: ignore[misc]
+            ),
             uid="pandas.DataFrame",
             source_pckg="zanj",
             desc="pandas.DataFrame loader",
