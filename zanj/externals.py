@@ -29,11 +29,11 @@ ExternalItem = NamedTuple(
 )
 
 
-def load_jsonl(zanj: "LoadedZANJ", fp: IO[bytes]) -> list[JSONitem]:  # type: ignore[name-defined]
+def load_jsonl(zanj: "LoadedZANJ", fp: IO[bytes]) -> list[JSONitem]:  # type: ignore[name-defined] # noqa: F821
     return [json.loads(line) for line in fp]
 
 
-def load_npy(zanj: "LoadedZANJ", fp: IO[bytes]) -> np.ndarray:  # type: ignore[name-defined]
+def load_npy(zanj: "LoadedZANJ", fp: IO[bytes]) -> np.ndarray:  # type: ignore[name-defined] # noqa: F821
     return np.load(fp)
 
 

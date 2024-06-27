@@ -32,7 +32,8 @@ from muutils.json_serialize.json_serialize import (
 from muutils.json_serialize.util import JSONitem, MonoTuple
 from muutils.sysinfo import SysInfo
 
-from zanj.externals import ZANJ_MAIN, ZANJ_META, ExternalItem, _ZANJ_pre
+from zanj.externals import ZANJ_MAIN, ZANJ_META, ExternalItem
+import zanj.externals
 from zanj.loading import LOADER_MAP, LoadedZANJ, load_item_recursive
 from zanj.serializing import (
     DEFAULT_SERIALIZER_HANDLERS_ZANJ,
@@ -45,7 +46,7 @@ from zanj.serializing import (
 ZANJitem = Union[
     JSONitem,
     np.ndarray,
-    "pd.DataFrame",  # type: ignore
+    "pd.DataFrame",  # type: ignore # noqa: F821
 ]
 
 
@@ -246,4 +247,4 @@ class ZANJ(JsonSerializer):
         )
 
 
-_ZANJ_pre = ZANJ  # type: ignore
+zanj.externals._ZANJ_pre = ZANJ  # type: ignore
