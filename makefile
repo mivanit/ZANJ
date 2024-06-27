@@ -7,7 +7,7 @@ PUBLISH_BRANCH := main
 # where to put the coverage reports
 COVERAGE_REPORTS_DIR := docs/coverage
 # where the tests are (assumes pytest)
-TESTS_DIR := tests/unit
+TESTS_DIR := tests/
 # temp directory to clean up
 TESTS_TEMP_DIR := tests/junk_data
 # dev and lint requirements.txt files
@@ -231,10 +231,9 @@ clean:
 	rm -rf dist
 	rm -rf build
 	rm -rf $(PACKAGE_NAME).egg-info
-	rm -rf tests/junk_data
+	rm -rf $(TESTS_TEMP_DIR)
 	$(PYTHON_BASE) -Bc "import pathlib; [p.unlink() for p in pathlib.Path('.').rglob('*.py[co]')]"
 	$(PYTHON_BASE) -Bc "import pathlib; [p.rmdir() for p in pathlib.Path('.').rglob('__pycache__')]"
-	rm -rf tests/unit/validate_type/test_validate_type_GENERATED.py
 
 # listing targets, from stackoverflow
 # https://stackoverflow.com/questions/4219255/how-do-you-get-the-list-of-targets-in-a-makefile
