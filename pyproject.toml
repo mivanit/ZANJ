@@ -19,7 +19,7 @@ repository = "https://github.com/mivanit/ZANJ"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-muutils = {version = "^0.6.0", extras = ["array"]}
+muutils = {version = "^0.6.1", extras = ["array"]}
 pandas = {version = ">=1.5.3", optional = true}
 numpy = [
     { version = "^1.24.4", optional = true, markers = "python_version < '3.9'" },
