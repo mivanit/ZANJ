@@ -131,11 +131,11 @@ class LoaderHandler:
         assert isinstance(fc.__muutils_format__, str)  # type: ignore
 
         return cls(
-            check=lambda json_item, path=None, z=None: ( # type: ignore[misc]
-                json_item[_FORMAT_KEY] == fc.__muutils_format__ # type: ignore[attr-defined]
+            check=lambda json_item, path=None, z=None: (  # type: ignore[misc]
+                json_item[_FORMAT_KEY] == fc.__muutils_format__  # type: ignore[attr-defined]
             ),
-            load=lambda json_item, path=None, z=None: fc.load(json_item, path, z), # type: ignore[misc]
-            uid=fc.__muutils_format__, # type: ignore[attr-defined]
+            load=lambda json_item, path=None, z=None: fc.load(json_item, path, z),  # type: ignore[misc]
+            uid=fc.__muutils_format__,  # type: ignore[attr-defined]
             source_pckg=str(fc.__module__),
             priority=priority,
             desc=f"formatted class loader for {fc.__name__}",
@@ -255,7 +255,7 @@ def get_item_loader(
                 f"invalid __muutils_format__ type '{type(json_item[_FORMAT_KEY])}' in '{path=}': '{json_item[_FORMAT_KEY] = }'"
             )
         if json_item[_FORMAT_KEY] in LOADER_MAP:
-            return LOADER_MAP[json_item[_FORMAT_KEY]] # type: ignore[index]
+            return LOADER_MAP[json_item[_FORMAT_KEY]]  # type: ignore[index]
 
     # if we dont recognize the format, try to find a loader that can handle it
     for key, lh in LOADER_MAP.items():
@@ -286,7 +286,7 @@ def load_item_recursive(
         if (
             isinstance(json_item, typing.Mapping)
             and (_FORMAT_KEY in json_item)
-            and ("SerializableDataclass" in json_item[_FORMAT_KEY]) # type: ignore[operator]
+            and ("SerializableDataclass" in json_item[_FORMAT_KEY])  # type: ignore[operator]
         ):
             # why this horribleness?
             # SerializableDataclass, if it has a field `x` which is also a SerializableDataclass, will automatically call `x.__class__.load()`
@@ -361,9 +361,9 @@ def _each_item_in_externals(
         # get the path to the item
         path: ObjectPath = tuple(ext_item.path)
         assert len(path) > 0
-        assert all(
-            isinstance(key, (str, int)) for key in path
-        ), f"improper types in path {path=}"
+        assert all(isinstance(key, (str, int)) for key in path), (
+            f"improper types in path {path=}"
+        )
         # get the item
         item = json_data
         for i, key in enumerate(path):
@@ -408,12 +408,12 @@ class LoadedZANJ:
         # read externals
         self._externals: dict[str, ExternalItem] = dict()
         for fname, ext_item in self._meta["externals_info"].items():  # type: ignore
-            item_type: str = ext_item["item_type"] # type: ignore
+            item_type: str = ext_item["item_type"]  # type: ignore
             with _zipf.open(fname, "r") as fp:
                 self._externals[fname] = ExternalItem(
                     item_type=item_type,  # type: ignore[arg-type]
                     data=GET_EXTERNAL_LOAD_FUNC(item_type)(self, fp),
-                    path=ext_item["path"], # type: ignore
+                    path=ext_item["path"],  # type: ignore
                 )
 
         # close zip file

@@ -243,13 +243,13 @@ def assert_model_cfg_equality(model_a: ConfiguredModel, model_b: ConfiguredModel
         ConfigMismatchException: if the configs don't match, e.diff will contain the diff
     """
     assert isinstance(model_a, ConfiguredModel), "model_a must be a ConfiguredModel"
-    assert isinstance(
-        model_a.zanj_model_config, SerializableDataclass
-    ), "model_a must have a zanj_model_config"
+    assert isinstance(model_a.zanj_model_config, SerializableDataclass), (
+        "model_a must have a zanj_model_config"
+    )
     assert isinstance(model_b, ConfiguredModel), "model_b must be a ConfiguredModel"
-    assert isinstance(
-        model_b.zanj_model_config, SerializableDataclass
-    ), "model_b must have a zanj_model_config"
+    assert isinstance(model_b.zanj_model_config, SerializableDataclass), (
+        "model_b must have a zanj_model_config"
+    )
 
     cls_type: type = type(model_a.zanj_model_config)
 
@@ -266,9 +266,9 @@ def assert_model_exact_equality(model_a: ConfiguredModel, model_b: ConfiguredMod
 
     model_a_sd_keys: set[str] = set(model_a.state_dict().keys())
     model_b_sd_keys: set[str] = set(model_b.state_dict().keys())
-    assert (
-        model_a_sd_keys == model_b_sd_keys
-    ), f"state dict keys don't match: {model_a_sd_keys - model_b_sd_keys} / {model_b_sd_keys - model_a_sd_keys}"
+    assert model_a_sd_keys == model_b_sd_keys, (
+        f"state dict keys don't match: {model_a_sd_keys - model_b_sd_keys} / {model_b_sd_keys - model_a_sd_keys}"
+    )
     keys_failed: list[str] = list()
     for k, v_a in model_a.state_dict().items():
         v_b = model_b.state_dict()[k]
@@ -278,6 +278,6 @@ def assert_model_exact_equality(model_a: ConfiguredModel, model_b: ConfiguredMod
             print(f"failed {k}")
         else:
             print(f"passed {k}")
-    assert (
-        len(keys_failed) == 0
-    ), f"{len(keys_failed)} / {len(model_a_sd_keys)} state dict elements don't match: {keys_failed}"
+    assert len(keys_failed) == 0, (
+        f"{len(keys_failed)} / {len(model_a_sd_keys)} state dict elements don't match: {keys_failed}"
+    )

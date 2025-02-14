@@ -178,7 +178,6 @@ class sdc_complicated(SerializableDataclass):
 
     tensor: torch.Tensor
 
-
     def __eq__(self, value):
         return super().__eq__(value)
 

@@ -40,7 +40,6 @@ class MyClass_np(SerializableDataclass):
     arr_2: np.ndarray
 
 
-
 def test_np_bool_array():
     fname: Path = TEST_DATA_PATH / "test_np_bool_array.zanj"
     c: MyClass_np = MyClass_np(
@@ -66,7 +65,6 @@ class MyClass_torch(SerializableDataclass):
     name: str
     arr_1: torch.Tensor
     arr_2: torch.Tensor
-
 
 
 def test_torch_bool_array():
