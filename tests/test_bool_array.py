@@ -16,20 +16,6 @@ class MyClass_list(SerializableDataclass):
     arr_2: list
 
 
-@serializable_dataclass
-class MyClass_np(SerializableDataclass):
-    name: str
-    arr_1: np.ndarray
-    arr_2: np.ndarray
-
-
-@serializable_dataclass
-class MyClass_torch(SerializableDataclass):
-    name: str
-    arr_1: torch.Tensor
-    arr_2: torch.Tensor
-
-
 def test_list_bool_array():
     fname: Path = TEST_DATA_PATH / "test_list_bool_array.zanj"
     c: MyClass_list = MyClass_list(
@@ -45,6 +31,14 @@ def test_list_bool_array():
     c2: MyClass_list = z.read(fname)
 
     assert c == c2
+
+
+@serializable_dataclass
+class MyClass_np(SerializableDataclass):
+    name: str
+    arr_1: np.ndarray
+    arr_2: np.ndarray
+
 
 
 def test_np_bool_array():
@@ -65,6 +59,14 @@ def test_np_bool_array():
     assert c2.arr_2.dtype == np.bool_
 
     assert c == c2
+
+
+@serializable_dataclass
+class MyClass_torch(SerializableDataclass):
+    name: str
+    arr_1: torch.Tensor
+    arr_2: torch.Tensor
+
 
 
 def test_torch_bool_array():

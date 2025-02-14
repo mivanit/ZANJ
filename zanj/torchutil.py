@@ -8,7 +8,7 @@ from typing import Any, Type, TypeVar
 import torch
 from muutils.json_serialize import SerializableDataclass
 from muutils.json_serialize.json_serialize import ObjectPath
-from muutils.json_serialize.util import safe_getsource, string_as_lines
+from muutils.json_serialize.util import safe_getsource, string_as_lines, _FORMAT_KEY
 
 from zanj import ZANJ, register_loader_handler
 from zanj.loading import LoaderHandler, load_item_recursive
@@ -114,7 +114,7 @@ class ConfiguredModel(
             ),
             training_records=self.training_records,
             state_dict=self.state_dict(),
-            __format__=self.__class__.__name__,
+            __muutils_format__=self.__class__.__name__,
         )
         return obj
 
@@ -195,8 +195,8 @@ class ConfiguredModel(
         return LoaderHandler(
             check=lambda json_item, path=None, z=None: (  # type: ignore
                 isinstance(json_item, dict)
-                and "__format__" in json_item
-                and json_item["__format__"].startswith(cls_name)
+                and _FORMAT_KEY in json_item
+                and json_item[_FORMAT_KEY].startswith(cls_name)
             ),
             load=lambda json_item, path=None, z=None: cls.load(json_item, path, z),  # type: ignore
             uid=cls_name,

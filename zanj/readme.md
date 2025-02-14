@@ -15,7 +15,7 @@ a file `<filename>.zanj` is a zip file containing:
 		- `.jsonl` for pandas dataframes or large sequences
 	- list of external files stored in `__zanj_meta__.json`
 	- "$ref" key will have value pointing to external file
-	- `__format__` key will detail an external format type
+	- `__muutils_format__` key will detail an external format type
 
 
 # Implementation

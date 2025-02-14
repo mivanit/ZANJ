@@ -12,7 +12,7 @@ from muutils.json_serialize.json_serialize import (  # JsonSerializer,
     ObjectPath,
     SerializerHandler,
 )
-from muutils.json_serialize.util import JSONdict, JSONitem, MonoTuple
+from muutils.json_serialize.util import JSONdict, JSONitem, MonoTuple, _FORMAT_KEY
 from muutils.tensor_utils import NDArray
 
 from zanj.externals import ExternalItem, ExternalItemType, _ZANJ_pre
@@ -39,7 +39,7 @@ def jsonl_metadata(data: list[JSONdict]) -> dict:
                 "len": len([item[col] for item in data if col in item]),
             }
             for col in all_cols
-            if col != "__format__"
+            if col != _FORMAT_KEY
         },
     }
 
@@ -73,7 +73,7 @@ EXTERNAL_STORE_FUNCS: dict[
 class ZANJSerializerHandler(SerializerHandler):
     """a handler for ZANJ serialization"""
 
-    # unique identifier for the handler, saved in __format__ field
+    # unique identifier for the handler, saved in _FORMAT_KEY field
     # uid: str
     # source package of the handler -- note that this might be overridden by ZANJ
     source_pckg: str
@@ -122,7 +122,7 @@ def zanj_external_serialize(
     # process the data if needed, assemble metadata
     data_new: Any = data
     output: dict = {
-        "__format__": _format,
+        _FORMAT_KEY: _format,
         "$ref": archive_path,
     }
     if item_type == "npy":

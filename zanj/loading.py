@@ -26,6 +26,7 @@ from muutils.errormode import ErrorMode
 from muutils.json_serialize.array import load_array
 from muutils.json_serialize.json_serialize import ObjectPath
 from muutils.json_serialize.util import (
+    _FORMAT_KEY,
     JSONdict,
     JSONitem,
     safe_getsource,
@@ -49,13 +50,13 @@ def _populate_externals_error_checking(key, item) -> bool:
 
     # special case for not fully loaded external item which we still need to populate
     if isinstance(item, typing.Mapping):
-        if ("__format__" in item) and item["__format__"].endswith(":external"):
+        if (_FORMAT_KEY in item) and item[_FORMAT_KEY].endswith(":external"):
             if "data" in item:
                 return True
             else:
                 raise KeyError(
                     f"expected an external item, but could not find data: {list(item.keys())}",
-                    f"{item['__format__']}, {len(item) = }, {item.get('data', '<EMPTY>') = }",
+                    f"{item[_FORMAT_KEY]}, {len(item) = }, {item.get('data', '<EMPTY>') = }",
                 )
 
     # if it's a list, make sure the key is an int and that it's in range
@@ -90,7 +91,7 @@ class LoaderHandler:
     check: Callable[[JSONitem, ObjectPath, _ZANJ_pre], bool]
     # function to load the object (json_data, path) -> loaded_obj
     load: Callable[[JSONitem, ObjectPath, _ZANJ_pre], Any]
-    # unique identifier for the handler, saved in __format__ field
+    # unique identifier for the handler, saved in __muutils_format__ field
     uid: str
     # source package of the handler -- note that this might be overridden by ZANJ
     source_pckg: str
@@ -121,19 +122,19 @@ class LoaderHandler:
 
     @classmethod
     def from_formattedclass(cls, fc: type, priority: int = 0):
-        """create a loader from a class with `serialize`, `load` methods and `__format__` attribute"""
+        """create a loader from a class with `serialize`, `load` methods and `__muutils_format__` attribute"""
         assert hasattr(fc, "serialize")
         assert callable(fc.serialize)  # type: ignore
         assert hasattr(fc, "load")
         assert callable(fc.load)  # type: ignore
-        assert hasattr(fc, "__format__")
-        assert isinstance(fc.__format__, str)  # type: ignore
+        assert hasattr(fc, _FORMAT_KEY)
+        assert isinstance(fc.__muutils_format__, str)  # type: ignore
 
         return cls(
-            check=lambda json_item, path=None, z=None: json_item["__format__"]
-            == fc.__format__,
+            check=lambda json_item, path=None, z=None: json_item[_FORMAT_KEY]
+            == fc.__muutils_format__,
             load=lambda json_item, path=None, z=None: fc.load(json_item, path, z),
-            uid=fc.__format__,
+            uid=fc.__muutils_format__,
             source_pckg=str(fc.__module__),
             priority=priority,
             desc=f"formatted class loader for {fc.__name__}",
@@ -151,8 +152,8 @@ LOADER_MAP: dict[str, LoaderHandler] = {
         LoaderHandler(
             check=lambda json_item, path=None, z=None: (  # type: ignore[misc]
                 isinstance(json_item, typing.Mapping)
-                and "__format__" in json_item
-                and json_item["__format__"].startswith("numpy.ndarray")
+                and _FORMAT_KEY in json_item
+                and json_item[_FORMAT_KEY].startswith("numpy.ndarray")
                 # and json_item["data"].dtype.name == json_item["dtype"]
                 # and tuple(json_item["data"].shape) == tuple(json_item["shape"])
             ),
@@ -166,8 +167,8 @@ LOADER_MAP: dict[str, LoaderHandler] = {
         LoaderHandler(
             check=lambda json_item, path=None, z=None: (  # type: ignore[misc]
                 isinstance(json_item, typing.Mapping)
-                and "__format__" in json_item
-                and json_item["__format__"].startswith("torch.Tensor")
+                and _FORMAT_KEY in json_item
+                and json_item[_FORMAT_KEY].startswith("torch.Tensor")
                 # and json_item["data"].dtype.name == json_item["dtype"]
                 # and tuple(json_item["data"].shape) == tuple(json_item["shape"])
             ),
@@ -182,8 +183,8 @@ LOADER_MAP: dict[str, LoaderHandler] = {
         LoaderHandler(
             check=lambda json_item, path=None, z=None: (  # type: ignore[misc]
                 isinstance(json_item, typing.Mapping)
-                and "__format__" in json_item
-                and json_item["__format__"].startswith("pandas.DataFrame")
+                and _FORMAT_KEY in json_item
+                and json_item[_FORMAT_KEY].startswith("pandas.DataFrame")
                 and "data" in json_item
                 and isinstance(json_item["data"], typing.Sequence)
             ),
@@ -198,8 +199,8 @@ LOADER_MAP: dict[str, LoaderHandler] = {
         LoaderHandler(
             check=lambda json_item, path=None, z=None: (  # type: ignore[misc]
                 isinstance(json_item, typing.Mapping)
-                and "__format__" in json_item
-                and json_item["__format__"].startswith("list")
+                and _FORMAT_KEY in json_item
+                and json_item[_FORMAT_KEY].startswith("list")
                 and "data" in json_item
                 and isinstance(json_item["data"], typing.Sequence)
             ),
@@ -213,8 +214,8 @@ LOADER_MAP: dict[str, LoaderHandler] = {
         LoaderHandler(
             check=lambda json_item, path=None, z=None: (  # type: ignore[misc]
                 isinstance(json_item, typing.Mapping)
-                and "__format__" in json_item
-                and json_item["__format__"].startswith("tuple")
+                and _FORMAT_KEY in json_item
+                and json_item[_FORMAT_KEY].startswith("tuple")
                 and "data" in json_item
                 and isinstance(json_item["data"], typing.Sequence)
             ),
@@ -247,13 +248,13 @@ def get_item_loader(
     global LOADER_MAP
 
     # check if we recognize the format
-    if isinstance(json_item, typing.Mapping) and "__format__" in json_item:
-        if not isinstance(json_item["__format__"], str):
+    if isinstance(json_item, typing.Mapping) and _FORMAT_KEY in json_item:
+        if not isinstance(json_item[_FORMAT_KEY], str):
             raise TypeError(
-                f"invalid __format__ type '{type(json_item['__format__'])}' in '{path=}': '{json_item['__format__'] = }'"
+                f"invalid __muutils_format__ type '{type(json_item[_FORMAT_KEY])}' in '{path=}': '{json_item[_FORMAT_KEY] = }'"
             )
-        if json_item["__format__"] in LOADER_MAP:
-            return LOADER_MAP[json_item["__format__"]]
+        if json_item[_FORMAT_KEY] in LOADER_MAP:
+            return LOADER_MAP[json_item[_FORMAT_KEY]]
 
     # if we dont recognize the format, try to find a loader that can handle it
     for key, lh in LOADER_MAP.items():
@@ -283,8 +284,8 @@ def load_item_recursive(
         # special case for serializable dataclasses
         if (
             isinstance(json_item, typing.Mapping)
-            and ("__format__" in json_item)
-            and ("SerializableDataclass" in json_item["__format__"])
+            and (_FORMAT_KEY in json_item)
+            and ("SerializableDataclass" in json_item[_FORMAT_KEY])
         ):
             # why this horribleness?
             # SerializableDataclass, if it has a field `x` which is also a SerializableDataclass, will automatically call `x.__class__.load()`
@@ -294,8 +295,8 @@ def load_item_recursive(
                     val
                     if (
                         isinstance(val, typing.Mapping)
-                        and ("__format__" in val)
-                        and ("SerializableDataclass" in val["__format__"])
+                        and (_FORMAT_KEY in val)
+                        and ("SerializableDataclass" in val[_FORMAT_KEY])
                     )
                     else load_item_recursive(
                         json_item=val,
