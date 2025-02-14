@@ -27,7 +27,7 @@ jobs:
         run: make format-check RUN_GLOBAL=1
 
   test:
-    name: Test and Lint
+    name: Test
     runs-on: ubuntu-latest
     strategy:
       matrix:
