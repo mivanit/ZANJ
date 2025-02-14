@@ -32,12 +32,21 @@ jobs:
     strategy:
       matrix:
         python: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
-        torch: ["1.13.1", "2.3.1", ""]
-        numpy: ["1.21.2", "2.2.0", ""]
-        # exclude:
-        #   - python: "3.8"
-        #     torch: "1.13.1"
-        #     numpy: "1.21.2"
+        pkg:
+          - torch: "1.13.1"
+            numpy: "1.26.4"
+            group: "legacy"
+          - torch: ""
+            numpy: ""
+            group: "latest"
+        exclude:
+          - python: "3.12"
+            pkg:
+              group: "legacy"
+          - python: "3.13"
+            pkg:
+              group: "legacy"
+
         #   - python: "3.9"
         #     torch: "1.13.1"
         #     numpy: "1.21.2"
@@ -74,13 +83,13 @@ jobs:
         run: make dep
 
       - name: Install pytorch
-        if: ${{ matrix.torch != '' }}
+        if: ${{ matrix.pkg.torch != '' }}
         run: |
-          uv pip install torch==${{ matrix.torch }}+cpu --extra-index-url https://download.pytorch.org/whl/cpu
+          uv pip install torch==${{ matrix.pkg.torch }}+cpu --extra-index-url https://download.pytorch.org/whl/cpu
       
       - name: Install numpy
-        if: ${{ matrix.numpy != '' }}
-        run: uv pip install numpy==${{ matrix.numpy }}
+        if: ${{ matrix.pkg.numpy != '' }}
+        run: uv pip install numpy==${{ matrix.pkg.numpy }}
       
       - name: format check
         run: make format-check
