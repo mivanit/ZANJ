@@ -24,7 +24,7 @@ jobs:
         run: pip install -r .meta/requirements/requirements-lint.txt
 
       - name: Run Format Checks
-        run: make check-format RUN_GLOBAL=1
+        run: make format-check RUN_GLOBAL=1
 
   test:
     name: Test and Lint
@@ -61,7 +61,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.versions.python }}
+          python-version: ${{ matrix.python }}
 
 
       - name: set up uv
@@ -74,23 +74,23 @@ jobs:
         run: make dep
 
       - name: Install pytorch
-        if: ${{ matrix.versions.torch != '' }}
+        if: ${{ matrix.torch != '' }}
         run: |
-          uv pip install torch==${{ matrix.versions.torch }}+cpu --extra-index-url https://download.pytorch.org/whl/cpu
+          uv pip install torch==${{ matrix.torch }}+cpu --extra-index-url https://download.pytorch.org/whl/cpu
       
       - name: Install numpy
-        if: ${{ matrix.versions.numpy != '' }}
-        run: uv pip install numpy==${{ matrix.versions.numpy }}
+        if: ${{ matrix.numpy != '' }}
+        run: uv pip install numpy==${{ matrix.numpy }}
       
       - name: format check
-        run: make check-format
+        run: make format-check
 
       - name: tests
         run: make test
 
       # - name: tests in strict mode
       #   # TODO: until zanj ported to 3.8 and 3.9
-      #   if: ${{ matrix.versions.python != '3.8' && matrix.versions.python != '3.9' }}
+      #   if: ${{ matrix.python != '3.8' && matrix.python != '3.9' }}
       #   run: make test WARN_STRICT=1 RUN_GLOBAL=1
 
       - name: check typing
