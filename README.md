@@ -197,7 +197,7 @@ The on-disk format is a file `<filename>.zanj` is a zip file containing:
 		- `.npy` for numpy arrays or torch tensors
 		- `.jsonl` for pandas dataframes or large sequences
 	- list of external files stored in `__zanj_meta__.json`
-	- "$ref" key will have value pointing to external file
+	- "$ref" key, specified in `_REF_KEY` in muutils, will have value pointing to external file
 	- `_FORMAT_KEY` key will detail an external format type
 
 

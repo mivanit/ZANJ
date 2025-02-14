@@ -1,5 +1,276 @@
   docs for zanj v0.4.0
 
+Contents
+
+[PyPI] [Checks] [Coverage] [code size, bytes] [PyPI - Downloads]
+
+ZANJ
+
+Overview
+
+The ZANJ format is meant to be a way of saving arbitrary objects to
+disk, in a way that is flexible, allows keeping configuration and data
+together, and is human readable. It is very loosely inspired by HDF5 and
+the derived exdir format, and the implementation is inspired by npz
+files.
+
+-   You can take any SerializableDataclass from the muutils library and
+    save it to disk – any large arrays or lists will be stored
+    efficiently as external files in the zip archive, while the basic
+    structure and metadata will be stored in readable JSON files.
+-   You can also specify a special ConfiguredModel, which inherits from
+    a torch.nn.Module which will let you save not just your model
+    weights, but all required configuration information, plus any other
+    metadata (like training logs) in a single file.
+
+This library was originally a module in muutils
+
+Installation
+
+Available on PyPI as zanj
+
+    pip install zanj
+
+Usage
+
+You can find a runnable example of this in demo.ipynb
+
+Saving a basic object
+
+Any SerializableDataclass of basic types can be saved as zanj:
+
+    import numpy as np
+    import pandas as pd
+    from muutils.json_serialize import SerializableDataclass, serializable_dataclass, serializable_field
+    from zanj import ZANJ
+
+    @serializable_dataclass
+    class BasicZanj(SerializableDataclass):
+        a: str
+        q: int = 42
+        c: list[int] = serializable_field(default_factory=list)
+
+    # initialize a zanj reader/writer
+    zj = ZANJ()
+
+    # create an instance
+    instance: BasicZanj = BasicZanj("hello", 42, [1, 2, 3])
+    path: str = "tests/junk_data/path_to_save_instance.zanj"
+    zj.save(instance, path)
+    recovered: BasicZanj = zj.read(path)
+
+ZANJ will intelligently handle nested serializable dataclasses, numpy
+arrays, pytorch tensors, and pandas dataframes:
+
+    import torch
+    import pandas as pd
+
+    @serializable_dataclass
+    class Complicated(SerializableDataclass):
+        name: str
+        arr1: np.ndarray
+        arr2: np.ndarray
+        iris_data: pd.DataFrame
+        brain_data: pd.DataFrame
+        container: list[BasicZanj]
+        torch_tensor: torch.Tensor
+
+For custom classes, you can specify a serialization_fn and loading_fn to
+handle the logic of converting to and from a json-serializable format:
+
+    @serializable_dataclass
+    class Complicated(SerializableDataclass):
+        name: str
+        device: torch.device = serializable_field(
+            serialization_fn=lambda self: str(self.device),
+            loading_fn=lambda data: torch.device(data["device"]),
+        )
+
+Note that loading_fn takes the dictionary of the whole class – this is
+in case you’ve stored data in multiple fields of the dict which are
+needed to reconstruct the object.
+
+Saving Models
+
+First, define a configuration class for your model. This class will hold
+the parameters for your model and any associated objects (like losses
+and optimizers). The configuration class should be a subclass of
+SerializableDataclass and use the serializable_field function to define
+fields that need special serialization.
+
+Here’s an example that defines a GPT-like model configuration:
+
+    from zanj.torchutil import ConfiguredModel, set_config_class
+
+    @serializable_dataclass
+    class MyNNConfig(SerializableDataclass):
+        input_dim: int
+        hidden_dim: int
+        output_dim: int
+
+        # store the activation function by name, reconstruct it by looking it up in torch.nn
+        act_fn: torch.nn.Module = serializable_field(
+            serialization_fn=lambda x: x.__name__,
+            loading_fn=lambda x: getattr(torch.nn, x["act_fn"]),
+        )
+
+        # same for the loss function
+        loss_kwargs: dict = serializable_field(default_factory=dict)
+        loss_factory: torch.nn.modules.loss._Loss = serializable_field(
+            default_factory=lambda: torch.nn.CrossEntropyLoss,
+            serialization_fn=lambda x: x.__name__,
+            loading_fn=lambda x: getattr(torch.nn, x["loss_factory"]),
+        )
+        loss = property(lambda self: self.loss_factory(**self.loss_kwargs))
+
+Then, define your model class. It should be a subclass of
+ConfiguredModel, and use the set_config_class decorator to associate it
+with your configuration class. The __init__ method should take a single
+argument, which is an instance of your configuration class. You must
+also call the superclass __init__ method with the configuration
+instance.
+
+    @set_config_class(MyNNConfig)
+    class MyNN(ConfiguredModel[MyNNConfig]):
+        def __init__(self, config: MyNNConfig):
+            # call the superclass init!
+            # this will store the model in the zanj_model_config field
+            super().__init__(config)
+
+            # whatever you want here
+            self.net = torch.nn.Sequential(
+                torch.nn.Linear(config.input_dim, config.hidden_dim),
+                config.act_fn(),
+                torch.nn.Linear(config.hidden_dim, config.output_dim),
+            )
+
+        def forward(self, x):
+            return self.net(x)
+
+You can now create instances of your model, save them to disk, and load
+them back into memory:
+
+    config = MyNNConfig(
+        input_dim=10,
+        hidden_dim=20,
+        output_dim=2,
+        act_fn=torch.nn.ReLU,
+        loss_kwargs=dict(reduction="mean"),
+    )
+
+    # create your model from the config, and save
+    model = MyNN(config)
+    fname = "tests/junk_data/path_to_save_model.zanj"
+    ZANJ().save(model, fname)
+    # load by calling the class method `read()`
+    loaded_model = MyNN.read(fname)
+    # zanj will actually infer the type of the object in the file 
+    # -- and will warn you if you don't have the correct package installed
+    loaded_another_way = ZANJ().read(fname)
+
+Configuration
+
+When initializing a ZANJ object, you can specify some configuration info
+about saving, such as:
+
+-   thresholds for how big an array/table has to be before moving to
+    external file
+-   compression settings
+-   error modes
+-   additional handlers for serialization
+
+    # how big an array or list (including pandas DataFrame) can be before moving it from the core JSON file
+    external_array_threshold: int = ZANJ_GLOBAL_DEFAULTS.external_array_threshold
+    external_list_threshold: int = ZANJ_GLOBAL_DEFAULTS.external_list_threshold
+    # compression settings passed to `zipfile` package
+    compress: bool | int = ZANJ_GLOBAL_DEFAULTS.compress
+    # for doing very cursed things in your own custom loading or serialization functions
+    custom_settings: dict[str, Any] | None = ZANJ_GLOBAL_DEFAULTS.custom_settings
+    # specify additional serialization handlers
+    handlers_pre: MonoTuple[SerializerHandler] = tuple()
+    handlers_default: MonoTuple[SerializerHandler] = DEFAULT_SERIALIZER_HANDLERS_ZANJ,
+
+Implementation
+
+The on-disk format is a file <filename>.zanj is a zip file containing:
+
+-   __zanj_meta__.json: a file containing zanj-specific metadata
+    including:
+    -   system information
+    -   installed packages
+    -   information about external files
+-   __zanj__.json: a file containing user-specified data
+    -   when an element is too big, it can be moved to an external file
+        -   .npy for numpy arrays or torch tensors
+        -   .jsonl for pandas dataframes or large sequences
+    -   list of external files stored in __zanj_meta__.json
+    -   “$ref” key, specified in _REF_KEY in muutils, will have value
+        pointing to external file
+    -   _FORMAT_KEY key will detail an external format type
+
+Comparison to other formats
+
+  ----------------------------------------------------------------------------------------------
+  Format           Safe   Zero-copy   Lazy      No file size Layout     Flexibility   Bfloat16
+                                      loading   limit        control                  
+  ---------------- ------ ----------- --------- ------------ ---------- ------------- ----------
+  pickle (PyTorch) ❌     ❌          ❌        ✅           ❌         ✅            ✅
+
+  H5 (Tensorflow)  ✅     ❌          ✅        ✅           ~          ~             ❌
+
+  HDF5             ✅     ?           ✅        ✅           ~          ✅            ❌
+
+  SavedModel       ✅     ❌          ❌        ✅           ✅         ❌            ✅
+  (Tensorflow)                                                                        
+
+  MsgPack (flax)   ✅     ✅          ❌        ✅           ❌         ❌            ✅
+
+  Protobuf (ONNX)  ✅     ❌          ❌        ❌           ❌         ❌            ✅
+
+  Cap’n’Proto      ✅     ✅          ~         ✅           ✅         ~             ❌
+
+  Numpy (npy,npz)  ✅     ?           ?         ❌           ✅         ❌            ❌
+
+  SafeTensors      ✅     ✅          ✅        ✅           ✅         ❌            ✅
+
+  exdir            ✅     ?           ?         ?            ?          ✅            ❌
+
+  ZANJ             ✅     ❌          ❌*       ✅           ✅         ✅            ❌*
+  ----------------------------------------------------------------------------------------------
+
+-   Safe: Can I use a file randomly downloaded and expect not to run
+    arbitrary code ?
+-   Zero-copy: Does reading the file require more memory than the
+    original file ?
+-   Lazy loading: Can I inspect the file without loading everything ?
+    And loading only some tensors in it without scanning the whole file
+    (distributed setting) ?
+-   Layout control: Lazy loading, is not necessarily enough since if the
+    information about tensors is spread out in your file, then even if
+    the information is lazily accessible you might have to access most
+    of your file to read the available tensors (incurring many DISK ->
+    RAM copies). Controlling the layout to keep fast access to single
+    tensors is important.
+-   No file size limit: Is there a limit to the file size ?
+-   Flexibility: Can I save custom code in the format and be able to use
+    it later with zero extra code ? (~ means we can store more than pure
+    tensors, but no custom code)
+-   Bfloat16: Does the format support native bfloat16 (meaning no weird
+    workarounds are necessary)? This is becoming increasingly important
+    in the ML world.
+
+* denotes this feature may be coming at a future date :)
+
+(This table was stolen from safetensors)
+
+Submodules
+
+-   externals
+-   loading
+-   serializing
+-   torchutil
+-   zanj
+
 API Documentation
 
 -   register_loader_handler
@@ -8,6 +279,269 @@ API Documentation
 View Source on GitHub
 
 zanj
+
+[PyPI] [Checks] [Coverage] [code size, bytes] [PyPI - Downloads]
+
+ZANJ
+
+Overview
+
+The ZANJ format is meant to be a way of saving arbitrary objects to
+disk, in a way that is flexible, allows keeping configuration and data
+together, and is human readable. It is very loosely inspired by HDF5 and
+the derived exdir format, and the implementation is inspired by npz
+files.
+
+-   You can take any SerializableDataclass from the muutils library and
+    save it to disk – any large arrays or lists will be stored
+    efficiently as external files in the zip archive, while the basic
+    structure and metadata will be stored in readable JSON files.
+-   You can also specify a special ConfiguredModel, which inherits from
+    a torch.nn.Module which will let you save not just your model
+    weights, but all required configuration information, plus any other
+    metadata (like training logs) in a single file.
+
+This library was originally a module in muutils
+
+Installation
+
+Available on PyPI as zanj
+
+    pip install zanj
+
+Usage
+
+You can find a runnable example of this in demo.ipynb
+
+Saving a basic object
+
+Any SerializableDataclass of basic types can be saved as zanj:
+
+    import numpy as np
+    import pandas as pd
+    from muutils.json_serialize import SerializableDataclass, serializable_dataclass, serializable_field
+    from zanj import ZANJ
+
+    @serializable_dataclass
+    class BasicZanj(SerializableDataclass):
+        a: str
+        q: int = 42
+        c: list[int] = serializable_field(default_factory=list)
+
+    ### initialize a zanj reader/writer
+    zj = ZANJ()
+
+    ### create an instance
+    instance: BasicZanj = BasicZanj("hello", 42, [1, 2, 3])
+    path: str = "tests/junk_data/path_to_save_instance<a href="zanj/zanj.html">zanj.zanj</a>"
+    zj.save(instance, path)
+    recovered: BasicZanj = zj.read(path)
+
+ZANJ will intelligently handle nested serializable dataclasses, numpy
+arrays, pytorch tensors, and pandas dataframes:
+
+    import torch
+    import pandas as pd
+
+    @serializable_dataclass
+    class Complicated(SerializableDataclass):
+        name: str
+        arr1: np.ndarray
+        arr2: np.ndarray
+        iris_data: pd.DataFrame
+        brain_data: pd.DataFrame
+        container: list[BasicZanj]
+        torch_tensor: torch.Tensor
+
+For custom classes, you can specify a serialization_fn and loading_fn to
+handle the logic of converting to and from a json-serializable format:
+
+    @serializable_dataclass
+    class Complicated(SerializableDataclass):
+        name: str
+        device: torch.device = serializable_field(
+            serialization_fn=lambda self: str(self.device),
+            loading_fn=lambda data: torch.device(data["device"]),
+        )
+
+Note that loading_fn takes the dictionary of the whole class – this is
+in case you’ve stored data in multiple fields of the dict which are
+needed to reconstruct the object.
+
+Saving Models
+
+First, define a configuration class for your model. This class will hold
+the parameters for your model and any associated objects (like losses
+and optimizers). The configuration class should be a subclass of
+SerializableDataclass and use the serializable_field function to define
+fields that need special serialization.
+
+Here’s an example that defines a GPT-like model configuration:
+
+    from <a href="zanj/torchutil.html">zanj.torchutil</a> import ConfiguredModel, set_config_class
+
+    @serializable_dataclass
+    class MyNNConfig(SerializableDataclass):
+        input_dim: int
+        hidden_dim: int
+        output_dim: int
+
+        # store the activation function by name, reconstruct it by looking it up in torch.nn
+        act_fn: torch.nn.Module = serializable_field(
+            serialization_fn=lambda x: x.__name__,
+            loading_fn=lambda x: getattr(torch.nn, x["act_fn"]),
+        )
+
+        # same for the loss function
+        loss_kwargs: dict = serializable_field(default_factory=dict)
+        loss_factory: torch.nn.modules.loss._Loss = serializable_field(
+            default_factory=lambda: torch.nn.CrossEntropyLoss,
+            serialization_fn=lambda x: x.__name__,
+            loading_fn=lambda x: getattr(torch.nn, x["loss_factory"]),
+        )
+        loss = property(lambda self: self.loss_factory(**self.loss_kwargs))
+
+Then, define your model class. It should be a subclass of
+ConfiguredModel, and use the set_config_class decorator to associate it
+with your configuration class. The __init__ method should take a single
+argument, which is an instance of your configuration class. You must
+also call the superclass __init__ method with the configuration
+instance.
+
+    @set_config_class(MyNNConfig)
+    class MyNN(ConfiguredModel[MyNNConfig]):
+        def __init__(self, config: MyNNConfig):
+            # call the superclass init!
+            # this will store the model in the zanj_model_config field
+            super().__init__(config)
+
+            # whatever you want here
+            self.net = torch.nn.Sequential(
+                torch.nn.Linear(config.input_dim, config.hidden_dim),
+                config.act_fn(),
+                torch.nn.Linear(config.hidden_dim, config.output_dim),
+            )
+
+        def forward(self, x):
+            return self.net(x)
+
+You can now create instances of your model, save them to disk, and load
+them back into memory:
+
+    config = MyNNConfig(
+        input_dim=10,
+        hidden_dim=20,
+        output_dim=2,
+        act_fn=torch.nn.ReLU,
+        loss_kwargs=dict(reduction="mean"),
+    )
+
+    ### create your model from the config, and save
+    model = MyNN(config)
+    fname = "tests/junk_data/path_to_save_model<a href="zanj/zanj.html">zanj.zanj</a>"
+    ZANJ().save(model, fname)
+    ### load by calling the class method `read()`
+    loaded_model = MyNN.read(fname)
+    ### zanj will actually infer the type of the object in the file 
+    ### -- and will warn you if you don't have the correct package installed
+    loaded_another_way = ZANJ().read(fname)
+
+Configuration
+
+When initializing a ZANJ object, you can specify some configuration info
+about saving, such as:
+
+-   thresholds for how big an array/table has to be before moving to
+    external file
+-   compression settings
+-   error modes
+-   additional handlers for serialization
+
+    ### how big an array or list (including pandas DataFrame) can be before moving it from the core JSON file
+    external_array_threshold: int = ZANJ_GLOBAL_DEFAULTS.external_array_threshold
+    external_list_threshold: int = ZANJ_GLOBAL_DEFAULTS.external_list_threshold
+    ### compression settings passed to `zipfile` package
+    compress: bool | int = ZANJ_GLOBAL_DEFAULTS.compress
+    ### for doing very cursed things in your own custom loading or serialization functions
+    custom_settings: dict[str, Any] | None = ZANJ_GLOBAL_DEFAULTS.custom_settings
+    ### specify additional serialization handlers
+    handlers_pre: MonoTuple[SerializerHandler] = tuple()
+    handlers_default: MonoTuple[SerializerHandler] = DEFAULT_SERIALIZER_HANDLERS_ZANJ,
+
+Implementation
+
+The on-disk format is a file
+<filename><a href="zanj/zanj.html">zanj.zanj</a> is a zip file
+containing:
+
+-   __zanj_meta__.json: a file containing zanj-specific metadata
+    including:
+    -   system information
+    -   installed packages
+    -   information about external files
+-   __zanj__.json: a file containing user-specified data
+    -   when an element is too big, it can be moved to an external file
+        -   .npy for numpy arrays or torch tensors
+        -   .jsonl for pandas dataframes or large sequences
+    -   list of external files stored in __zanj_meta__.json
+    -   “$ref” key, specified in _REF_KEY in muutils, will have value
+        pointing to external file
+    -   _FORMAT_KEY key will detail an external format type
+
+Comparison to other formats
+
+  ----------------------------------------------------------------------------------------------
+  Format           Safe   Zero-copy   Lazy      No file size Layout     Flexibility   Bfloat16
+                                      loading   limit        control                  
+  ---------------- ------ ----------- --------- ------------ ---------- ------------- ----------
+  pickle (PyTorch) ❌     ❌          ❌        ✅           ❌         ✅            ✅
+
+  H5 (Tensorflow)  ✅     ❌          ✅        ✅           ~          ~             ❌
+
+  HDF5             ✅     ?           ✅        ✅           ~          ✅            ❌
+
+  SavedModel       ✅     ❌          ❌        ✅           ✅         ❌            ✅
+  (Tensorflow)                                                                        
+
+  MsgPack (flax)   ✅     ✅          ❌        ✅           ❌         ❌            ✅
+
+  Protobuf (ONNX)  ✅     ❌          ❌        ❌           ❌         ❌            ✅
+
+  Cap’n’Proto      ✅     ✅          ~         ✅           ✅         ~             ❌
+
+  Numpy (npy,npz)  ✅     ?           ?         ❌           ✅         ❌            ❌
+
+  SafeTensors      ✅     ✅          ✅        ✅           ✅         ❌            ✅
+
+  exdir            ✅     ?           ?         ?            ?          ✅            ❌
+
+  ZANJ             ✅     ❌          ❌*       ✅           ✅         ✅            ❌*
+  ----------------------------------------------------------------------------------------------
+
+-   Safe: Can I use a file randomly downloaded and expect not to run
+    arbitrary code ?
+-   Zero-copy: Does reading the file require more memory than the
+    original file ?
+-   Lazy loading: Can I inspect the file without loading everything ?
+    And loading only some tensors in it without scanning the whole file
+    (distributed setting) ?
+-   Layout control: Lazy loading, is not necessarily enough since if the
+    information about tensors is spread out in your file, then even if
+    the information is lazily accessible you might have to access most
+    of your file to read the available tensors (incurring many DISK ->
+    RAM copies). Controlling the layout to keep fast access to single
+    tensors is important.
+-   No file size limit: Is there a limit to the file size ?
+-   Flexibility: Can I save custom code in the format and be able to use
+    it later with zero extra code ? (~ means we can store more than pure
+    tensors, but no custom code)
+-   Bfloat16: Does the format support native bfloat16 (meaning no weird
+    workarounds are necessary)? This is becoming increasingly important
+    in the ML world.
+
+* denotes this feature may be coming at a future date :)
+
+(This table was stolen from safetensors)
 
 View Source on GitHub
 
@@ -18,6 +552,715 @@ def register_loader_handler
 View Source on GitHub
 
 register a custom loader handler
+
+class ZANJ(muutils.json_serialize.json_serialize.JsonSerializer):
+
+View Source on GitHub
+
+Zip up: Arrays in Numpy, JSON for everything else
+
+given an arbitrary object, throw into a zip file, with arrays stored in
+.npy files, and everything else stored in a json file
+
+(basically npz file with json)
+
+-   numpy (or pytorch) arrays are stored in paths according to their
+    name and structure in the object
+-   everything else about the object is stored in a json file zanj.json
+    in the root of the archive, via
+    muutils.json_serialize.JsonSerializer
+-   metadata about ZANJ configuration, and optionally packages and
+    versions, is stored in a __zanj_meta__.json file in the root of the
+    archive
+
+create a ZANJ-class via z_cls = ZANJ().create(obj), and save/read
+instances of the object via z_cls.save(obj, path), z_cls.load(path). be
+sure to pass an instance of the object, to make sure that the attributes
+of the class can be correctly recognized
+
+ZANJ
+
+    (
+        error_mode: muutils.errormode.ErrorMode = ErrorMode.Except,
+        internal_array_mode: Literal['list', 'array_list_meta', 'array_hex_meta', 'array_b64_meta', 'external', 'zero_dim'] = 'array_list_meta',
+        external_array_threshold: int = 256,
+        external_list_threshold: int = 256,
+        compress: bool | int = True,
+        custom_settings: dict[str, typing.Any] | None = None,
+        handlers_pre: None = (),
+        handlers_default: None = (ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='numpy.ndarray:external', desc='external numpy array', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='torch.Tensor:external', desc='external torch tensor', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='list:external', desc='external list', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='tuple:external', desc='external tuple', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='pandas.DataFrame:external', desc='external pandas DataFrame', source_pckg='zanj'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='base types', desc='base types (bool, int, float, str, None)'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='dictionaries', desc='dictionaries'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='(list, tuple) -> list', desc='lists and tuples as lists'), SerializerHandler(check=<function <lambda>>, serialize_func=<function _serialize_override_serialize_func>, uid='.serialize override', desc='objects with .serialize method'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='namedtuple -> dict', desc='namedtuples as dicts'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='dataclass -> dict', desc='dataclasses as dicts'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='path -> str', desc='Path objects as posix strings'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='obj -> str(obj)', desc='directly serialize objects in `SERIALIZE_DIRECT_AS_STR` to strings'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='numpy.ndarray', desc='numpy arrays'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='torch.Tensor', desc='pytorch tensors'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='pandas.DataFrame', desc='pandas DataFrames'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='(set, list, tuple, Iterable) -> list', desc='sets, lists, tuples, and Iterables as lists'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='fallback', desc='fallback handler -- serialize object attributes and special functions as strings'))
+    )
+
+View Source on GitHub
+
+-   external_array_threshold: int
+
+-   external_list_threshold: int
+
+-   custom_settings: dict
+
+-   compress
+
+def externals_info
+
+    (self) -> dict[str, dict[str, str | int | list[int]]]
+
+View Source on GitHub
+
+return information about the current externals
+
+def meta
+
+    (
+        self
+    ) -> Union[bool, int, float, str, NoneType, List[Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]], Dict[str, Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]]]
+
+View Source on GitHub
+
+return the metadata of the ZANJ archive
+
+def save
+
+    (self, obj: Any, file_path: str | pathlib.Path) -> str
+
+View Source on GitHub
+
+save the object to a ZANJ archive. returns the path to the archive
+
+def read
+
+    (self, file_path: Union[str, pathlib.Path]) -> Any
+
+View Source on GitHub
+
+load the object from a ZANJ archive ### TODO: load only some part of the
+zanj file by passing an ObjectPath
+
+Inherited Members
+
+-   array_mode
+-   error_mode
+-   write_only_format
+-   handlers
+-   json_serialize
+-   hashify
+
+  docs for zanj v0.4.0
+
+Contents
+
+for storing/retrieving an item externally in a ZANJ archive
+
+API Documentation
+
+-   ZANJ_MAIN
+-   ZANJ_META
+-   ExternalItemType
+-   ExternalItemType_vals
+-   ExternalItem
+-   load_jsonl
+-   load_npy
+-   EXTERNAL_LOAD_FUNCS
+-   GET_EXTERNAL_LOAD_FUNC
+
+View Source on GitHub
+
+zanj.externals
+
+for storing/retrieving an item externally in a ZANJ archive
+
+View Source on GitHub
+
+-   ZANJ_MAIN: str = '__zanj__.json'
+
+-   ZANJ_META: str = '__zanj_meta__.json'
+
+-   ExternalItemType = typing.Literal['jsonl', 'npy']
+
+-   ExternalItemType_vals = ('jsonl', 'npy')
+
+class ExternalItem(typing.NamedTuple):
+
+ExternalItem(item_type, data, path)
+
+ExternalItem
+
+    (
+        item_type: Literal['jsonl', 'npy'],
+        data: Any,
+        path: tuple[typing.Union[str, int], ...]
+    )
+
+Create new instance of ExternalItem(item_type, data, path)
+
+-   item_type: Literal['jsonl', 'npy']
+
+Alias for field number 0
+
+-   data: Any
+
+Alias for field number 1
+
+-   path: tuple[typing.Union[str, int], ...]
+
+Alias for field number 2
+
+Inherited Members
+
+-   index
+-   count
+
+def load_jsonl
+
+    (
+        zanj: "'LoadedZANJ'",
+        fp: IO[bytes]
+    ) -> list[typing.Union[bool, int, float, str, NoneType, typing.List[typing.Union[bool, int, float, str, NoneType, typing.List[typing.Any], typing.Dict[str, typing.Any]]], typing.Dict[str, typing.Union[bool, int, float, str, NoneType, typing.List[typing.Any], typing.Dict[str, typing.Any]]]]]
+
+View Source on GitHub
+
+def load_npy
+
+    (zanj: "'LoadedZANJ'", fp: IO[bytes]) -> numpy.ndarray
+
+View Source on GitHub
+
+-   EXTERNAL_LOAD_FUNCS: dict[typing.Literal['jsonl', 'npy'], typing.Callable[[zanj.zanj.ZANJ, typing.IO[bytes]], typing.Any]] = {'jsonl': <function load_jsonl>, 'npy': <function load_npy>}
+
+def GET_EXTERNAL_LOAD_FUNC
+
+    (item_type: str) -> Callable[[zanj.zanj.ZANJ, IO[bytes]], Any]
+
+View Source on GitHub
+
+  docs for zanj v0.4.0
+
+API Documentation
+
+-   LoaderHandler
+-   LOADER_MAP_LOCK
+-   LOADER_MAP
+-   register_loader_handler
+-   get_item_loader
+-   load_item_recursive
+-   LoadedZANJ
+
+View Source on GitHub
+
+zanj.loading
+
+View Source on GitHub
+
+class LoaderHandler:
+
+View Source on GitHub
+
+handler for loading an object from a json file or a ZANJ archive
+
+LoaderHandler
+
+    (
+        check: Callable[[Union[bool, int, float, str, NoneType, List[Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]], Dict[str, Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]]], tuple[Union[str, int], ...], Any], bool],
+        load: Callable[[Union[bool, int, float, str, NoneType, List[Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]], Dict[str, Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]]], tuple[Union[str, int], ...], Any], Any],
+        uid: str,
+        source_pckg: str,
+        priority: int = 0,
+        desc: str = '(no description)'
+    )
+
+-   check: Callable[[Union[bool, int, float, str, NoneType, List[Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]], Dict[str, Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]]], tuple[Union[str, int], ...], Any], bool]
+
+-   load: Callable[[Union[bool, int, float, str, NoneType, List[Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]], Dict[str, Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]]], tuple[Union[str, int], ...], Any], Any]
+
+-   uid: str
+
+-   source_pckg: str
+
+-   priority: int = 0
+
+-   desc: str = '(no description)'
+
+def serialize
+
+    (
+        self
+    ) -> Dict[str, Union[bool, int, float, str, NoneType, List[Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]], Dict[str, Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]]]]
+
+View Source on GitHub
+
+serialize the handler info
+
+def from_formattedclass
+
+    (cls, fc: type, priority: int = 0)
+
+View Source on GitHub
+
+create a loader from a class with serialize, load methods and
+__muutils_format__ attribute
+
+-   LOADER_MAP_LOCK = <unlocked _thread.lock object>
+
+-   LOADER_MAP: dict[str, zanj.loading.LoaderHandler] = {'numpy.ndarray': LoaderHandler(check=<function <lambda>>, load=<function <lambda>>, uid='numpy.ndarray', source_pckg='zanj', priority=0, desc='numpy.ndarray loader'), 'torch.Tensor': LoaderHandler(check=<function <lambda>>, load=<function <lambda>>, uid='torch.Tensor', source_pckg='zanj', priority=0, desc='torch.Tensor loader'), 'pandas.DataFrame': LoaderHandler(check=<function <lambda>>, load=<function <lambda>>, uid='pandas.DataFrame', source_pckg='zanj', priority=0, desc='pandas.DataFrame loader'), 'list': LoaderHandler(check=<function <lambda>>, load=<function <lambda>>, uid='list', source_pckg='zanj', priority=0, desc='list loader, for externals'), 'tuple': LoaderHandler(check=<function <lambda>>, load=<function <lambda>>, uid='tuple', source_pckg='zanj', priority=0, desc='tuple loader, for externals')}
+
+def register_loader_handler
+
+    (handler: zanj.loading.LoaderHandler)
+
+View Source on GitHub
+
+register a custom loader handler
+
+def get_item_loader
+
+    (
+        json_item: Union[bool, int, float, str, NoneType, List[Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]], Dict[str, Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]]],
+        path: tuple[typing.Union[str, int], ...],
+        zanj: typing.Any | None = None,
+        error_mode: muutils.errormode.ErrorMode = ErrorMode.Warn
+    ) -> zanj.loading.LoaderHandler | None
+
+View Source on GitHub
+
+get the loader for a json item
+
+def load_item_recursive
+
+    (
+        json_item: Union[bool, int, float, str, NoneType, List[Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]], Dict[str, Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]]],
+        path: tuple[typing.Union[str, int], ...],
+        zanj: typing.Any | None = None,
+        error_mode: muutils.errormode.ErrorMode = ErrorMode.Warn,
+        allow_not_loading: bool = True
+    ) -> Any
+
+View Source on GitHub
+
+class LoadedZANJ:
+
+View Source on GitHub
+
+for loading a zanj file
+
+LoadedZANJ
+
+    (path: str | pathlib.Path, zanj: Any)
+
+View Source on GitHub
+
+def populate_externals
+
+    (self) -> None
+
+View Source on GitHub
+
+put all external items into the main json data
+
+  docs for zanj v0.4.0
+
+API Documentation
+
+-   KW_ONLY_KWARGS
+-   jsonl_metadata
+-   store_npy
+-   store_jsonl
+-   EXTERNAL_STORE_FUNCS
+-   ZANJSerializerHandler
+-   zanj_external_serialize
+-   DEFAULT_SERIALIZER_HANDLERS_ZANJ
+
+View Source on GitHub
+
+zanj.serializing
+
+View Source on GitHub
+
+-   KW_ONLY_KWARGS: dict = {'kw_only': True}
+
+def jsonl_metadata
+
+    (
+        data: list[typing.Dict[str, typing.Union[bool, int, float, str, NoneType, typing.List[typing.Union[bool, int, float, str, NoneType, typing.List[typing.Any], typing.Dict[str, typing.Any]]], typing.Dict[str, typing.Union[bool, int, float, str, NoneType, typing.List[typing.Any], typing.Dict[str, typing.Any]]]]]]
+    ) -> dict
+
+View Source on GitHub
+
+metadata about a jsonl object
+
+def store_npy
+
+    (
+        self: Any,
+        fp: IO[bytes],
+        data: muutils.tensor_utils.jaxtype_factory.<locals>._BaseArray
+    ) -> None
+
+View Source on GitHub
+
+store numpy array to given file as .npy
+
+def store_jsonl
+
+    (
+        self: Any,
+        fp: IO[bytes],
+        data: Sequence[Union[bool, int, float, str, NoneType, List[Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]], Dict[str, Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]]]]
+    ) -> None
+
+View Source on GitHub
+
+store sequence to given file as .jsonl
+
+-   EXTERNAL_STORE_FUNCS: dict[typing.Literal['jsonl', 'npy'], typing.Callable[[typing.Any, typing.IO[bytes], typing.Any], NoneType]] = {'npy': <function store_npy>, 'jsonl': <function store_jsonl>}
+
+class ZANJSerializerHandler(muutils.json_serialize.json_serialize.SerializerHandler):
+
+View Source on GitHub
+
+a handler for ZANJ serialization
+
+ZANJSerializerHandler
+
+    (
+        uid: str,
+        desc: str,
+        *,
+        check: Callable[[Any, Any, tuple[Union[str, int], ...]], bool],
+        serialize_func: Callable[[Any, Any, tuple[Union[str, int], ...]], Union[bool, int, float, str, NoneType, List[Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]], Dict[str, Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]]]],
+        source_pckg: str
+    )
+
+-   source_pckg: str
+
+-   check: Callable[[Any, Any, tuple[Union[str, int], ...]], bool]
+
+-   serialize_func: Callable[[Any, Any, tuple[Union[str, int], ...]], Union[bool, int, float, str, NoneType, List[Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]], Dict[str, Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]]]]
+
+Inherited Members
+
+-   uid
+-   desc
+-   serialize
+
+def zanj_external_serialize
+
+    (
+        jser: Any,
+        data: Any,
+        path: tuple[typing.Union[str, int], ...],
+        item_type: Literal['jsonl', 'npy'],
+        _format: str
+    ) -> Union[bool, int, float, str, NoneType, List[Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]], Dict[str, Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]]]
+
+View Source on GitHub
+
+stores a numpy array or jsonl externally in a ZANJ object
+
+Parameters:
+
+-   jser: ZANJ
+-   data: Any
+-   path: ObjectPath
+-   item_type: ExternalItemType
+
+Returns:
+
+-   JSONitem json data with reference
+
+Modifies:
+
+-   modifies jser._externals
+
+-   DEFAULT_SERIALIZER_HANDLERS_ZANJ: None = (ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='numpy.ndarray:external', desc='external numpy array', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='torch.Tensor:external', desc='external torch tensor', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='list:external', desc='external list', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='tuple:external', desc='external tuple', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='pandas.DataFrame:external', desc='external pandas DataFrame', source_pckg='zanj'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='base types', desc='base types (bool, int, float, str, None)'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='dictionaries', desc='dictionaries'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='(list, tuple) -> list', desc='lists and tuples as lists'), SerializerHandler(check=<function <lambda>>, serialize_func=<function _serialize_override_serialize_func>, uid='.serialize override', desc='objects with .serialize method'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='namedtuple -> dict', desc='namedtuples as dicts'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='dataclass -> dict', desc='dataclasses as dicts'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='path -> str', desc='Path objects as posix strings'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='obj -> str(obj)', desc='directly serialize objects inSERIALIZE_DIRECT_AS_STRto strings'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='numpy.ndarray', desc='numpy arrays'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='torch.Tensor', desc='pytorch tensors'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='pandas.DataFrame', desc='pandas DataFrames'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='(set, list, tuple, Iterable) -> list', desc='sets, lists, tuples, and Iterables as lists'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='fallback', desc='fallback handler -- serialize object attributes and special functions as strings'))
+
+  docs for zanj v0.4.0
+
+API Documentation
+
+-   KWArgs
+-   num_params
+-   get_module_device
+-   ConfiguredModel
+-   set_config_class
+-   ConfigMismatchException
+-   assert_model_cfg_equality
+-   assert_model_exact_equality
+
+View Source on GitHub
+
+zanj.torchutil
+
+View Source on GitHub
+
+-   KWArgs = typing.Any
+
+def num_params
+
+    (m: torch.nn.modules.module.Module, only_trainable: bool = True)
+
+View Source on GitHub
+
+return total number of parameters in a model
+
+-   only counting shared parameters once
+-   if only_trainable is False, will include parameters with
+    requires_grad = False
+
+https://stackoverflow.com/questions/49201236/check-the-total-number-of-parameters-in-a-pytorch-model
+
+def get_module_device
+
+    (
+        m: torch.nn.modules.module.Module
+    ) -> tuple[bool, torch.device | dict[str, torch.device]]
+
+View Source on GitHub
+
+get the current devices
+
+class ConfiguredModel(torch.nn.modules.module.Module, typing.Generic[~T_config]):
+
+View Source on GitHub
+
+a model that has a configuration, for saving with ZANJ
+
+    @set_config_class(YourConfig)
+    class YourModule(ConfiguredModel[YourConfig]):
+        def __init__(self, cfg: YourConfig):
+            super().__init__(cfg)
+
+__init__() must initialize the model from a config object only, and call
+super().__init__(zanj_model_config)
+
+If you are inheriting from another class + ConfiguredModel,
+ConfiguredModel must be the first class in the inheritance list
+
+-   zanj_config_class
+
+View Source on GitHub
+
+-   zanj_model_config: ~T_config
+
+-   training_records: dict | None
+
+def serialize
+
+    (
+        self,
+        path: tuple[typing.Union[str, int], ...] = (),
+        zanj: zanj.zanj.ZANJ | None = None
+    ) -> dict[str, typing.Any]
+
+View Source on GitHub
+
+def save
+
+    (self, file_path: str, zanj: zanj.zanj.ZANJ | None = None)
+
+View Source on GitHub
+
+def load
+
+    (
+        cls,
+        obj: dict[str, typing.Any],
+        path: tuple[typing.Union[str, int], ...],
+        zanj: zanj.zanj.ZANJ | None = None
+    ) -> zanj.torchutil.ConfiguredModel
+
+View Source on GitHub
+
+load a model from a serialized object
+
+def read
+
+    (
+        cls,
+        file_path: str,
+        zanj: zanj.zanj.ZANJ | None = None
+    ) -> zanj.torchutil.ConfiguredModel
+
+View Source on GitHub
+
+read a model from a file
+
+def load_file
+
+    (
+        cls,
+        file_path: str,
+        zanj: zanj.zanj.ZANJ | None = None
+    ) -> zanj.torchutil.ConfiguredModel
+
+View Source on GitHub
+
+read a model from a file
+
+def get_handler
+
+    (cls) -> zanj.loading.LoaderHandler
+
+View Source on GitHub
+
+def num_params
+
+    (self) -> int
+
+View Source on GitHub
+
+Inherited Members
+
+-   Module
+-   dump_patches
+-   training
+-   call_super_init
+-   forward
+-   register_buffer
+-   register_parameter
+-   add_module
+-   register_module
+-   get_submodule
+-   set_submodule
+-   get_parameter
+-   get_buffer
+-   get_extra_state
+-   set_extra_state
+-   apply
+-   cuda
+-   ipu
+-   xpu
+-   mtia
+-   cpu
+-   type
+-   float
+-   double
+-   half
+-   bfloat16
+-   to_empty
+-   to
+-   register_full_backward_pre_hook
+-   register_backward_hook
+-   register_full_backward_hook
+-   register_forward_pre_hook
+-   register_forward_hook
+-   register_state_dict_post_hook
+-   register_state_dict_pre_hook
+-   state_dict
+-   register_load_state_dict_pre_hook
+-   register_load_state_dict_post_hook
+-   load_state_dict
+-   parameters
+-   named_parameters
+-   buffers
+-   named_buffers
+-   children
+-   named_children
+-   modules
+-   named_modules
+-   train
+-   eval
+-   requires_grad_
+-   zero_grad
+-   share_memory
+-   extra_repr
+-   compile
+
+def set_config_class
+
+    (
+        config_class: Type[muutils.json_serialize.serializable_dataclass.SerializableDataclass]
+    ) -> Callable[[Type[zanj.torchutil.ConfiguredModel]], Type[zanj.torchutil.ConfiguredModel]]
+
+View Source on GitHub
+
+class ConfigMismatchException(builtins.ValueError):
+
+View Source on GitHub
+
+Inappropriate argument value (of correct type).
+
+ConfigMismatchException
+
+    (msg: str, diff)
+
+View Source on GitHub
+
+-   diff
+
+Inherited Members
+
+-   with_traceback
+-   add_note
+-   args
+
+def assert_model_cfg_equality
+
+    (
+        model_a: zanj.torchutil.ConfiguredModel,
+        model_b: zanj.torchutil.ConfiguredModel
+    )
+
+View Source on GitHub
+
+check both models are correct instances and have the same config
+
+Raises: ConfigMismatchException: if the configs don’t match, e.diff will
+contain the diff
+
+def assert_model_exact_equality
+
+    (
+        model_a: zanj.torchutil.ConfiguredModel,
+        model_b: zanj.torchutil.ConfiguredModel
+    )
+
+View Source on GitHub
+
+check the models are exactly equal, including state dict contents
+
+  docs for zanj v0.4.0
+
+Contents
+
+an HDF5/exdir file alternative, which uses json for attributes, allows
+serialization of arbitrary data
+
+for large arrays, the output is a .tar.gz file with most data in a json
+file, but with sufficiently large arrays stored in binary .npy files
+
+“ZANJ” is an acronym that the AI tool Elicit came up with for me. not to
+be confused with:
+
+-   https://en.wikipedia.org/wiki/Zanj
+-   https://www.plutojournals.com/zanj/
+
+API Documentation
+
+-   ZANJitem
+-   ZANJ_GLOBAL_DEFAULTS
+-   ZANJ
+
+View Source on GitHub
+
+zanj.zanj
+
+an HDF5/exdir file alternative, which uses json for attributes, allows
+serialization of arbitrary data
+
+for large arrays, the output is a .tar.gz file with most data in a json
+file, but with sufficiently large arrays stored in binary .npy files
+
+“ZANJ” is an acronym that the AI tool Elicit came up with for me. not to
+be confused with:
+
+-   https://en.wikipedia.org/wiki/Zanj
+-   https://www.plutojournals.com/zanj/
+
+View Source on GitHub
+
+-   ZANJitem = typing.Union[bool, int, float, str, NoneType, typing.List[typing.Union[bool, int, float, str, NoneType, typing.List[typing.Any], typing.Dict[str, typing.Any]]], typing.Dict[str, typing.Union[bool, int, float, str, NoneType, typing.List[typing.Any], typing.Dict[str, typing.Any]]], numpy.ndarray, ForwardRef('pd.DataFrame')]
+
+-   ZANJ_GLOBAL_DEFAULTS: zanj.zanj._ZANJ_GLOBAL_DEFAULTS_CLASS = _ZANJ_GLOBAL_DEFAULTS_CLASS(error_mode=ErrorMode.Except, internal_array_mode='array_list_meta', external_array_threshold=256, external_list_threshold=256, compress=True, custom_settings=None)
 
 class ZANJ(muutils.json_serialize.json_serialize.JsonSerializer):
 

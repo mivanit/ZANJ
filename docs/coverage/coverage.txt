@@ -1,19 +1,19 @@
 Name                                        Stmts   Miss  Cover   Missing
 -------------------------------------------------------------------------
-tests\test_bool_array.py                       46     41    11%   9-87
-tests\test_get_module_device.py                27     23    15%   9-53
-tests\test_isolate_zanj_handler_store.py       47     39    17%   16-78
-tests\test_zanj_basic.py                       35     28    20%   12-79
-tests\test_zanj_populate_nested.py             24     18    25%   15-57
-tests\test_zanj_sdc_modelcfg.py                90     81    10%   18-169
-tests\test_zanj_serializable_dataclass.py     128    119     7%   18-237
-tests\test_zanj_torch.py                       88     81     8%   15-169
-tests\test_zanj_torch_cfgmismatch.py           59     54     8%   22-161
-zanj\__init__.py                                4      2    50%   4-6
-zanj\externals.py                              21     21     0%   3-52
-zanj\loading.py                               126    109    13%   17-21, 35-433
-zanj\serializing.py                            59     59     0%   1-169
-zanj\torchutil.py                             113    113     0%   1-281
-zanj\zanj.py                                   83     83     0%   14-250
+tests\test_bool_array.py                       46      0   100%
+tests\test_get_module_device.py                27      8    70%   28-41
+tests\test_isolate_zanj_handler_store.py       47      1    98%   78
+tests\test_zanj_basic.py                       35      0   100%
+tests\test_zanj_populate_nested.py             24      0   100%
+tests\test_zanj_sdc_modelcfg.py                90      0   100%
+tests\test_zanj_serializable_dataclass.py     128      1    99%   182
+tests\test_zanj_torch.py                       88      4    95%   39, 100, 111, 130
+tests\test_zanj_torch_cfgmismatch.py           59      3    95%   43, 107, 143
+zanj\__init__.py                                4      4     0%   5-10
+zanj\externals.py                              21      1    95%   48
+zanj\loading.py                               126     25    80%   17-21, 58, 65-68, 73, 75-79, 127-134, 255, 343-346, 379-380
+zanj\serializing.py                            59      4    93%   118, 120, 138, 152
+zanj\torchutil.py                             113     13    88%   56, 90, 92, 122-124, 142, 187-190, 208, 215, 277-278
+zanj\zanj.py                                   83      5    94%   113, 134, 172, 230, 232
 -------------------------------------------------------------------------
-TOTAL                                         950    871     8%
+TOTAL                                         950     69    93%

@@ -1,8 +1,8 @@
 # Stats
-- 24 files
-- 3438 (3.4K) lines
-- 112117 (112K) chars
-- 11065 (11K) `whitespace-split` tokens
+- 23 files
+- 3382 (3.4K) lines
+- 108131 (108K) chars
+- 10439 (10K) `whitespace-split` tokens
 
 # File Tree
 
@@ -25,15 +25,14 @@ ZANJ
 │   ├── test_zanj_torch.py                   [  169L     4,974C   344T]
 │   └── test_zanj_torch_cfgmismatch.py       [  161L     3,949C   331T]
 ├── zanj                                     
-│   ├── __init__.py                          [    6L       159C    16T]
+│   ├── __init__.py                          [   19L       275C    30T]
 │   ├── externals.py                         [   52L     1,530C   166T]
-│   ├── loading.py                           [  433L    16,306C 1,525T]
+│   ├── loading.py                           [  434L    16,324C 1,526T]
 │   ├── py.typed                             [    0L         0C     0T]
-│   ├── readme.md                            [   65L     4,023C   634T]
-│   ├── serializing.py                       [  246L     8,536C   770T]
+│   ├── serializing.py                       [  246L     8,548C   771T]
 │   ├── torchutil.py                         [  283L     9,837C   869T]
 │   └── zanj.py                              [  250L     8,705C   798T]
-├── README.md                                [  233L    10,816C 1,359T]
+├── README.md                                [  233L    10,853C 1,364T]
 ├── demo.ipynb                               [  306L     8,941C   920T]
 ├── makefile                                 [1,442L    43,772C 5,280T]
 ├── pyproject.toml                           [  154L     4,175C   446T]
@@ -1303,12 +1302,25 @@ def test_incorrect_instance():
 ``````{ end_of_file="tests/test_zanj_torch_cfgmismatch.py" }
 
 ``````{ path="zanj/__init__.py"  }
+"""
+.. include:: ../README.md
+"""
+
 from __future__ import annotations
 
 from zanj.loading import register_loader_handler
 from zanj.zanj import ZANJ
 
-__all__ = ["register_loader_handler", "ZANJ"]
+__all__ = [
+	"register_loader_handler",
+	"ZANJ",
+	# modules
+	"externals",
+	"loading",
+	"serializing",
+	"torchutil",
+	"zanj",
+]
 
 ``````{ end_of_file="zanj/__init__.py" }
 
@@ -1398,6 +1410,7 @@ from muutils.json_serialize.array import load_array
 from muutils.json_serialize.json_serialize import ObjectPath
 from muutils.json_serialize.util import (
     _FORMAT_KEY,
+    _REF_KEY,
     JSONdict,
     JSONitem,
     safe_getsource,
@@ -1799,8 +1812,8 @@ class LoadedZANJ:
             self._externals, self._json_data
         ):
             # replace the item with the external item
-            assert "$ref" in item  # type: ignore
-            assert item["$ref"] == ext_path  # type: ignore
+            assert _REF_KEY in item  # type: ignore
+            assert item[_REF_KEY] == ext_path  # type: ignore
             item["data"] = ext_item.data  # type: ignore
 
 ``````{ end_of_file="zanj/loading.py" }
@@ -1808,75 +1821,6 @@ class LoadedZANJ:
 ``````{ path="zanj/py.typed"  }
 
 ``````{ end_of_file="zanj/py.typed" }
-
-``````{ path="zanj/readme.md"  }
-
-# Overview
-
-The `ZANJ` format is meant to be a way of saving arbitrary objects to disk, in a way that is flexible, allows to keep configuration and data together, and is human readable. It is loosely inspired by HDF5 and the derived `exdir` format, and the implementation is similar to `npz` files. The on-disk format is as follows:
-
-a file `<filename>.zanj` is a zip file containing:
-
-- `__zanj_meta__.json`: a file containing zanj-specific metadata including:
-	- system information
-	- installed packages
-	- information about external files
-- `__zanj__.json`: a file containing user-specified data
-	- when an element is too big, it can be moved to an external file
-		- `.npy` for numpy arrays or torch tensors
-		- `.jsonl` for pandas dataframes or large sequences
-	- list of external files stored in `__zanj_meta__.json`
-	- "$ref" key will have value pointing to external file
-	- `__muutils_format__` key will detail an external format type
-
-
-# Implementation
-
-## `ZANJ`
-
-> located in `zanj.zanj`
-
-main class for saving and loading zanj files
-
-contains some configuration info about saving, such as:
-
-- thresholds for how big an array/table has to be before moving to external file
-- compression settings
-- error modes
-- handlers for serialization
-
-
-# Comparison to other formats
-
-
-
-| Format                  | Safe | Zero-copy | Lazy loading | No file size limit | Layout control | Flexibility | Bfloat16 |
-| ----------------------- | ---- | --------- | ------------ | ------------------ | -------------- | ----------- | -------- |
-| pickle (PyTorch)        | ❌   | ❌        | ❌           | ✅                 | ❌             | ✅          | ✅       |
-| H5 (Tensorflow)         | ✅   | ❌        | ✅           | ✅                 | ~              | ~           | ❌       |
-| HDF5                    | ✅   | ?         | ✅           | ✅                 | ~              | ✅          | ❌       |
-| SavedModel (Tensorflow) | ✅   | ❌        | ❌           | ✅                 | ✅             | ❌          | ✅       |
-| MsgPack (flax)          | ✅   | ✅        | ❌           | ✅                 | ❌             | ❌          | ✅       |
-| Protobuf (ONNX)         | ✅   | ❌        | ❌           | ❌                 | ❌             | ❌          | ✅       |
-| Cap'n'Proto             | ✅   | ✅        | ~            | ✅                 | ✅             | ~           | ❌       |
-| Numpy (npy,npz)         | ✅   | ?         | ?            | ❌                 | ✅             | ❌          | ❌       |
-| SafeTensors             | ✅   | ✅        | ✅           | ✅                 | ✅             | ❌          | ✅       |
-| exdir                   | ✅   | ?         | ?            | ?                  | ?              | ✅          | ❌       |
-| ZANJ                    | ✅   | ?         | ❌*          | ✅                 | ✅             | ✅          | ❌       |
-
-
-- Safe: Can I use a file randomly downloaded and expect not to run arbitrary code ?
-- Zero-copy: Does reading the file require more memory than the original file ?
-- Lazy loading: Can I inspect the file without loading everything ? And loading only some tensors in it without scanning the whole file (distributed setting) ?
-- Layout control: Lazy loading, is not necessarily enough since if the information about tensors is spread out in your file, then even if the information is lazily accessible you might have to access most of your file to read the available tensors (incurring many DISK -> RAM copies). Controlling the layout to keep fast access to single tensors is important.
-- No file size limit: Is there a limit to the file size ?
-- Flexibility: Can I save custom code in the format and be able to use it later with zero extra code ? (~ means we can store more than pure tensors, but no custom code)
-- Bfloat16: Does the format support native bfloat16 (meaning no weird workarounds are necessary)? This is becoming increasingly important in the ML world.
-
-
-(This table was Stolen from [safetensors](https://github.com/huggingface/safetensors/blob/main/README.md))
-
-``````{ end_of_file="zanj/readme.md" }
 
 ``````{ path="zanj/serializing.py"  }
 from __future__ import annotations
@@ -1893,7 +1837,7 @@ from muutils.json_serialize.json_serialize import (  # JsonSerializer,
     ObjectPath,
     SerializerHandler,
 )
-from muutils.json_serialize.util import JSONdict, JSONitem, MonoTuple, _FORMAT_KEY
+from muutils.json_serialize.util import JSONdict, JSONitem, MonoTuple, _FORMAT_KEY, _REF_KEY
 from muutils.tensor_utils import NDArray
 
 from zanj.externals import ExternalItem, ExternalItemType, _ZANJ_pre
@@ -2004,7 +1948,7 @@ def zanj_external_serialize(
     data_new: Any = data
     output: dict = {
         _FORMAT_KEY: _format,
-        "$ref": archive_path,
+        _REF_KEY: archive_path,
     }
     if item_type == "npy":
         # check type
@@ -2869,7 +2813,7 @@ The on-disk format is a file `<filename>.zanj` is a zip file containing:
 		- `.npy` for numpy arrays or torch tensors
 		- `.jsonl` for pandas dataframes or large sequences
 	- list of external files stored in `__zanj_meta__.json`
-	- "$ref" key will have value pointing to external file
+	- "$ref" key, specified in `_REF_KEY` in muutils, will have value pointing to external file
 	- `_FORMAT_KEY` key will detail an external format type
 
 

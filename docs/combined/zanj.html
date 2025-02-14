@@ -2,6 +2,391 @@
 <p>docs for <a
 href="https://github.com/mivanit/zanj"><code>zanj</code></a> v0.4.0</p>
 </blockquote>
+<h2 id="contents">Contents</h2>
+<p><a href="https://pypi.org/project/zanj/"><img
+src="https://img.shields.io/pypi/v/zanj" alt="PyPI" /></a> <a
+href="https://github.com/mivanit/zanj/actions/workflows/checks.yml"><img
+src="https://github.com/mivanit/zanj/actions/workflows/checks.yml/badge.svg"
+alt="Checks" /></a> <a href="docs/coverage/coverage.txt"><img
+src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iOTkiIGhlaWdodD0iMjAiPg0KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYiIgeDI9IjAiIHkyPSIxMDAlIj4NCiAgICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYmJiIiBzdG9wLW9wYWNpdHk9Ii4xIi8+DQogICAgICAgIDxzdG9wIG9mZnNldD0iMSIgc3RvcC1vcGFjaXR5PSIuMSIvPg0KICAgIDwvbGluZWFyR3JhZGllbnQ+DQogICAgPG1hc2sgaWQ9ImEiPg0KICAgICAgICA8cmVjdCB3aWR0aD0iOTkiIGhlaWdodD0iMjAiIHJ4PSIzIiBmaWxsPSIjZmZmIi8+DQogICAgPC9tYXNrPg0KICAgIDxnIG1hc2s9InVybCgjYSkiPg0KICAgICAgICA8cGF0aCBmaWxsPSIjNTU1IiBkPSJNMCAwaDYzdjIwSDB6Ii8+DQogICAgICAgIDxwYXRoIGZpbGw9IiM5N0NBMDAiIGQ9Ik02MyAwaDM2djIwSDYzeiIvPg0KICAgICAgICA8cGF0aCBmaWxsPSJ1cmwoI2IpIiBkPSJNMCAwaDk5djIwSDB6Ii8+DQogICAgPC9nPg0KICAgIDxnIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJEZWphVnUgU2FucyxWZXJkYW5hLEdlbmV2YSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIj4NCiAgICAgICAgPHRleHQgeD0iMzEuNSIgeT0iMTUiIGZpbGw9IiMwMTAxMDEiIGZpbGwtb3BhY2l0eT0iLjMiPmNvdmVyYWdlPC90ZXh0Pg0KICAgICAgICA8dGV4dCB4PSIzMS41IiB5PSIxNCI+Y292ZXJhZ2U8L3RleHQ+DQogICAgICAgIDx0ZXh0IHg9IjgwIiB5PSIxNSIgZmlsbD0iIzAxMDEwMSIgZmlsbC1vcGFjaXR5PSIuMyI+OTMlPC90ZXh0Pg0KICAgICAgICA8dGV4dCB4PSI4MCIgeT0iMTQiPjkzJTwvdGV4dD4NCiAgICA8L2c+DQo8L3N2Zz4NCg=="
+alt="Coverage" /></a> <img
+src="https://img.shields.io/github/languages/code-size/mivanit/zanj"
+alt="code size, bytes" /> <img src="https://img.shields.io/pypi/dm/zanj"
+alt="PyPI - Downloads" /></p>
+<!-- ![GitHub commit activity](https://img.shields.io/github/commit-activity/t/mivanit/zanj)
+![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/mivanit/zanj) -->
+<!-- ![Lines of code](https://img.shields.io/tokei/lines/github.com/mivanit/zanj) -->
+<h1 id="zanj">ZANJ</h1>
+<h1 id="overview">Overview</h1>
+<p>The <code>ZANJ</code> format is meant to be a way of saving arbitrary
+objects to disk, in a way that is flexible, allows keeping configuration
+and data together, and is human readable. It is very loosely inspired by
+HDF5 and the derived <code>exdir</code> format, and the implementation
+is inspired by <code>npz</code> files.</p>
+<ul>
+<li>You can take any <code>SerializableDataclass</code> from the <a
+href="https://github.com/mivanit/muutils">muutils</a> library and save
+it to disk – any large arrays or lists will be stored efficiently as
+external files in the zip archive, while the basic structure and
+metadata will be stored in readable JSON files.</li>
+<li>You can also specify a special <code>ConfiguredModel</code>, which
+inherits from a <code>torch.nn.Module</code> which will let you save not
+just your model weights, but all required configuration information,
+plus any other metadata (like training logs) in a single file.</li>
+</ul>
+<p>This library was originally a module in <a
+href="https://github.com/mivanit/muutils/">muutils</a></p>
+<h1 id="installation">Installation</h1>
+<p>Available on PyPI as <a
+href="https://pypi.org/project/zanj/"><code>zanj</code></a></p>
+<pre><code>pip install zanj</code></pre>
+<h1 id="usage">Usage</h1>
+<p>You can find a runnable example of this in <a
+href="demo.ipynb"><code>demo.ipynb</code></a></p>
+<h2 id="saving-a-basic-object">Saving a basic object</h2>
+<p>Any <code>SerializableDataclass</code> of basic types can be saved as
+zanj:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> muutils.json_serialize <span class="im">import</span> SerializableDataclass, serializable_dataclass, serializable_field</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> zanj <span class="im">import</span> ZANJ</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="at">@serializable_dataclass</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> BasicZanj(SerializableDataclass):</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    a: <span class="bu">str</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    q: <span class="bu">int</span> <span class="op">=</span> <span class="dv">42</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    c: <span class="bu">list</span>[<span class="bu">int</span>] <span class="op">=</span> serializable_field(default_factory<span class="op">=</span><span class="bu">list</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># initialize a zanj reader/writer</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>zj <span class="op">=</span> ZANJ()</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># create an instance</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>instance: BasicZanj <span class="op">=</span> BasicZanj(<span class="st">&quot;hello&quot;</span>, <span class="dv">42</span>, [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>])</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>path: <span class="bu">str</span> <span class="op">=</span> <span class="st">&quot;tests/junk_data/path_to_save_instance.zanj&quot;</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>zj.save(instance, path)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>recovered: BasicZanj <span class="op">=</span> zj.read(path)</span></code></pre></div>
+<p>ZANJ will intelligently handle nested serializable dataclasses, numpy
+arrays, pytorch tensors, and pandas dataframes:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="at">@serializable_dataclass</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Complicated(SerializableDataclass):</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    name: <span class="bu">str</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    arr1: np.ndarray</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    arr2: np.ndarray</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    iris_data: pd.DataFrame</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    brain_data: pd.DataFrame</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    container: <span class="bu">list</span>[BasicZanj]</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    torch_tensor: torch.Tensor</span></code></pre></div>
+<p>For custom classes, you can specify a <code>serialization_fn</code>
+and <code>loading_fn</code> to handle the logic of converting to and
+from a json-serializable format:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="at">@serializable_dataclass</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Complicated(SerializableDataclass):</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    name: <span class="bu">str</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    device: torch.device <span class="op">=</span> serializable_field(</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        serialization_fn<span class="op">=</span><span class="kw">lambda</span> <span class="va">self</span>: <span class="bu">str</span>(<span class="va">self</span>.device),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        loading_fn<span class="op">=</span><span class="kw">lambda</span> data: torch.device(data[<span class="st">&quot;device&quot;</span>]),</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
+<p>Note that <code>loading_fn</code> takes the dictionary of the whole
+class – this is in case you’ve stored data in multiple fields of the
+dict which are needed to reconstruct the object.</p>
+<h2 id="saving-models">Saving Models</h2>
+<p>First, define a configuration class for your model. This class will
+hold the parameters for your model and any associated objects (like
+losses and optimizers). The configuration class should be a subclass of
+<code>SerializableDataclass</code> and use the
+<code>serializable_field</code> function to define fields that need
+special serialization.</p>
+<p>Here’s an example that defines a GPT-like model configuration:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> zanj.torchutil <span class="im">import</span> ConfiguredModel, set_config_class</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="at">@serializable_dataclass</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MyNNConfig(SerializableDataclass):</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    input_dim: <span class="bu">int</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    hidden_dim: <span class="bu">int</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    output_dim: <span class="bu">int</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># store the activation function by name, reconstruct it by looking it up in torch.nn</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    act_fn: torch.nn.Module <span class="op">=</span> serializable_field(</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        serialization_fn<span class="op">=</span><span class="kw">lambda</span> x: x.<span class="va">__name__</span>,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        loading_fn<span class="op">=</span><span class="kw">lambda</span> x: <span class="bu">getattr</span>(torch.nn, x[<span class="st">&quot;act_fn&quot;</span>]),</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># same for the loss function</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    loss_kwargs: <span class="bu">dict</span> <span class="op">=</span> serializable_field(default_factory<span class="op">=</span><span class="bu">dict</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    loss_factory: torch.nn.modules.loss._Loss <span class="op">=</span> serializable_field(</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        default_factory<span class="op">=</span><span class="kw">lambda</span>: torch.nn.CrossEntropyLoss,</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>        serialization_fn<span class="op">=</span><span class="kw">lambda</span> x: x.<span class="va">__name__</span>,</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>        loading_fn<span class="op">=</span><span class="kw">lambda</span> x: <span class="bu">getattr</span>(torch.nn, x[<span class="st">&quot;loss_factory&quot;</span>]),</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> <span class="bu">property</span>(<span class="kw">lambda</span> <span class="va">self</span>: <span class="va">self</span>.loss_factory(<span class="op">**</span><span class="va">self</span>.loss_kwargs))</span></code></pre></div>
+<p>Then, define your model class. It should be a subclass of
+<code>ConfiguredModel</code>, and use the <code>set_config_class</code>
+decorator to associate it with your configuration class. The
+<code>__init__</code> method should take a single argument, which is an
+instance of your configuration class. You must also call the superclass
+<code>__init__</code> method with the configuration instance.</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="at">@set_config_class</span>(MyNNConfig)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MyNN(ConfiguredModel[MyNNConfig]):</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, config: MyNNConfig):</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="co"># call the superclass init!</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="co"># this will store the model in the zanj_model_config field</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(config)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># whatever you want here</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.net <span class="op">=</span> torch.nn.Sequential(</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>            torch.nn.Linear(config.input_dim, config.hidden_dim),</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>            config.act_fn(),</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>            torch.nn.Linear(config.hidden_dim, config.output_dim),</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.net(x)</span></code></pre></div>
+<p>You can now create instances of your model, save them to disk, and
+load them back into memory:</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>config <span class="op">=</span> MyNNConfig(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    input_dim<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    hidden_dim<span class="op">=</span><span class="dv">20</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    output_dim<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    act_fn<span class="op">=</span>torch.nn.ReLU,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    loss_kwargs<span class="op">=</span><span class="bu">dict</span>(reduction<span class="op">=</span><span class="st">&quot;mean&quot;</span>),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># create your model from the config, and save</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> MyNN(config)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>fname <span class="op">=</span> <span class="st">&quot;tests/junk_data/path_to_save_model.zanj&quot;</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>ZANJ().save(model, fname)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># load by calling the class method `read()`</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>loaded_model <span class="op">=</span> MyNN.read(fname)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co"># zanj will actually infer the type of the object in the file </span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># -- and will warn you if you don&#39;t have the correct package installed</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>loaded_another_way <span class="op">=</span> ZANJ().read(fname)</span></code></pre></div>
+<h2 id="configuration">Configuration</h2>
+<p>When initializing a <code>ZANJ</code> object, you can specify some
+configuration info about saving, such as:</p>
+<ul>
+<li>thresholds for how big an array/table has to be before moving to
+external file</li>
+<li>compression settings</li>
+<li>error modes</li>
+<li>additional handlers for serialization</li>
+</ul>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># how big an array or list (including pandas DataFrame) can be before moving it from the core JSON file</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>external_array_threshold: <span class="bu">int</span> <span class="op">=</span> ZANJ_GLOBAL_DEFAULTS.external_array_threshold</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>external_list_threshold: <span class="bu">int</span> <span class="op">=</span> ZANJ_GLOBAL_DEFAULTS.external_list_threshold</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># compression settings passed to `zipfile` package</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>compress: <span class="bu">bool</span> <span class="op">|</span> <span class="bu">int</span> <span class="op">=</span> ZANJ_GLOBAL_DEFAULTS.compress</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># for doing very cursed things in your own custom loading or serialization functions</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>custom_settings: <span class="bu">dict</span>[<span class="bu">str</span>, Any] <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> ZANJ_GLOBAL_DEFAULTS.custom_settings</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># specify additional serialization handlers</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>handlers_pre: MonoTuple[SerializerHandler] <span class="op">=</span> <span class="bu">tuple</span>()</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>handlers_default: MonoTuple[SerializerHandler] <span class="op">=</span> DEFAULT_SERIALIZER_HANDLERS_ZANJ,</span></code></pre></div>
+<h1 id="implementation">Implementation</h1>
+<p>The on-disk format is a file <code>&lt;filename&gt;.zanj</code> is a
+zip file containing:</p>
+<ul>
+<li><code>__zanj_meta__.json</code>: a file containing zanj-specific
+metadata including:
+<ul>
+<li>system information</li>
+<li>installed packages</li>
+<li>information about external files</li>
+</ul></li>
+<li><code>__zanj__.json</code>: a file containing user-specified data
+<ul>
+<li>when an element is too big, it can be moved to an external file
+<ul>
+<li><code>.npy</code> for numpy arrays or torch tensors</li>
+<li><code>.jsonl</code> for pandas dataframes or large sequences</li>
+</ul></li>
+<li>list of external files stored in
+<code>__zanj_meta__.json</code></li>
+<li>“$ref” key, specified in <code>_REF_KEY</code> in muutils, will have
+value pointing to external file</li>
+<li><code>_FORMAT_KEY</code> key will detail an external format
+type</li>
+</ul></li>
+</ul>
+<h1 id="comparison-to-other-formats">Comparison to other formats</h1>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 4%" />
+<col style="width: 9%" />
+<col style="width: 12%" />
+<col style="width: 18%" />
+<col style="width: 14%" />
+<col style="width: 11%" />
+<col style="width: 8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Format</th>
+<th>Safe</th>
+<th>Zero-copy</th>
+<th>Lazy loading</th>
+<th>No file size limit</th>
+<th>Layout control</th>
+<th>Flexibility</th>
+<th>Bfloat16</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>pickle (PyTorch)</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr class="even">
+<td>H5 (Tensorflow)</td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>~</td>
+<td>~</td>
+<td>❌</td>
+</tr>
+<tr class="odd">
+<td>HDF5</td>
+<td>✅</td>
+<td>?</td>
+<td>✅</td>
+<td>✅</td>
+<td>~</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr class="even">
+<td>SavedModel (Tensorflow)</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr class="odd">
+<td>MsgPack (flax)</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr class="even">
+<td>Protobuf (ONNX)</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr class="odd">
+<td>Cap’n’Proto</td>
+<td>✅</td>
+<td>✅</td>
+<td>~</td>
+<td>✅</td>
+<td>✅</td>
+<td>~</td>
+<td>❌</td>
+</tr>
+<tr class="even">
+<td>Numpy (npy,npz)</td>
+<td>✅</td>
+<td>?</td>
+<td>?</td>
+<td>❌</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr class="odd">
+<td>SafeTensors</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr class="even">
+<td>exdir</td>
+<td>✅</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr class="odd">
+<td>ZANJ</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌*</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌*</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Safe: Can I use a file randomly downloaded and expect not to run
+arbitrary code ?</li>
+<li>Zero-copy: Does reading the file require more memory than the
+original file ?</li>
+<li>Lazy loading: Can I inspect the file without loading everything ?
+And loading only some tensors in it without scanning the whole file
+(distributed setting) ?</li>
+<li>Layout control: Lazy loading, is not necessarily enough since if the
+information about tensors is spread out in your file, then even if the
+information is lazily accessible you might have to access most of your
+file to read the available tensors (incurring many DISK -&gt; RAM
+copies). Controlling the layout to keep fast access to single tensors is
+important.</li>
+<li>No file size limit: Is there a limit to the file size ?</li>
+<li>Flexibility: Can I save custom code in the format and be able to use
+it later with zero extra code ? (~ means we can store more than pure
+tensors, but no custom code)</li>
+<li>Bfloat16: Does the format support native bfloat16 (meaning no weird
+workarounds are necessary)? This is becoming increasingly important in
+the ML world.</li>
+</ul>
+<p><code>*</code> denotes this feature may be coming at a future date
+:)</p>
+<p>(This table was stolen from <a
+href="https://github.com/huggingface/safetensors/blob/main/README.md">safetensors</a>)</p>
+<h2 id="submodules">Submodules</h2>
+<ul>
+<li><a href="#externals"><code>externals</code></a></li>
+<li><a href="#loading"><code>loading</code></a></li>
+<li><a href="#serializing"><code>serializing</code></a></li>
+<li><a href="#torchutil"><code>torchutil</code></a></li>
+<li><a href="#zanj"><code>zanj</code></a></li>
+</ul>
 <h2 id="api-documentation">API Documentation</h2>
 <ul>
 <li><a
@@ -11,15 +396,392 @@ href="#register_loader_handler"><code>register_loader_handler</code></a></li>
 <p><a href="https://github.com/mivanit/zanj/blob/0.4.0__init__.py">View
 Source on GitHub</a></p>
 <h1 id="zanj"><code>zanj</code></h1>
+<p><a href="https://pypi.org/project/zanj/"><img
+src="https://img.shields.io/pypi/v/zanj" alt="PyPI" /></a> <a
+href="https://github.com/mivanit/zanj/actions/workflows/checks.yml"><img
+src="https://github.com/mivanit/zanj/actions/workflows/checks.yml/badge.svg"
+alt="Checks" /></a> <a href="docs/coverage/coverage.txt"><img
+src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iOTkiIGhlaWdodD0iMjAiPg0KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYiIgeDI9IjAiIHkyPSIxMDAlIj4NCiAgICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYmJiIiBzdG9wLW9wYWNpdHk9Ii4xIi8+DQogICAgICAgIDxzdG9wIG9mZnNldD0iMSIgc3RvcC1vcGFjaXR5PSIuMSIvPg0KICAgIDwvbGluZWFyR3JhZGllbnQ+DQogICAgPG1hc2sgaWQ9ImEiPg0KICAgICAgICA8cmVjdCB3aWR0aD0iOTkiIGhlaWdodD0iMjAiIHJ4PSIzIiBmaWxsPSIjZmZmIi8+DQogICAgPC9tYXNrPg0KICAgIDxnIG1hc2s9InVybCgjYSkiPg0KICAgICAgICA8cGF0aCBmaWxsPSIjNTU1IiBkPSJNMCAwaDYzdjIwSDB6Ii8+DQogICAgICAgIDxwYXRoIGZpbGw9IiM5N0NBMDAiIGQ9Ik02MyAwaDM2djIwSDYzeiIvPg0KICAgICAgICA8cGF0aCBmaWxsPSJ1cmwoI2IpIiBkPSJNMCAwaDk5djIwSDB6Ii8+DQogICAgPC9nPg0KICAgIDxnIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJEZWphVnUgU2FucyxWZXJkYW5hLEdlbmV2YSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIj4NCiAgICAgICAgPHRleHQgeD0iMzEuNSIgeT0iMTUiIGZpbGw9IiMwMTAxMDEiIGZpbGwtb3BhY2l0eT0iLjMiPmNvdmVyYWdlPC90ZXh0Pg0KICAgICAgICA8dGV4dCB4PSIzMS41IiB5PSIxNCI+Y292ZXJhZ2U8L3RleHQ+DQogICAgICAgIDx0ZXh0IHg9IjgwIiB5PSIxNSIgZmlsbD0iIzAxMDEwMSIgZmlsbC1vcGFjaXR5PSIuMyI+OTMlPC90ZXh0Pg0KICAgICAgICA8dGV4dCB4PSI4MCIgeT0iMTQiPjkzJTwvdGV4dD4NCiAgICA8L2c+DQo8L3N2Zz4NCg=="
+alt="Coverage" /></a> <img
+src="https://img.shields.io/github/languages/code-size/mivanit/zanj"
+alt="code size, bytes" /> <img src="https://img.shields.io/pypi/dm/zanj"
+alt="PyPI - Downloads" /></p>
+<!-- ![GitHub commit activity](https://img.shields.io/github/commit-activity/t/mivanit/zanj)
+![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/mivanit/zanj) -->
+<!-- ![Lines of code](https://img.shields.io/tokei/lines/github.com/mivanit/zanj) -->
+<h3 id="zanj-1">ZANJ</h3>
+<h3 id="overview-1">Overview</h3>
+<p>The <code>ZANJ</code> format is meant to be a way of saving arbitrary
+objects to disk, in a way that is flexible, allows keeping configuration
+and data together, and is human readable. It is very loosely inspired by
+HDF5 and the derived <code>exdir</code> format, and the implementation
+is inspired by <code>npz</code> files.</p>
+<ul>
+<li>You can take any <code>SerializableDataclass</code> from the <a
+href="https://github.com/mivanit/muutils">muutils</a> library and save
+it to disk – any large arrays or lists will be stored efficiently as
+external files in the zip archive, while the basic structure and
+metadata will be stored in readable JSON files.</li>
+<li>You can also specify a special <code>ConfiguredModel</code>, which
+inherits from a <code>torch.nn.Module</code> which will let you save not
+just your model weights, but all required configuration information,
+plus any other metadata (like training logs) in a single file.</li>
+</ul>
+<p>This library was originally a module in <a
+href="https://github.com/mivanit/muutils/">muutils</a></p>
+<h3 id="installation-1">Installation</h3>
+<p>Available on PyPI as <a
+href="https://pypi.org/project/zanj/"><code>zanj</code></a></p>
+<pre><code>pip install zanj</code></pre>
+<h3 id="usage-1">Usage</h3>
+<p>You can find a runnable example of this in <a
+href="demo.ipynb"><code>demo.ipynb</code></a></p>
+<h4 id="saving-a-basic-object-1">Saving a basic object</h4>
+<p>Any <code>SerializableDataclass</code> of basic types can be saved as
+zanj:</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> muutils.json_serialize <span class="im">import</span> SerializableDataclass, serializable_dataclass, serializable_field</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> zanj <span class="im">import</span> ZANJ</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="at">@serializable_dataclass</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> BasicZanj(SerializableDataclass):</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    a: <span class="bu">str</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    q: <span class="bu">int</span> <span class="op">=</span> <span class="dv">42</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    c: <span class="bu">list</span>[<span class="bu">int</span>] <span class="op">=</span> serializable_field(default_factory<span class="op">=</span><span class="bu">list</span>)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">### initialize a zanj reader/writer</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>zj <span class="op">=</span> ZANJ()</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co">### create an instance</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>instance: BasicZanj <span class="op">=</span> BasicZanj(<span class="st">&quot;hello&quot;</span>, <span class="dv">42</span>, [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>])</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>path: <span class="bu">str</span> <span class="op">=</span> <span class="st">&quot;tests/junk_data/path_to_save_instance&lt;a href=&quot;</span>zanj<span class="op">/</span>zanj.html<span class="st">&quot;&gt;zanj.zanj&lt;/a&gt;&quot;</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>zj.save(instance, path)</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>recovered: BasicZanj <span class="op">=</span> zj.read(path)</span></code></pre></div>
+<p>ZANJ will intelligently handle nested serializable dataclasses, numpy
+arrays, pytorch tensors, and pandas dataframes:</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="at">@serializable_dataclass</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Complicated(SerializableDataclass):</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    name: <span class="bu">str</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    arr1: np.ndarray</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    arr2: np.ndarray</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    iris_data: pd.DataFrame</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    brain_data: pd.DataFrame</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    container: <span class="bu">list</span>[BasicZanj]</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    torch_tensor: torch.Tensor</span></code></pre></div>
+<p>For custom classes, you can specify a <code>serialization_fn</code>
+and <code>loading_fn</code> to handle the logic of converting to and
+from a json-serializable format:</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="at">@serializable_dataclass</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Complicated(SerializableDataclass):</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    name: <span class="bu">str</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    device: torch.device <span class="op">=</span> serializable_field(</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        serialization_fn<span class="op">=</span><span class="kw">lambda</span> <span class="va">self</span>: <span class="bu">str</span>(<span class="va">self</span>.device),</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        loading_fn<span class="op">=</span><span class="kw">lambda</span> data: torch.device(data[<span class="st">&quot;device&quot;</span>]),</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
+<p>Note that <code>loading_fn</code> takes the dictionary of the whole
+class – this is in case you’ve stored data in multiple fields of the
+dict which are needed to reconstruct the object.</p>
+<h4 id="saving-models-1">Saving Models</h4>
+<p>First, define a configuration class for your model. This class will
+hold the parameters for your model and any associated objects (like
+losses and optimizers). The configuration class should be a subclass of
+<code>SerializableDataclass</code> and use the
+<code>serializable_field</code> function to define fields that need
+special serialization.</p>
+<p>Here’s an example that defines a GPT-like model configuration:</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> <span class="op">&lt;</span>a href<span class="op">=</span><span class="st">&quot;zanj/torchutil.html&quot;</span><span class="op">&gt;</span>zanj.torchutil<span class="op">&lt;/</span>a<span class="op">&gt;</span> <span class="im">import</span> ConfiguredModel, set_config_class</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="at">@serializable_dataclass</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MyNNConfig(SerializableDataclass):</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    input_dim: <span class="bu">int</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    hidden_dim: <span class="bu">int</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    output_dim: <span class="bu">int</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># store the activation function by name, reconstruct it by looking it up in torch.nn</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    act_fn: torch.nn.Module <span class="op">=</span> serializable_field(</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>        serialization_fn<span class="op">=</span><span class="kw">lambda</span> x: x.<span class="va">__name__</span>,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>        loading_fn<span class="op">=</span><span class="kw">lambda</span> x: <span class="bu">getattr</span>(torch.nn, x[<span class="st">&quot;act_fn&quot;</span>]),</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># same for the loss function</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    loss_kwargs: <span class="bu">dict</span> <span class="op">=</span> serializable_field(default_factory<span class="op">=</span><span class="bu">dict</span>)</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    loss_factory: torch.nn.modules.loss._Loss <span class="op">=</span> serializable_field(</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>        default_factory<span class="op">=</span><span class="kw">lambda</span>: torch.nn.CrossEntropyLoss,</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>        serialization_fn<span class="op">=</span><span class="kw">lambda</span> x: x.<span class="va">__name__</span>,</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>        loading_fn<span class="op">=</span><span class="kw">lambda</span> x: <span class="bu">getattr</span>(torch.nn, x[<span class="st">&quot;loss_factory&quot;</span>]),</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> <span class="bu">property</span>(<span class="kw">lambda</span> <span class="va">self</span>: <span class="va">self</span>.loss_factory(<span class="op">**</span><span class="va">self</span>.loss_kwargs))</span></code></pre></div>
+<p>Then, define your model class. It should be a subclass of
+<code>ConfiguredModel</code>, and use the <code>set_config_class</code>
+decorator to associate it with your configuration class. The
+<code>__init__</code> method should take a single argument, which is an
+instance of your configuration class. You must also call the superclass
+<code>__init__</code> method with the configuration instance.</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="at">@set_config_class</span>(MyNNConfig)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MyNN(ConfiguredModel[MyNNConfig]):</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, config: MyNNConfig):</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>        <span class="co"># call the superclass init!</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>        <span class="co"># this will store the model in the zanj_model_config field</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(config)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># whatever you want here</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.net <span class="op">=</span> torch.nn.Sequential(</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>            torch.nn.Linear(config.input_dim, config.hidden_dim),</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>            config.act_fn(),</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>            torch.nn.Linear(config.hidden_dim, config.output_dim),</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.net(x)</span></code></pre></div>
+<p>You can now create instances of your model, save them to disk, and
+load them back into memory:</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>config <span class="op">=</span> MyNNConfig(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    input_dim<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    hidden_dim<span class="op">=</span><span class="dv">20</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    output_dim<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    act_fn<span class="op">=</span>torch.nn.ReLU,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    loss_kwargs<span class="op">=</span><span class="bu">dict</span>(reduction<span class="op">=</span><span class="st">&quot;mean&quot;</span>),</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">### create your model from the config, and save</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> MyNN(config)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>fname <span class="op">=</span> <span class="st">&quot;tests/junk_data/path_to_save_model&lt;a href=&quot;</span>zanj<span class="op">/</span>zanj.html<span class="st">&quot;&gt;zanj.zanj&lt;/a&gt;&quot;</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>ZANJ().save(model, fname)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co">### load by calling the class method `read()`</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>loaded_model <span class="op">=</span> MyNN.read(fname)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co">### zanj will actually infer the type of the object in the file </span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="co">### -- and will warn you if you don&#39;t have the correct package installed</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>loaded_another_way <span class="op">=</span> ZANJ().read(fname)</span></code></pre></div>
+<h4 id="configuration-1">Configuration</h4>
+<p>When initializing a <code>ZANJ</code> object, you can specify some
+configuration info about saving, such as:</p>
+<ul>
+<li>thresholds for how big an array/table has to be before moving to
+external file</li>
+<li>compression settings</li>
+<li>error modes</li>
+<li>additional handlers for serialization</li>
+</ul>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">### how big an array or list (including pandas DataFrame) can be before moving it from the core JSON file</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>external_array_threshold: <span class="bu">int</span> <span class="op">=</span> ZANJ_GLOBAL_DEFAULTS.external_array_threshold</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>external_list_threshold: <span class="bu">int</span> <span class="op">=</span> ZANJ_GLOBAL_DEFAULTS.external_list_threshold</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">### compression settings passed to `zipfile` package</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>compress: <span class="bu">bool</span> <span class="op">|</span> <span class="bu">int</span> <span class="op">=</span> ZANJ_GLOBAL_DEFAULTS.compress</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">### for doing very cursed things in your own custom loading or serialization functions</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>custom_settings: <span class="bu">dict</span>[<span class="bu">str</span>, Any] <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> ZANJ_GLOBAL_DEFAULTS.custom_settings</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co">### specify additional serialization handlers</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>handlers_pre: MonoTuple[SerializerHandler] <span class="op">=</span> <span class="bu">tuple</span>()</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>handlers_default: MonoTuple[SerializerHandler] <span class="op">=</span> DEFAULT_SERIALIZER_HANDLERS_ZANJ,</span></code></pre></div>
+<h3 id="implementation-1">Implementation</h3>
+<p>The on-disk format is a file
+<code>&lt;filename&gt;&lt;a href="zanj/zanj.html"&gt;zanj.zanj&lt;/a&gt;</code>
+is a zip file containing:</p>
+<ul>
+<li><code>__zanj_meta__.json</code>: a file containing zanj-specific
+metadata including:
+<ul>
+<li>system information</li>
+<li>installed packages</li>
+<li>information about external files</li>
+</ul></li>
+<li><code>__zanj__.json</code>: a file containing user-specified data
+<ul>
+<li>when an element is too big, it can be moved to an external file
+<ul>
+<li><code>.npy</code> for numpy arrays or torch tensors</li>
+<li><code>.jsonl</code> for pandas dataframes or large sequences</li>
+</ul></li>
+<li>list of external files stored in
+<code>__zanj_meta__.json</code></li>
+<li>“$ref” key, specified in <code>_REF_KEY</code> in muutils, will have
+value pointing to external file</li>
+<li><code>_FORMAT_KEY</code> key will detail an external format
+type</li>
+</ul></li>
+</ul>
+<h3 id="comparison-to-other-formats-1">Comparison to other formats</h3>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 4%" />
+<col style="width: 9%" />
+<col style="width: 12%" />
+<col style="width: 18%" />
+<col style="width: 14%" />
+<col style="width: 11%" />
+<col style="width: 8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Format</th>
+<th>Safe</th>
+<th>Zero-copy</th>
+<th>Lazy loading</th>
+<th>No file size limit</th>
+<th>Layout control</th>
+<th>Flexibility</th>
+<th>Bfloat16</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>pickle (PyTorch)</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr class="even">
+<td>H5 (Tensorflow)</td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>~</td>
+<td>~</td>
+<td>❌</td>
+</tr>
+<tr class="odd">
+<td>HDF5</td>
+<td>✅</td>
+<td>?</td>
+<td>✅</td>
+<td>✅</td>
+<td>~</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr class="even">
+<td>SavedModel (Tensorflow)</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr class="odd">
+<td>MsgPack (flax)</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr class="even">
+<td>Protobuf (ONNX)</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr class="odd">
+<td>Cap’n’Proto</td>
+<td>✅</td>
+<td>✅</td>
+<td>~</td>
+<td>✅</td>
+<td>✅</td>
+<td>~</td>
+<td>❌</td>
+</tr>
+<tr class="even">
+<td>Numpy (npy,npz)</td>
+<td>✅</td>
+<td>?</td>
+<td>?</td>
+<td>❌</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr class="odd">
+<td>SafeTensors</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr class="even">
+<td>exdir</td>
+<td>✅</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr class="odd">
+<td>ZANJ</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌*</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌*</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Safe: Can I use a file randomly downloaded and expect not to run
+arbitrary code ?</li>
+<li>Zero-copy: Does reading the file require more memory than the
+original file ?</li>
+<li>Lazy loading: Can I inspect the file without loading everything ?
+And loading only some tensors in it without scanning the whole file
+(distributed setting) ?</li>
+<li>Layout control: Lazy loading, is not necessarily enough since if the
+information about tensors is spread out in your file, then even if the
+information is lazily accessible you might have to access most of your
+file to read the available tensors (incurring many DISK -&gt; RAM
+copies). Controlling the layout to keep fast access to single tensors is
+important.</li>
+<li>No file size limit: Is there a limit to the file size ?</li>
+<li>Flexibility: Can I save custom code in the format and be able to use
+it later with zero extra code ? (~ means we can store more than pure
+tensors, but no custom code)</li>
+<li>Bfloat16: Does the format support native bfloat16 (meaning no weird
+workarounds are necessary)? This is becoming increasingly important in
+the ML world.</li>
+</ul>
+<p><code>*</code> denotes this feature may be coming at a future date
+:)</p>
+<p>(This table was stolen from <a
+href="https://github.com/huggingface/safetensors/blob/main/README.md">safetensors</a>)</p>
 <p><a
-href="https://github.com/mivanit/zanj/blob/0.4.0__init__.py#L0-L5">View
+href="https://github.com/mivanit/zanj/blob/0.4.0__init__.py#L0-L18">View
 Source on GitHub</a></p>
 <h3
 id="register_loader_handler"><code>def register_loader_handler</code></h3>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>(handler: zanj.loading.LoaderHandler)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>(handler: zanj.loading.LoaderHandler)</span></code></pre></div>
 <p><a
-href="https://github.com/mivanit/zanj/blob/0.4.0__init__.py#L234-L238">View
+href="https://github.com/mivanit/zanj/blob/0.4.0__init__.py#L235-L239">View
 Source on GitHub</a></p>
 <p>register a custom loader handler</p>
 <h3
@@ -47,17 +809,17 @@ save/read instances of the object via
 sure to pass an <strong>instance</strong> of the object, to make sure
 that the attributes of the class can be correctly recognized</p>
 <h3 id="ZANJ.__init__"><code>ZANJ</code></h3>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    error_mode: muutils.errormode.ErrorMode <span class="op">=</span> ErrorMode.Except,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    internal_array_mode: Literal[<span class="st">&#39;list&#39;</span>, <span class="st">&#39;array_list_meta&#39;</span>, <span class="st">&#39;array_hex_meta&#39;</span>, <span class="st">&#39;array_b64_meta&#39;</span>, <span class="st">&#39;external&#39;</span>, <span class="st">&#39;zero_dim&#39;</span>] <span class="op">=</span> <span class="st">&#39;array_list_meta&#39;</span>,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    external_array_threshold: <span class="bu">int</span> <span class="op">=</span> <span class="dv">256</span>,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    external_list_threshold: <span class="bu">int</span> <span class="op">=</span> <span class="dv">256</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    compress: <span class="bu">bool</span> <span class="op">|</span> <span class="bu">int</span> <span class="op">=</span> <span class="va">True</span>,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    custom_settings: <span class="bu">dict</span>[<span class="bu">str</span>, typing.Any] <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    handlers_pre: <span class="va">None</span> <span class="op">=</span> (),</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    handlers_default: <span class="va">None</span> <span class="op">=</span> (ZANJSerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;numpy.ndarray:external&#39;</span>, desc<span class="op">=</span><span class="st">&#39;external numpy array&#39;</span>, source_pckg<span class="op">=</span><span class="st">&#39;zanj&#39;</span>), ZANJSerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;torch.Tensor:external&#39;</span>, desc<span class="op">=</span><span class="st">&#39;external torch tensor&#39;</span>, source_pckg<span class="op">=</span><span class="st">&#39;zanj&#39;</span>), ZANJSerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;list:external&#39;</span>, desc<span class="op">=</span><span class="st">&#39;external list&#39;</span>, source_pckg<span class="op">=</span><span class="st">&#39;zanj&#39;</span>), ZANJSerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;tuple:external&#39;</span>, desc<span class="op">=</span><span class="st">&#39;external tuple&#39;</span>, source_pckg<span class="op">=</span><span class="st">&#39;zanj&#39;</span>), ZANJSerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;pandas.DataFrame:external&#39;</span>, desc<span class="op">=</span><span class="st">&#39;external pandas DataFrame&#39;</span>, source_pckg<span class="op">=</span><span class="st">&#39;zanj&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;base types&#39;</span>, desc<span class="op">=</span><span class="st">&#39;base types (bool, int, float, str, None)&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;dictionaries&#39;</span>, desc<span class="op">=</span><span class="st">&#39;dictionaries&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;(list, tuple) -&gt; list&#39;</span>, desc<span class="op">=</span><span class="st">&#39;lists and tuples as lists&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function _serialize_override_serialize_func<span class="op">&gt;</span>, uid<span class="op">=</span><span class="st">&#39;.serialize override&#39;</span>, desc<span class="op">=</span><span class="st">&#39;objects with .serialize method&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;namedtuple -&gt; dict&#39;</span>, desc<span class="op">=</span><span class="st">&#39;namedtuples as dicts&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;dataclass -&gt; dict&#39;</span>, desc<span class="op">=</span><span class="st">&#39;dataclasses as dicts&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;path -&gt; str&#39;</span>, desc<span class="op">=</span><span class="st">&#39;Path objects as posix strings&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;obj -&gt; str(obj)&#39;</span>, desc<span class="op">=</span><span class="st">&#39;directly serialize objects in `SERIALIZE_DIRECT_AS_STR` to strings&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;numpy.ndarray&#39;</span>, desc<span class="op">=</span><span class="st">&#39;numpy arrays&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;torch.Tensor&#39;</span>, desc<span class="op">=</span><span class="st">&#39;pytorch tensors&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;pandas.DataFrame&#39;</span>, desc<span class="op">=</span><span class="st">&#39;pandas DataFrames&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;(set, list, tuple, Iterable) -&gt; list&#39;</span>, desc<span class="op">=</span><span class="st">&#39;sets, lists, tuples, and Iterables as lists&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;fallback&#39;</span>, desc<span class="op">=</span><span class="st">&#39;fallback handler -- serialize object attributes and special functions as strings&#39;</span>))</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    error_mode: muutils.errormode.ErrorMode <span class="op">=</span> ErrorMode.Except,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    internal_array_mode: Literal[<span class="st">&#39;list&#39;</span>, <span class="st">&#39;array_list_meta&#39;</span>, <span class="st">&#39;array_hex_meta&#39;</span>, <span class="st">&#39;array_b64_meta&#39;</span>, <span class="st">&#39;external&#39;</span>, <span class="st">&#39;zero_dim&#39;</span>] <span class="op">=</span> <span class="st">&#39;array_list_meta&#39;</span>,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    external_array_threshold: <span class="bu">int</span> <span class="op">=</span> <span class="dv">256</span>,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    external_list_threshold: <span class="bu">int</span> <span class="op">=</span> <span class="dv">256</span>,</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    compress: <span class="bu">bool</span> <span class="op">|</span> <span class="bu">int</span> <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    custom_settings: <span class="bu">dict</span>[<span class="bu">str</span>, typing.Any] <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    handlers_pre: <span class="va">None</span> <span class="op">=</span> (),</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    handlers_default: <span class="va">None</span> <span class="op">=</span> (ZANJSerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;numpy.ndarray:external&#39;</span>, desc<span class="op">=</span><span class="st">&#39;external numpy array&#39;</span>, source_pckg<span class="op">=</span><span class="st">&#39;zanj&#39;</span>), ZANJSerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;torch.Tensor:external&#39;</span>, desc<span class="op">=</span><span class="st">&#39;external torch tensor&#39;</span>, source_pckg<span class="op">=</span><span class="st">&#39;zanj&#39;</span>), ZANJSerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;list:external&#39;</span>, desc<span class="op">=</span><span class="st">&#39;external list&#39;</span>, source_pckg<span class="op">=</span><span class="st">&#39;zanj&#39;</span>), ZANJSerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;tuple:external&#39;</span>, desc<span class="op">=</span><span class="st">&#39;external tuple&#39;</span>, source_pckg<span class="op">=</span><span class="st">&#39;zanj&#39;</span>), ZANJSerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;pandas.DataFrame:external&#39;</span>, desc<span class="op">=</span><span class="st">&#39;external pandas DataFrame&#39;</span>, source_pckg<span class="op">=</span><span class="st">&#39;zanj&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;base types&#39;</span>, desc<span class="op">=</span><span class="st">&#39;base types (bool, int, float, str, None)&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;dictionaries&#39;</span>, desc<span class="op">=</span><span class="st">&#39;dictionaries&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;(list, tuple) -&gt; list&#39;</span>, desc<span class="op">=</span><span class="st">&#39;lists and tuples as lists&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function _serialize_override_serialize_func<span class="op">&gt;</span>, uid<span class="op">=</span><span class="st">&#39;.serialize override&#39;</span>, desc<span class="op">=</span><span class="st">&#39;objects with .serialize method&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;namedtuple -&gt; dict&#39;</span>, desc<span class="op">=</span><span class="st">&#39;namedtuples as dicts&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;dataclass -&gt; dict&#39;</span>, desc<span class="op">=</span><span class="st">&#39;dataclasses as dicts&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;path -&gt; str&#39;</span>, desc<span class="op">=</span><span class="st">&#39;Path objects as posix strings&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;obj -&gt; str(obj)&#39;</span>, desc<span class="op">=</span><span class="st">&#39;directly serialize objects in `SERIALIZE_DIRECT_AS_STR` to strings&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;numpy.ndarray&#39;</span>, desc<span class="op">=</span><span class="st">&#39;numpy arrays&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;torch.Tensor&#39;</span>, desc<span class="op">=</span><span class="st">&#39;pytorch tensors&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;pandas.DataFrame&#39;</span>, desc<span class="op">=</span><span class="st">&#39;pandas DataFrames&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;(set, list, tuple, Iterable) -&gt; list&#39;</span>, desc<span class="op">=</span><span class="st">&#39;sets, lists, tuples, and Iterables as lists&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;fallback&#39;</span>, desc<span class="op">=</span><span class="st">&#39;fallback handler -- serialize object attributes and special functions as strings&#39;</span>))</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p><a
 href="https://github.com/mivanit/zanj/blob/0.4.0__init__.py#L81-L116">View
 Source on GitHub</a></p>
@@ -68,38 +830,780 @@ Source on GitHub</a></p>
 <li><p><code>compress</code></p></li>
 </ul>
 <h3 id="ZANJ.externals_info"><code>def externals_info</code></h3>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">dict</span>[<span class="bu">str</span>, <span class="bu">dict</span>[<span class="bu">str</span>, <span class="bu">str</span> <span class="op">|</span> <span class="bu">int</span> <span class="op">|</span> <span class="bu">list</span>[<span class="bu">int</span>]]]</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">dict</span>[<span class="bu">str</span>, <span class="bu">dict</span>[<span class="bu">str</span>, <span class="bu">str</span> <span class="op">|</span> <span class="bu">int</span> <span class="op">|</span> <span class="bu">list</span>[<span class="bu">int</span>]]]</span></code></pre></div>
 <p><a
 href="https://github.com/mivanit/zanj/blob/0.4.0__init__.py#L118-L141">View
 Source on GitHub</a></p>
 <p>return information about the current externals</p>
 <h3 id="ZANJ.meta"><code>def meta</code></h3>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Any], Dict[<span class="bu">str</span>, Any]]], Dict[<span class="bu">str</span>, Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Any], Dict[<span class="bu">str</span>, Any]]]]</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Any], Dict[<span class="bu">str</span>, Any]]], Dict[<span class="bu">str</span>, Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Any], Dict[<span class="bu">str</span>, Any]]]]</span></code></pre></div>
 <p><a
 href="https://github.com/mivanit/zanj/blob/0.4.0__init__.py#L143-L164">View
 Source on GitHub</a></p>
 <p>return the metadata of the ZANJ archive</p>
 <h3 id="ZANJ.save"><code>def save</code></h3>
-<div class="sourceCode" id="cb5"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>(<span class="va">self</span>, obj: Any, file_path: <span class="bu">str</span> <span class="op">|</span> pathlib.Path) <span class="op">-&gt;</span> <span class="bu">str</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>(<span class="va">self</span>, obj: Any, file_path: <span class="bu">str</span> <span class="op">|</span> pathlib.Path) <span class="op">-&gt;</span> <span class="bu">str</span></span></code></pre></div>
 <p><a
 href="https://github.com/mivanit/zanj/blob/0.4.0__init__.py#L166-L219">View
 Source on GitHub</a></p>
 <p>save the object to a ZANJ archive. returns the path to the
 archive</p>
 <h3 id="ZANJ.read"><code>def read</code></h3>
-<div class="sourceCode" id="cb6"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>(<span class="va">self</span>, file_path: Union[<span class="bu">str</span>, pathlib.Path]) <span class="op">-&gt;</span> Any</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>(<span class="va">self</span>, file_path: Union[<span class="bu">str</span>, pathlib.Path]) <span class="op">-&gt;</span> Any</span></code></pre></div>
 <p><a
 href="https://github.com/mivanit/zanj/blob/0.4.0__init__.py#L221-L247">View
 Source on GitHub</a></p>
 <p>load the object from a ZANJ archive ### TODO: load only some part of
 the zanj file by passing an ObjectPath</p>
 <h3 id="inherited-members">Inherited Members</h3>
+<ul>
+<li><a href="#ZANJ.array_mode"><code>array_mode</code></a></li>
+<li><a href="#ZANJ.error_mode"><code>error_mode</code></a></li>
+<li><a
+href="#ZANJ.write_only_format"><code>write_only_format</code></a></li>
+<li><a href="#ZANJ.handlers"><code>handlers</code></a></li>
+<li><a href="#ZANJ.json_serialize"><code>json_serialize</code></a></li>
+<li><a href="#ZANJ.hashify"><code>hashify</code></a></li>
+</ul>
+<blockquote>
+<p>docs for <a
+href="https://github.com/mivanit/zanj"><code>zanj</code></a> v0.4.0</p>
+</blockquote>
+<h2 id="contents-1">Contents</h2>
+<p>for storing/retrieving an item externally in a ZANJ archive</p>
+<h2 id="api-documentation-1">API Documentation</h2>
+<ul>
+<li><a href="#ZANJ_MAIN"><code>ZANJ_MAIN</code></a></li>
+<li><a href="#ZANJ_META"><code>ZANJ_META</code></a></li>
+<li><a href="#ExternalItemType"><code>ExternalItemType</code></a></li>
+<li><a
+href="#ExternalItemType_vals"><code>ExternalItemType_vals</code></a></li>
+<li><a href="#ExternalItem"><code>ExternalItem</code></a></li>
+<li><a href="#load_jsonl"><code>load_jsonl</code></a></li>
+<li><a href="#load_npy"><code>load_npy</code></a></li>
+<li><a
+href="#EXTERNAL_LOAD_FUNCS"><code>EXTERNAL_LOAD_FUNCS</code></a></li>
+<li><a
+href="#GET_EXTERNAL_LOAD_FUNC"><code>GET_EXTERNAL_LOAD_FUNC</code></a></li>
+</ul>
+<p><a href="https://github.com/mivanit/zanj/blob/0.4.0externals.py">View
+Source on GitHub</a></p>
+<h1 id="zanj.externals"><code>zanj.externals</code></h1>
+<p>for storing/retrieving an item externally in a ZANJ archive</p>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0externals.py#L0-L51">View
+Source on GitHub</a></p>
+<ul>
+<li><p><code>ZANJ_MAIN: str = '__zanj__.json'</code></p></li>
+<li><p><code>ZANJ_META: str = '__zanj_meta__.json'</code></p></li>
+<li><p><code>ExternalItemType = typing.Literal['jsonl', 'npy']</code></p></li>
+<li><p><code>ExternalItemType_vals = ('jsonl', 'npy')</code></p></li>
+</ul>
+<h3
+id="ExternalItem"><code>class ExternalItem(typing.NamedTuple):</code></h3>
+<p>ExternalItem(item_type, data, path)</p>
+<h3 id="ExternalItem.__init__"><code>ExternalItem</code></h3>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    item_type: Literal[<span class="st">&#39;jsonl&#39;</span>, <span class="st">&#39;npy&#39;</span>],</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    data: Any,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    path: <span class="bu">tuple</span>[typing.Union[<span class="bu">str</span>, <span class="bu">int</span>], ...]</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>Create new instance of ExternalItem(item_type, data, path)</p>
+<ul>
+<li><code>item_type: Literal['jsonl', 'npy']</code></li>
+</ul>
+<p>Alias for field number 0</p>
+<ul>
+<li><code>data: Any</code></li>
+</ul>
+<p>Alias for field number 1</p>
+<ul>
+<li><code>path: tuple[typing.Union[str, int], ...]</code></li>
+</ul>
+<p>Alias for field number 2</p>
+<h3 id="inherited-members-1">Inherited Members</h3>
+<ul>
+<li><a href="#ExternalItem.index"><code>index</code></a></li>
+<li><a href="#ExternalItem.count"><code>count</code></a></li>
+</ul>
+<h3 id="load_jsonl"><code>def load_jsonl</code></h3>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    zanj: <span class="st">&quot;&#39;LoadedZANJ&#39;&quot;</span>,</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    fp: IO[<span class="bu">bytes</span>]</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> <span class="bu">list</span>[typing.Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, typing.List[typing.Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, typing.List[typing.Any], typing.Dict[<span class="bu">str</span>, typing.Any]]], typing.Dict[<span class="bu">str</span>, typing.Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, typing.List[typing.Any], typing.Dict[<span class="bu">str</span>, typing.Any]]]]]</span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0externals.py#L32-L33">View
+Source on GitHub</a></p>
+<h3 id="load_npy"><code>def load_npy</code></h3>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>(zanj: <span class="st">&quot;&#39;LoadedZANJ&#39;&quot;</span>, fp: IO[<span class="bu">bytes</span>]) <span class="op">-&gt;</span> numpy.ndarray</span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0externals.py#L36-L37">View
+Source on GitHub</a></p>
+<ul>
+<li><code>EXTERNAL_LOAD_FUNCS: dict[typing.Literal['jsonl', 'npy'], typing.Callable[[zanj.zanj.ZANJ, typing.IO[bytes]], typing.Any]] = {'jsonl': &lt;function load_jsonl&gt;, 'npy': &lt;function load_npy&gt;}</code></li>
+</ul>
+<h3
+id="GET_EXTERNAL_LOAD_FUNC"><code>def GET_EXTERNAL_LOAD_FUNC</code></h3>
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>(item_type: <span class="bu">str</span>) <span class="op">-&gt;</span> Callable[[zanj.zanj.ZANJ, IO[<span class="bu">bytes</span>]], Any]</span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0externals.py#L46-L52">View
+Source on GitHub</a></p>
+<blockquote>
+<p>docs for <a
+href="https://github.com/mivanit/zanj"><code>zanj</code></a> v0.4.0</p>
+</blockquote>
+<h2 id="api-documentation-2">API Documentation</h2>
+<ul>
+<li><a href="#LoaderHandler"><code>LoaderHandler</code></a></li>
+<li><a href="#LOADER_MAP_LOCK"><code>LOADER_MAP_LOCK</code></a></li>
+<li><a href="#LOADER_MAP"><code>LOADER_MAP</code></a></li>
+<li><a
+href="#register_loader_handler"><code>register_loader_handler</code></a></li>
+<li><a href="#get_item_loader"><code>get_item_loader</code></a></li>
+<li><a
+href="#load_item_recursive"><code>load_item_recursive</code></a></li>
+<li><a href="#LoadedZANJ"><code>LoadedZANJ</code></a></li>
+</ul>
+<p><a href="https://github.com/mivanit/zanj/blob/0.4.0loading.py">View
+Source on GitHub</a></p>
+<h1 id="zanj.loading"><code>zanj.loading</code></h1>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0loading.py#L0-L433">View
+Source on GitHub</a></p>
+<h3 id="LoaderHandler"><code>class LoaderHandler:</code></h3>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0loading.py#L84-L143">View
+Source on GitHub</a></p>
+<p>handler for loading an object from a json file or a ZANJ archive</p>
+<h3 id="LoaderHandler.__init__"><code>LoaderHandler</code></h3>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    check: Callable[[Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Any], Dict[<span class="bu">str</span>, Any]]], Dict[<span class="bu">str</span>, Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Any], Dict[<span class="bu">str</span>, Any]]]], <span class="bu">tuple</span>[Union[<span class="bu">str</span>, <span class="bu">int</span>], ...], Any], <span class="bu">bool</span>],</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    load: Callable[[Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Any], Dict[<span class="bu">str</span>, Any]]], Dict[<span class="bu">str</span>, Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Any], Dict[<span class="bu">str</span>, Any]]]], <span class="bu">tuple</span>[Union[<span class="bu">str</span>, <span class="bu">int</span>], ...], Any], Any],</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    uid: <span class="bu">str</span>,</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    source_pckg: <span class="bu">str</span>,</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    priority: <span class="bu">int</span> <span class="op">=</span> <span class="dv">0</span>,</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    desc: <span class="bu">str</span> <span class="op">=</span> <span class="st">&#39;(no description)&#39;</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<ul>
+<li><p><code>check: Callable[[Union[bool, int, float, str, NoneType, List[Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]], Dict[str, Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]]], tuple[Union[str, int], ...], Any], bool]</code></p></li>
+<li><p><code>load: Callable[[Union[bool, int, float, str, NoneType, List[Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]], Dict[str, Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]]], tuple[Union[str, int], ...], Any], Any]</code></p></li>
+<li><p><code>uid: str</code></p></li>
+<li><p><code>source_pckg: str</code></p></li>
+<li><p><code>priority: int = 0</code></p></li>
+<li><p><code>desc: str = '(no description)'</code></p></li>
+</ul>
+<h3 id="LoaderHandler.serialize"><code>def serialize</code></h3>
+<div class="sourceCode" id="cb28"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> Dict[<span class="bu">str</span>, Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Any], Dict[<span class="bu">str</span>, Any]]], Dict[<span class="bu">str</span>, Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Any], Dict[<span class="bu">str</span>, Any]]]]]</span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0loading.py#L104-L122">View
+Source on GitHub</a></p>
+<p>serialize the handler info</p>
+<h3
+id="LoaderHandler.from_formattedclass"><code>def from_formattedclass</code></h3>
+<div class="sourceCode" id="cb29"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>(cls, fc: <span class="bu">type</span>, priority: <span class="bu">int</span> <span class="op">=</span> <span class="dv">0</span>)</span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0loading.py#L124-L143">View
+Source on GitHub</a></p>
+<p>create a loader from a class with <code>serialize</code>,
+<code>load</code> methods and <code>__muutils_format__</code>
+attribute</p>
+<ul>
+<li><p><code>LOADER_MAP_LOCK = &lt;unlocked _thread.lock object&gt;</code></p></li>
+<li><p><code>LOADER_MAP: dict[str, zanj.loading.LoaderHandler] = {'numpy.ndarray': LoaderHandler(check=&lt;function &lt;lambda&gt;&gt;, load=&lt;function &lt;lambda&gt;&gt;, uid='numpy.ndarray', source_pckg='zanj', priority=0, desc='numpy.ndarray loader'), 'torch.Tensor': LoaderHandler(check=&lt;function &lt;lambda&gt;&gt;, load=&lt;function &lt;lambda&gt;&gt;, uid='torch.Tensor', source_pckg='zanj', priority=0, desc='torch.Tensor loader'), 'pandas.DataFrame': LoaderHandler(check=&lt;function &lt;lambda&gt;&gt;, load=&lt;function &lt;lambda&gt;&gt;, uid='pandas.DataFrame', source_pckg='zanj', priority=0, desc='pandas.DataFrame loader'), 'list': LoaderHandler(check=&lt;function &lt;lambda&gt;&gt;, load=&lt;function &lt;lambda&gt;&gt;, uid='list', source_pckg='zanj', priority=0, desc='list loader, for externals'), 'tuple': LoaderHandler(check=&lt;function &lt;lambda&gt;&gt;, load=&lt;function &lt;lambda&gt;&gt;, uid='tuple', source_pckg='zanj', priority=0, desc='tuple loader, for externals')}</code></p></li>
+</ul>
+<h3
+id="register_loader_handler"><code>def register_loader_handler</code></h3>
+<div class="sourceCode" id="cb30"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>(handler: zanj.loading.LoaderHandler)</span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0loading.py#L235-L239">View
+Source on GitHub</a></p>
+<p>register a custom loader handler</p>
+<h3 id="get_item_loader"><code>def get_item_loader</code></h3>
+<div class="sourceCode" id="cb31"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    json_item: Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Any], Dict[<span class="bu">str</span>, Any]]], Dict[<span class="bu">str</span>, Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Any], Dict[<span class="bu">str</span>, Any]]]],</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    path: <span class="bu">tuple</span>[typing.Union[<span class="bu">str</span>, <span class="bu">int</span>], ...],</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    zanj: typing.Any <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    error_mode: muutils.errormode.ErrorMode <span class="op">=</span> ErrorMode.Warn</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> zanj.loading.LoaderHandler <span class="op">|</span> <span class="va">None</span></span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0loading.py#L242-L267">View
+Source on GitHub</a></p>
+<p>get the loader for a json item</p>
+<h3 id="load_item_recursive"><code>def load_item_recursive</code></h3>
+<div class="sourceCode" id="cb32"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    json_item: Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Any], Dict[<span class="bu">str</span>, Any]]], Dict[<span class="bu">str</span>, Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Any], Dict[<span class="bu">str</span>, Any]]]],</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    path: <span class="bu">tuple</span>[typing.Union[<span class="bu">str</span>, <span class="bu">int</span>], ...],</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    zanj: typing.Any <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    error_mode: muutils.errormode.ErrorMode <span class="op">=</span> ErrorMode.Warn,</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    allow_not_loading: <span class="bu">bool</span> <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> Any</span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0loading.py#L270-L348">View
+Source on GitHub</a></p>
+<h3 id="LoadedZANJ"><code>class LoadedZANJ:</code></h3>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0loading.py#L390-L434">View
+Source on GitHub</a></p>
+<p>for loading a zanj file</p>
+<h3 id="LoadedZANJ.__init__"><code>LoadedZANJ</code></h3>
+<div class="sourceCode" id="cb33"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>(path: <span class="bu">str</span> <span class="op">|</span> pathlib.Path, zanj: Any)</span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0loading.py#L393-L422">View
+Source on GitHub</a></p>
+<h3
+id="LoadedZANJ.populate_externals"><code>def populate_externals</code></h3>
+<div class="sourceCode" id="cb34"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="va">None</span></span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0loading.py#L424-L434">View
+Source on GitHub</a></p>
+<p>put all external items into the main json data</p>
+<blockquote>
+<p>docs for <a
+href="https://github.com/mivanit/zanj"><code>zanj</code></a> v0.4.0</p>
+</blockquote>
+<h2 id="api-documentation-3">API Documentation</h2>
+<ul>
+<li><a href="#KW_ONLY_KWARGS"><code>KW_ONLY_KWARGS</code></a></li>
+<li><a href="#jsonl_metadata"><code>jsonl_metadata</code></a></li>
+<li><a href="#store_npy"><code>store_npy</code></a></li>
+<li><a href="#store_jsonl"><code>store_jsonl</code></a></li>
+<li><a
+href="#EXTERNAL_STORE_FUNCS"><code>EXTERNAL_STORE_FUNCS</code></a></li>
+<li><a
+href="#ZANJSerializerHandler"><code>ZANJSerializerHandler</code></a></li>
+<li><a
+href="#zanj_external_serialize"><code>zanj_external_serialize</code></a></li>
+<li><a
+href="#DEFAULT_SERIALIZER_HANDLERS_ZANJ"><code>DEFAULT_SERIALIZER_HANDLERS_ZANJ</code></a></li>
+</ul>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0serializing.py">View
+Source on GitHub</a></p>
+<h1 id="zanj.serializing"><code>zanj.serializing</code></h1>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0serializing.py#L0-L245">View
+Source on GitHub</a></p>
+<ul>
+<li><code>KW_ONLY_KWARGS: dict = {'kw_only': True}</code></li>
+</ul>
+<h3 id="jsonl_metadata"><code>def jsonl_metadata</code></h3>
+<div class="sourceCode" id="cb35"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    data: <span class="bu">list</span>[typing.Dict[<span class="bu">str</span>, typing.Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, typing.List[typing.Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, typing.List[typing.Any], typing.Dict[<span class="bu">str</span>, typing.Any]]], typing.Dict[<span class="bu">str</span>, typing.Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, typing.List[typing.Any], typing.Dict[<span class="bu">str</span>, typing.Any]]]]]]</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> <span class="bu">dict</span></span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0serializing.py#L28-L44">View
+Source on GitHub</a></p>
+<p>metadata about a jsonl object</p>
+<h3 id="store_npy"><code>def store_npy</code></h3>
+<div class="sourceCode" id="cb36"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>: Any,</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    fp: IO[<span class="bu">bytes</span>],</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    data: muutils.tensor_utils.jaxtype_factory.<span class="op">&lt;</span><span class="bu">locals</span><span class="op">&gt;</span>._BaseArray</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> <span class="va">None</span></span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0serializing.py#L47-L53">View
+Source on GitHub</a></p>
+<p>store numpy array to given file as .npy</p>
+<h3 id="store_jsonl"><code>def store_jsonl</code></h3>
+<div class="sourceCode" id="cb37"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>: Any,</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    fp: IO[<span class="bu">bytes</span>],</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    data: Sequence[Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Any], Dict[<span class="bu">str</span>, Any]]], Dict[<span class="bu">str</span>, Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Any], Dict[<span class="bu">str</span>, Any]]]]]</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> <span class="va">None</span></span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0serializing.py#L56-L61">View
+Source on GitHub</a></p>
+<p>store sequence to given file as .jsonl</p>
+<ul>
+<li><code>EXTERNAL_STORE_FUNCS: dict[typing.Literal['jsonl', 'npy'], typing.Callable[[typing.Any, typing.IO[bytes], typing.Any], NoneType]] = {'npy': &lt;function store_npy&gt;, 'jsonl': &lt;function store_jsonl&gt;}</code></li>
+</ul>
+<h3
+id="ZANJSerializerHandler"><code>class ZANJSerializerHandler(muutils.json_serialize.json_serialize.SerializerHandler):</code></h3>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0serializing.py#L72-L85">View
+Source on GitHub</a></p>
+<p>a handler for ZANJ serialization</p>
+<h3
+id="ZANJSerializerHandler.__init__"><code>ZANJSerializerHandler</code></h3>
+<div class="sourceCode" id="cb38"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>    uid: <span class="bu">str</span>,</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    desc: <span class="bu">str</span>,</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span>,</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>    check: Callable[[Any, Any, <span class="bu">tuple</span>[Union[<span class="bu">str</span>, <span class="bu">int</span>], ...]], <span class="bu">bool</span>],</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>    serialize_func: Callable[[Any, Any, <span class="bu">tuple</span>[Union[<span class="bu">str</span>, <span class="bu">int</span>], ...]], Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Any], Dict[<span class="bu">str</span>, Any]]], Dict[<span class="bu">str</span>, Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Any], Dict[<span class="bu">str</span>, Any]]]]],</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>    source_pckg: <span class="bu">str</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<ul>
+<li><p><code>source_pckg: str</code></p></li>
+<li><p><code>check: Callable[[Any, Any, tuple[Union[str, int], ...]], bool]</code></p></li>
+<li><p><code>serialize_func: Callable[[Any, Any, tuple[Union[str, int], ...]], Union[bool, int, float, str, NoneType, List[Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]], Dict[str, Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]]]]</code></p></li>
+</ul>
+<h3 id="inherited-members-2">Inherited Members</h3>
+<ul>
+<li><a href="#ZANJSerializerHandler.uid"><code>uid</code></a></li>
+<li><a href="#ZANJSerializerHandler.desc"><code>desc</code></a></li>
+<li><a
+href="#ZANJSerializerHandler.serialize"><code>serialize</code></a></li>
+</ul>
+<h3
+id="zanj_external_serialize"><code>def zanj_external_serialize</code></h3>
+<div class="sourceCode" id="cb39"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    jser: Any,</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    data: Any,</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    path: <span class="bu">tuple</span>[typing.Union[<span class="bu">str</span>, <span class="bu">int</span>], ...],</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    item_type: Literal[<span class="st">&#39;jsonl&#39;</span>, <span class="st">&#39;npy&#39;</span>],</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>    _format: <span class="bu">str</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Any], Dict[<span class="bu">str</span>, Any]]], Dict[<span class="bu">str</span>, Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Any], Dict[<span class="bu">str</span>, Any]]]]</span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0serializing.py#L88-L166">View
+Source on GitHub</a></p>
+<p>stores a numpy array or jsonl externally in a ZANJ object</p>
+<h3 id="parameters">Parameters:</h3>
+<ul>
+<li><code>jser: ZANJ</code></li>
+<li><code>data: Any</code></li>
+<li><code>path: ObjectPath</code></li>
+<li><code>item_type: ExternalItemType</code></li>
+</ul>
+<h3 id="returns">Returns:</h3>
+<ul>
+<li><code>JSONitem</code> json data with reference</li>
+</ul>
+<h3 id="modifies">Modifies:</h3>
+<ul>
+<li><p>modifies <code>jser._externals</code></p></li>
+<li><p><code>DEFAULT_SERIALIZER_HANDLERS_ZANJ: None = (ZANJSerializerHandler(check=&lt;function &lt;lambda&gt;&gt;, serialize_func=&lt;function &lt;lambda&gt;&gt;, uid='numpy.ndarray:external', desc='external numpy array', source_pckg='zanj'), ZANJSerializerHandler(check=&lt;function &lt;lambda&gt;&gt;, serialize_func=&lt;function &lt;lambda&gt;&gt;, uid='torch.Tensor:external', desc='external torch tensor', source_pckg='zanj'), ZANJSerializerHandler(check=&lt;function &lt;lambda&gt;&gt;, serialize_func=&lt;function &lt;lambda&gt;&gt;, uid='list:external', desc='external list', source_pckg='zanj'), ZANJSerializerHandler(check=&lt;function &lt;lambda&gt;&gt;, serialize_func=&lt;function &lt;lambda&gt;&gt;, uid='tuple:external', desc='external tuple', source_pckg='zanj'), ZANJSerializerHandler(check=&lt;function &lt;lambda&gt;&gt;, serialize_func=&lt;function &lt;lambda&gt;&gt;, uid='pandas.DataFrame:external', desc='external pandas DataFrame', source_pckg='zanj'), SerializerHandler(check=&lt;function &lt;lambda&gt;&gt;, serialize_func=&lt;function &lt;lambda&gt;&gt;, uid='base types', desc='base types (bool, int, float, str, None)'), SerializerHandler(check=&lt;function &lt;lambda&gt;&gt;, serialize_func=&lt;function &lt;lambda&gt;&gt;, uid='dictionaries', desc='dictionaries'), SerializerHandler(check=&lt;function &lt;lambda&gt;&gt;, serialize_func=&lt;function &lt;lambda&gt;&gt;, uid='(list, tuple) -&gt; list', desc='lists and tuples as lists'), SerializerHandler(check=&lt;function &lt;lambda&gt;&gt;, serialize_func=&lt;function _serialize_override_serialize_func&gt;, uid='.serialize override', desc='objects with .serialize method'), SerializerHandler(check=&lt;function &lt;lambda&gt;&gt;, serialize_func=&lt;function &lt;lambda&gt;&gt;, uid='namedtuple -&gt; dict', desc='namedtuples as dicts'), SerializerHandler(check=&lt;function &lt;lambda&gt;&gt;, serialize_func=&lt;function &lt;lambda&gt;&gt;, uid='dataclass -&gt; dict', desc='dataclasses as dicts'), SerializerHandler(check=&lt;function &lt;lambda&gt;&gt;, serialize_func=&lt;function &lt;lambda&gt;&gt;, uid='path -&gt; str', desc='Path objects as posix strings'), SerializerHandler(check=&lt;function &lt;lambda&gt;&gt;, serialize_func=&lt;function &lt;lambda&gt;&gt;, uid='obj -&gt; str(obj)', desc='directly serialize objects in</code>SERIALIZE_DIRECT_AS_STR<code>to strings'), SerializerHandler(check=&lt;function &lt;lambda&gt;&gt;, serialize_func=&lt;function &lt;lambda&gt;&gt;, uid='numpy.ndarray', desc='numpy arrays'), SerializerHandler(check=&lt;function &lt;lambda&gt;&gt;, serialize_func=&lt;function &lt;lambda&gt;&gt;, uid='torch.Tensor', desc='pytorch tensors'), SerializerHandler(check=&lt;function &lt;lambda&gt;&gt;, serialize_func=&lt;function &lt;lambda&gt;&gt;, uid='pandas.DataFrame', desc='pandas DataFrames'), SerializerHandler(check=&lt;function &lt;lambda&gt;&gt;, serialize_func=&lt;function &lt;lambda&gt;&gt;, uid='(set, list, tuple, Iterable) -&gt; list', desc='sets, lists, tuples, and Iterables as lists'), SerializerHandler(check=&lt;function &lt;lambda&gt;&gt;, serialize_func=&lt;function &lt;lambda&gt;&gt;, uid='fallback', desc='fallback handler -- serialize object attributes and special functions as strings'))</code></p></li>
+</ul>
+<blockquote>
+<p>docs for <a
+href="https://github.com/mivanit/zanj"><code>zanj</code></a> v0.4.0</p>
+</blockquote>
+<h2 id="api-documentation-4">API Documentation</h2>
+<ul>
+<li><a href="#KWArgs"><code>KWArgs</code></a></li>
+<li><a href="#num_params"><code>num_params</code></a></li>
+<li><a href="#get_module_device"><code>get_module_device</code></a></li>
+<li><a href="#ConfiguredModel"><code>ConfiguredModel</code></a></li>
+<li><a href="#set_config_class"><code>set_config_class</code></a></li>
+<li><a
+href="#ConfigMismatchException"><code>ConfigMismatchException</code></a></li>
+<li><a
+href="#assert_model_cfg_equality"><code>assert_model_cfg_equality</code></a></li>
+<li><a
+href="#assert_model_exact_equality"><code>assert_model_exact_equality</code></a></li>
+</ul>
+<p><a href="https://github.com/mivanit/zanj/blob/0.4.0torchutil.py">View
+Source on GitHub</a></p>
+<h1 id="zanj.torchutil"><code>zanj.torchutil</code></h1>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L0-L282">View
+Source on GitHub</a></p>
+<ul>
+<li><code>KWArgs = typing.Any</code></li>
+</ul>
+<h3 id="num_params"><code>def num_params</code></h3>
+<div class="sourceCode" id="cb40"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>(m: torch.nn.modules.module.Module, only_trainable: <span class="bu">bool</span> <span class="op">=</span> <span class="va">True</span>)</span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L21-L37">View
+Source on GitHub</a></p>
+<p>return total number of parameters in a model</p>
+<ul>
+<li>only counting shared parameters once</li>
+<li>if <code>only_trainable</code> is False, will include parameters
+with <code>requires_grad = False</code></li>
+</ul>
+<p>https://stackoverflow.com/questions/49201236/check-the-total-number-of-parameters-in-a-pytorch-model</p>
+<h3 id="get_module_device"><code>def get_module_device</code></h3>
+<div class="sourceCode" id="cb41"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>    m: torch.nn.modules.module.Module</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> <span class="bu">tuple</span>[<span class="bu">bool</span>, torch.device <span class="op">|</span> <span class="bu">dict</span>[<span class="bu">str</span>, torch.device]]</span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L40-L56">View
+Source on GitHub</a></p>
+<p>get the current devices</p>
+<h3
+id="ConfiguredModel"><code>class ConfiguredModel(torch.nn.modules.module.Module, typing.Generic[~T_config]):</code></h3>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L62-L208">View
+Source on GitHub</a></p>
+<p>a model that has a configuration, for saving with ZANJ</p>
+<div class="sourceCode" id="cb42"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="at">@set_config_class</span>(YourConfig)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> YourModule(ConfiguredModel[YourConfig]):</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, cfg: YourConfig):</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(cfg)</span></code></pre></div>
+<p><code>__init__()</code> must initialize the model from a config
+object only, and call
+<code>super().__init__(zanj_model_config)</code></p>
+<p>If you are inheriting from another class + ConfiguredModel,
+ConfiguredModel must be the first class in the inheritance list</p>
+<ul>
+<li><code>zanj_config_class</code></li>
+</ul>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L85-L85">View
+Source on GitHub</a></p>
+<ul>
+<li><p><code>zanj_model_config: ~T_config</code></p></li>
+<li><p><code>training_records: dict | None</code></p></li>
+</ul>
+<h3 id="ConfiguredModel.serialize"><code>def serialize</code></h3>
+<div class="sourceCode" id="cb43"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>,</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    path: <span class="bu">tuple</span>[typing.Union[<span class="bu">str</span>, <span class="bu">int</span>], ...] <span class="op">=</span> (),</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    zanj: zanj.zanj.ZANJ <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> <span class="bu">dict</span>[<span class="bu">str</span>, typing.Any]</span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L99-L119">View
+Source on GitHub</a></p>
+<h3 id="ConfiguredModel.save"><code>def save</code></h3>
+<div class="sourceCode" id="cb44"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>(<span class="va">self</span>, file_path: <span class="bu">str</span>, zanj: zanj.zanj.ZANJ <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>)</span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L121-L124">View
+Source on GitHub</a></p>
+<h3 id="ConfiguredModel.load"><code>def load</code></h3>
+<div class="sourceCode" id="cb45"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>    cls,</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    obj: <span class="bu">dict</span>[<span class="bu">str</span>, typing.Any],</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    path: <span class="bu">tuple</span>[typing.Union[<span class="bu">str</span>, <span class="bu">int</span>], ...],</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>    zanj: zanj.zanj.ZANJ <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> zanj.torchutil.ConfiguredModel</span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L135-L172">View
+Source on GitHub</a></p>
+<p>load a model from a serialized object</p>
+<h3 id="ConfiguredModel.read"><code>def read</code></h3>
+<div class="sourceCode" id="cb46"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>    cls,</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    file_path: <span class="bu">str</span>,</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>    zanj: zanj.zanj.ZANJ <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> zanj.torchutil.ConfiguredModel</span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L174-L182">View
+Source on GitHub</a></p>
+<p>read a model from a file</p>
+<h3 id="ConfiguredModel.load_file"><code>def load_file</code></h3>
+<div class="sourceCode" id="cb47"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>    cls,</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    file_path: <span class="bu">str</span>,</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>    zanj: zanj.zanj.ZANJ <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> zanj.torchutil.ConfiguredModel</span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L184-L190">View
+Source on GitHub</a></p>
+<p>read a model from a file</p>
+<h3 id="ConfiguredModel.get_handler"><code>def get_handler</code></h3>
+<div class="sourceCode" id="cb48"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>(cls) <span class="op">-&gt;</span> zanj.loading.LoaderHandler</span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L192-L205">View
+Source on GitHub</a></p>
+<h3 id="ConfiguredModel.num_params"><code>def num_params</code></h3>
+<div class="sourceCode" id="cb49"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">int</span></span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L207-L208">View
+Source on GitHub</a></p>
+<h3 id="inherited-members-3">Inherited Members</h3>
+<ul>
+<li><a href="#ConfiguredModel.__init__"><code>Module</code></a></li>
+<li><a
+href="#ConfiguredModel.dump_patches"><code>dump_patches</code></a></li>
+<li><a href="#ConfiguredModel.training"><code>training</code></a></li>
+<li><a
+href="#ConfiguredModel.call_super_init"><code>call_super_init</code></a></li>
+<li><a href="#ConfiguredModel.forward"><code>forward</code></a></li>
+<li><a
+href="#ConfiguredModel.register_buffer"><code>register_buffer</code></a></li>
+<li><a
+href="#ConfiguredModel.register_parameter"><code>register_parameter</code></a></li>
+<li><a
+href="#ConfiguredModel.add_module"><code>add_module</code></a></li>
+<li><a
+href="#ConfiguredModel.register_module"><code>register_module</code></a></li>
+<li><a
+href="#ConfiguredModel.get_submodule"><code>get_submodule</code></a></li>
+<li><a
+href="#ConfiguredModel.set_submodule"><code>set_submodule</code></a></li>
+<li><a
+href="#ConfiguredModel.get_parameter"><code>get_parameter</code></a></li>
+<li><a
+href="#ConfiguredModel.get_buffer"><code>get_buffer</code></a></li>
+<li><a
+href="#ConfiguredModel.get_extra_state"><code>get_extra_state</code></a></li>
+<li><a
+href="#ConfiguredModel.set_extra_state"><code>set_extra_state</code></a></li>
+<li><a href="#ConfiguredModel.apply"><code>apply</code></a></li>
+<li><a href="#ConfiguredModel.cuda"><code>cuda</code></a></li>
+<li><a href="#ConfiguredModel.ipu"><code>ipu</code></a></li>
+<li><a href="#ConfiguredModel.xpu"><code>xpu</code></a></li>
+<li><a href="#ConfiguredModel.mtia"><code>mtia</code></a></li>
+<li><a href="#ConfiguredModel.cpu"><code>cpu</code></a></li>
+<li><a href="#ConfiguredModel.type"><code>type</code></a></li>
+<li><a href="#ConfiguredModel.float"><code>float</code></a></li>
+<li><a href="#ConfiguredModel.double"><code>double</code></a></li>
+<li><a href="#ConfiguredModel.half"><code>half</code></a></li>
+<li><a href="#ConfiguredModel.bfloat16"><code>bfloat16</code></a></li>
+<li><a href="#ConfiguredModel.to_empty"><code>to_empty</code></a></li>
+<li><a href="#ConfiguredModel.to"><code>to</code></a></li>
+<li><a
+href="#ConfiguredModel.register_full_backward_pre_hook"><code>register_full_backward_pre_hook</code></a></li>
+<li><a
+href="#ConfiguredModel.register_backward_hook"><code>register_backward_hook</code></a></li>
+<li><a
+href="#ConfiguredModel.register_full_backward_hook"><code>register_full_backward_hook</code></a></li>
+<li><a
+href="#ConfiguredModel.register_forward_pre_hook"><code>register_forward_pre_hook</code></a></li>
+<li><a
+href="#ConfiguredModel.register_forward_hook"><code>register_forward_hook</code></a></li>
+<li><a
+href="#ConfiguredModel.register_state_dict_post_hook"><code>register_state_dict_post_hook</code></a></li>
+<li><a
+href="#ConfiguredModel.register_state_dict_pre_hook"><code>register_state_dict_pre_hook</code></a></li>
+<li><a
+href="#ConfiguredModel.state_dict"><code>state_dict</code></a></li>
+<li><a
+href="#ConfiguredModel.register_load_state_dict_pre_hook"><code>register_load_state_dict_pre_hook</code></a></li>
+<li><a
+href="#ConfiguredModel.register_load_state_dict_post_hook"><code>register_load_state_dict_post_hook</code></a></li>
+<li><a
+href="#ConfiguredModel.load_state_dict"><code>load_state_dict</code></a></li>
+<li><a
+href="#ConfiguredModel.parameters"><code>parameters</code></a></li>
+<li><a
+href="#ConfiguredModel.named_parameters"><code>named_parameters</code></a></li>
+<li><a href="#ConfiguredModel.buffers"><code>buffers</code></a></li>
+<li><a
+href="#ConfiguredModel.named_buffers"><code>named_buffers</code></a></li>
+<li><a href="#ConfiguredModel.children"><code>children</code></a></li>
+<li><a
+href="#ConfiguredModel.named_children"><code>named_children</code></a></li>
+<li><a href="#ConfiguredModel.modules"><code>modules</code></a></li>
+<li><a
+href="#ConfiguredModel.named_modules"><code>named_modules</code></a></li>
+<li><a href="#ConfiguredModel.train"><code>train</code></a></li>
+<li><a href="#ConfiguredModel.eval"><code>eval</code></a></li>
+<li><a
+href="#ConfiguredModel.requires_grad_"><code>requires_grad_</code></a></li>
+<li><a href="#ConfiguredModel.zero_grad"><code>zero_grad</code></a></li>
+<li><a
+href="#ConfiguredModel.share_memory"><code>share_memory</code></a></li>
+<li><a
+href="#ConfiguredModel.extra_repr"><code>extra_repr</code></a></li>
+<li><a href="#ConfiguredModel.compile"><code>compile</code></a></li>
+</ul>
+<h3 id="set_config_class"><code>def set_config_class</code></h3>
+<div class="sourceCode" id="cb50"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>    config_class: Type[muutils.json_serialize.serializable_dataclass.SerializableDataclass]</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> Callable[[Type[zanj.torchutil.ConfiguredModel]], Type[zanj.torchutil.ConfiguredModel]]</span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L211-L227">View
+Source on GitHub</a></p>
+<h3
+id="ConfigMismatchException"><code>class ConfigMismatchException(builtins.ValueError):</code></h3>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L230-L236">View
+Source on GitHub</a></p>
+<p>Inappropriate argument value (of correct type).</p>
+<h3
+id="ConfigMismatchException.__init__"><code>ConfigMismatchException</code></h3>
+<div class="sourceCode" id="cb51"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>(msg: <span class="bu">str</span>, diff)</span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L231-L233">View
+Source on GitHub</a></p>
+<ul>
+<li><code>diff</code></li>
+</ul>
+<h3 id="inherited-members-4">Inherited Members</h3>
+<ul>
+<li><a
+href="#ConfigMismatchException.with_traceback"><code>with_traceback</code></a></li>
+<li><a
+href="#ConfigMismatchException.add_note"><code>add_note</code></a></li>
+<li><a href="#ConfigMismatchException.args"><code>args</code></a></li>
+</ul>
+<h3
+id="assert_model_cfg_equality"><code>def assert_model_cfg_equality</code></h3>
+<div class="sourceCode" id="cb52"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>    model_a: zanj.torchutil.ConfiguredModel,</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>    model_b: zanj.torchutil.ConfiguredModel</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L239-L260">View
+Source on GitHub</a></p>
+<p>check both models are correct instances and have the same config</p>
+<p>Raises: ConfigMismatchException: if the configs don’t match, e.diff
+will contain the diff</p>
+<h3
+id="assert_model_exact_equality"><code>def assert_model_exact_equality</code></h3>
+<div class="sourceCode" id="cb53"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>    model_a: zanj.torchutil.ConfiguredModel,</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>    model_b: zanj.torchutil.ConfiguredModel</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L263-L283">View
+Source on GitHub</a></p>
+<p>check the models are exactly equal, including state dict contents</p>
+<blockquote>
+<p>docs for <a
+href="https://github.com/mivanit/zanj"><code>zanj</code></a> v0.4.0</p>
+</blockquote>
+<h2 id="contents-2">Contents</h2>
+<p>an HDF5/exdir file alternative, which uses json for attributes,
+allows serialization of arbitrary data</p>
+<p>for large arrays, the output is a .tar.gz file with most data in a
+json file, but with sufficiently large arrays stored in binary .npy
+files</p>
+<p>“ZANJ” is an acronym that the AI tool <a
+href="https://elicit.org">Elicit</a> came up with for me. not to be
+confused with:</p>
+<ul>
+<li>https://en.wikipedia.org/wiki/Zanj</li>
+<li>https://www.plutojournals.com/zanj/</li>
+</ul>
+<h2 id="api-documentation-5">API Documentation</h2>
+<ul>
+<li><a href="#ZANJitem"><code>ZANJitem</code></a></li>
+<li><a
+href="#ZANJ_GLOBAL_DEFAULTS"><code>ZANJ_GLOBAL_DEFAULTS</code></a></li>
+<li><a href="#ZANJ"><code>ZANJ</code></a></li>
+</ul>
+<p><a href="https://github.com/mivanit/zanj/blob/0.4.0zanj.py">View
+Source on GitHub</a></p>
+<h1 id="zanj.zanj"><code>zanj.zanj</code></h1>
+<p>an HDF5/exdir file alternative, which uses json for attributes,
+allows serialization of arbitrary data</p>
+<p>for large arrays, the output is a .tar.gz file with most data in a
+json file, but with sufficiently large arrays stored in binary .npy
+files</p>
+<p>“ZANJ” is an acronym that the AI tool <a
+href="https://elicit.org">Elicit</a> came up with for me. not to be
+confused with:</p>
+<ul>
+<li>https://en.wikipedia.org/wiki/Zanj</li>
+<li>https://www.plutojournals.com/zanj/</li>
+</ul>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0zanj.py#L0-L249">View
+Source on GitHub</a></p>
+<ul>
+<li><p><code>ZANJitem = typing.Union[bool, int, float, str, NoneType, typing.List[typing.Union[bool, int, float, str, NoneType, typing.List[typing.Any], typing.Dict[str, typing.Any]]], typing.Dict[str, typing.Union[bool, int, float, str, NoneType, typing.List[typing.Any], typing.Dict[str, typing.Any]]], numpy.ndarray, ForwardRef('pd.DataFrame')]</code></p></li>
+<li><p><code>ZANJ_GLOBAL_DEFAULTS: zanj.zanj._ZANJ_GLOBAL_DEFAULTS_CLASS = _ZANJ_GLOBAL_DEFAULTS_CLASS(error_mode=ErrorMode.Except, internal_array_mode='array_list_meta', external_array_threshold=256, external_list_threshold=256, compress=True, custom_settings=None)</code></p></li>
+</ul>
+<h3
+id="ZANJ"><code>class ZANJ(muutils.json_serialize.json_serialize.JsonSerializer):</code></h3>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0zanj.py#L66-L247">View
+Source on GitHub</a></p>
+<p>Zip up: Arrays in Numpy, JSON for everything else</p>
+<p>given an arbitrary object, throw into a zip file, with arrays stored
+in .npy files, and everything else stored in a json file</p>
+<p>(basically npz file with json)</p>
+<ul>
+<li>numpy (or pytorch) arrays are stored in paths according to their
+name and structure in the object</li>
+<li>everything else about the object is stored in a json file
+<code>zanj.json</code> in the root of the archive, via
+<code>muutils.json_serialize.JsonSerializer</code></li>
+<li>metadata about ZANJ configuration, and optionally packages and
+versions, is stored in a <code>__zanj_meta__.json</code> file in the
+root of the archive</li>
+</ul>
+<p>create a ZANJ-class via <code>z_cls = ZANJ().create(obj)</code>, and
+save/read instances of the object via
+<code>z_cls.save(obj, path)</code>, <code>z_cls.load(path)</code>. be
+sure to pass an <strong>instance</strong> of the object, to make sure
+that the attributes of the class can be correctly recognized</p>
+<h3 id="ZANJ.__init__"><code>ZANJ</code></h3>
+<div class="sourceCode" id="cb54"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>    error_mode: muutils.errormode.ErrorMode <span class="op">=</span> ErrorMode.Except,</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>    internal_array_mode: Literal[<span class="st">&#39;list&#39;</span>, <span class="st">&#39;array_list_meta&#39;</span>, <span class="st">&#39;array_hex_meta&#39;</span>, <span class="st">&#39;array_b64_meta&#39;</span>, <span class="st">&#39;external&#39;</span>, <span class="st">&#39;zero_dim&#39;</span>] <span class="op">=</span> <span class="st">&#39;array_list_meta&#39;</span>,</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>    external_array_threshold: <span class="bu">int</span> <span class="op">=</span> <span class="dv">256</span>,</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>    external_list_threshold: <span class="bu">int</span> <span class="op">=</span> <span class="dv">256</span>,</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>    compress: <span class="bu">bool</span> <span class="op">|</span> <span class="bu">int</span> <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>    custom_settings: <span class="bu">dict</span>[<span class="bu">str</span>, typing.Any] <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>    handlers_pre: <span class="va">None</span> <span class="op">=</span> (),</span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>    handlers_default: <span class="va">None</span> <span class="op">=</span> (ZANJSerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;numpy.ndarray:external&#39;</span>, desc<span class="op">=</span><span class="st">&#39;external numpy array&#39;</span>, source_pckg<span class="op">=</span><span class="st">&#39;zanj&#39;</span>), ZANJSerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;torch.Tensor:external&#39;</span>, desc<span class="op">=</span><span class="st">&#39;external torch tensor&#39;</span>, source_pckg<span class="op">=</span><span class="st">&#39;zanj&#39;</span>), ZANJSerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;list:external&#39;</span>, desc<span class="op">=</span><span class="st">&#39;external list&#39;</span>, source_pckg<span class="op">=</span><span class="st">&#39;zanj&#39;</span>), ZANJSerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;tuple:external&#39;</span>, desc<span class="op">=</span><span class="st">&#39;external tuple&#39;</span>, source_pckg<span class="op">=</span><span class="st">&#39;zanj&#39;</span>), ZANJSerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;pandas.DataFrame:external&#39;</span>, desc<span class="op">=</span><span class="st">&#39;external pandas DataFrame&#39;</span>, source_pckg<span class="op">=</span><span class="st">&#39;zanj&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;base types&#39;</span>, desc<span class="op">=</span><span class="st">&#39;base types (bool, int, float, str, None)&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;dictionaries&#39;</span>, desc<span class="op">=</span><span class="st">&#39;dictionaries&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;(list, tuple) -&gt; list&#39;</span>, desc<span class="op">=</span><span class="st">&#39;lists and tuples as lists&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function _serialize_override_serialize_func<span class="op">&gt;</span>, uid<span class="op">=</span><span class="st">&#39;.serialize override&#39;</span>, desc<span class="op">=</span><span class="st">&#39;objects with .serialize method&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;namedtuple -&gt; dict&#39;</span>, desc<span class="op">=</span><span class="st">&#39;namedtuples as dicts&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;dataclass -&gt; dict&#39;</span>, desc<span class="op">=</span><span class="st">&#39;dataclasses as dicts&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;path -&gt; str&#39;</span>, desc<span class="op">=</span><span class="st">&#39;Path objects as posix strings&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;obj -&gt; str(obj)&#39;</span>, desc<span class="op">=</span><span class="st">&#39;directly serialize objects in `SERIALIZE_DIRECT_AS_STR` to strings&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;numpy.ndarray&#39;</span>, desc<span class="op">=</span><span class="st">&#39;numpy arrays&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;torch.Tensor&#39;</span>, desc<span class="op">=</span><span class="st">&#39;pytorch tensors&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;pandas.DataFrame&#39;</span>, desc<span class="op">=</span><span class="st">&#39;pandas DataFrames&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;(set, list, tuple, Iterable) -&gt; list&#39;</span>, desc<span class="op">=</span><span class="st">&#39;sets, lists, tuples, and Iterables as lists&#39;</span>), SerializerHandler(check<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, serialize_func<span class="op">=&lt;</span>function <span class="op">&lt;</span><span class="kw">lambda</span><span class="op">&gt;&gt;</span>, uid<span class="op">=</span><span class="st">&#39;fallback&#39;</span>, desc<span class="op">=</span><span class="st">&#39;fallback handler -- serialize object attributes and special functions as strings&#39;</span>))</span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0zanj.py#L81-L116">View
+Source on GitHub</a></p>
+<ul>
+<li><p><code>external_array_threshold: int</code></p></li>
+<li><p><code>external_list_threshold: int</code></p></li>
+<li><p><code>custom_settings: dict</code></p></li>
+<li><p><code>compress</code></p></li>
+</ul>
+<h3 id="ZANJ.externals_info"><code>def externals_info</code></h3>
+<div class="sourceCode" id="cb55"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">dict</span>[<span class="bu">str</span>, <span class="bu">dict</span>[<span class="bu">str</span>, <span class="bu">str</span> <span class="op">|</span> <span class="bu">int</span> <span class="op">|</span> <span class="bu">list</span>[<span class="bu">int</span>]]]</span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0zanj.py#L118-L141">View
+Source on GitHub</a></p>
+<p>return information about the current externals</p>
+<h3 id="ZANJ.meta"><code>def meta</code></h3>
+<div class="sourceCode" id="cb56"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Any], Dict[<span class="bu">str</span>, Any]]], Dict[<span class="bu">str</span>, Union[<span class="bu">bool</span>, <span class="bu">int</span>, <span class="bu">float</span>, <span class="bu">str</span>, NoneType, List[Any], Dict[<span class="bu">str</span>, Any]]]]</span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0zanj.py#L143-L164">View
+Source on GitHub</a></p>
+<p>return the metadata of the ZANJ archive</p>
+<h3 id="ZANJ.save"><code>def save</code></h3>
+<div class="sourceCode" id="cb57"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>(<span class="va">self</span>, obj: Any, file_path: <span class="bu">str</span> <span class="op">|</span> pathlib.Path) <span class="op">-&gt;</span> <span class="bu">str</span></span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0zanj.py#L166-L219">View
+Source on GitHub</a></p>
+<p>save the object to a ZANJ archive. returns the path to the
+archive</p>
+<h3 id="ZANJ.read"><code>def read</code></h3>
+<div class="sourceCode" id="cb58"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>(<span class="va">self</span>, file_path: Union[<span class="bu">str</span>, pathlib.Path]) <span class="op">-&gt;</span> Any</span></code></pre></div>
+<p><a
+href="https://github.com/mivanit/zanj/blob/0.4.0zanj.py#L221-L247">View
+Source on GitHub</a></p>
+<p>load the object from a ZANJ archive ### TODO: load only some part of
+the zanj file by passing an ObjectPath</p>
+<h3 id="inherited-members-5">Inherited Members</h3>
 <ul>
 <li><a href="#ZANJ.array_mode"><code>array_mode</code></a></li>
 <li><a href="#ZANJ.error_mode"><code>error_mode</code></a></li>
