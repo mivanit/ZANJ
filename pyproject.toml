@@ -80,6 +80,23 @@ pandas = ["pandas>=1.5.3"]
     exclude = ["tests/input_data", "tests/junk_data"]
     show_error_codes = true
 
+
+[tool.lmcat]
+    output = "docs/other/lmcat.txt" # changing this might mean it wont be accessible from the docs
+    ignore_patterns = [
+		"docs/**",
+		".venv/**",
+		".git/**",
+		".meta/**",
+        ".ruff_cache/**",
+		"uv.lock",
+		"LICENSE",
+	]
+    [tool.lmcat.glob_process]
+        "[mM]akefile" = "makefile_recipes"
+        "*.ipynb" = "ipynb_to_md"
+        "*.csv" = "csv_preview_5_lines"
+
 # for configuring this tool (makefile, make_docs.py)
 # ============================================================
 [tool.makefile]
