@@ -98,7 +98,7 @@ matplotlib-inline==0.1.7
 mdurl==0.1.2
 mistune==3.1.1
 mpmath==1.3.0
-muutils==0.7.0
+muutils==0.8.0
 mypy==1.14.1 ; python_full_version < '3.9'
 mypy==1.15.0 ; python_full_version >= '3.9'
 mypy-extensions==1.0.0

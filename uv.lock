@@ -2481,11 +2481,11 @@ wheels = [
 
 [[package]]
 name = "muutils"
-version = "0.7.0"
+version = "0.8.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/7e/5a/adf2787c34e693b24b589726b60f8a27efdd2d3d43bff9713eeaad7cdf4b/muutils-0.7.0.tar.gz", hash = "sha256:d5b0cb8240d518527204d6a9a4ec082d1ae119c71d8e1d87641c07df758269f5", size = 2425816 }
+sdist = { url = "https://files.pythonhosted.org/packages/e3/99/af101467bd227291d1adcaa340261a73f144aa11711a804eeebc7da859b9/muutils-0.8.0.tar.gz", hash = "sha256:73d1c714e980e4e371a1e09a54f7115e18fb1d5a1f406f064fc310df1d593ff5", size = 2458843 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c4/e5/e528b9a21f00c5e0b40b412ad24f1aff42ad79f3cccec29748d5a9da67fa/muutils-0.7.0-py3-none-any.whl", hash = "sha256:c6f881f0652c59b420581da759c780577b670cac31fa22b11af6a1a2aa9f3e1c", size = 106718 },
+    { url = "https://files.pythonhosted.org/packages/b1/3b/013ace104e284b6a4fddd19e74d62ee05ad97357b258561782c7e9a4f14f/muutils-0.8.0-py3-none-any.whl", hash = "sha256:de8d9567aea388f94d960d381a0553c30e820b99b7e4ae3c6f317bf61a06ad60", size = 107336 },
 ]
 
 [package.optional-dependencies]
@@ -5059,7 +5059,7 @@ lint = [
 
 [package.metadata]
 requires-dist = [
-    { name = "muutils", extras = ["array"], specifier = ">=0.6.1" },
+    { name = "muutils", extras = ["array"], specifier = ">=0.8.0" },
     { name = "numpy", specifier = ">=1.24.4" },
     { name = "pandas", marker = "extra == 'pandas'", specifier = ">=1.5.3" },
 ]
