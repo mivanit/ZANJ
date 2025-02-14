@@ -2,7 +2,7 @@
 #| python project makefile template                                 |
 #| originally by Michael Ivanitskiy (mivanits@umich.edu)            |
 #| https://github.com/mivanit/python-project-makefile-template      |
-#| version: v0.2.0                                                  |
+#| version: v0.2.1                                                  |
 #| license: https://creativecommons.org/licenses/by-sa/4.0/         |
 #| modifications from the original should be denoted with `~~~~~`   |
 #| as this makes it easier to find edits when updating makefile     |
@@ -168,9 +168,9 @@ import warnings
 try:
 	import tomllib  # Python 3.11+
 except ImportError:
-	import tomli as tomllib
+	import tomli as tomllib  # type: ignore
 from pathlib import Path
-from typing import Any, Union, List
+from typing import Any, Dict, Union, List
 from functools import reduce
 
 TOOL_PATH: str = "tool.makefile.uv-exports"
@@ -196,7 +196,6 @@ def export_configuration(
 	if not name or not name.isalnum():
 		warnings.warn(
 			f"Export configuration missing valid 'name' field {export}",
-			file=sys.stderr,
 		)
 		return
 
@@ -261,7 +260,7 @@ def main(
 	export_opts: dict = deep_get(pyproject_data, TOOL_PATH, {})
 
 	# what are we exporting?
-	exports: List[str] = export_opts.get("exports", [])
+	exports: List[Dict[str, Any]] = export_opts.get("exports", [])
 	if not exports:
 		exports = [{"name": "all", "groups": [], "extras": [], "options": []}]
 
@@ -295,7 +294,7 @@ try:
 	try:
 		import tomllib  # Python 3.11+
 	except ImportError:
-		import tomli as tomllib
+		import tomli as tomllib  # type: ignore
 
 	pyproject_path: str = sys.argv[1].strip()
 
@@ -434,9 +433,9 @@ def get_nvcc_info() -> Dict[str, str]:
 	return info
 
 
-def get_torch_info() -> Tuple[List[Exception], Dict[str, str]]:
+def get_torch_info() -> Tuple[List[Exception], Dict[str, Any]]:
 	exceptions: List[Exception] = []
-	info: Dict[str, str] = {}
+	info: Dict[str, Any] = {}
 
 	try:
 		import torch
@@ -454,7 +453,7 @@ def get_torch_info() -> Tuple[List[Exception], Dict[str, str]]:
 				info["n_devices"] = n_devices
 				for current_device in range(n_devices):
 					try:
-						current_device_info: Dict[str, str] = {}
+						current_device_info: Dict[str, Union[str, int]] = {}
 
 						dev_prop = torch.cuda.get_device_properties(
 							torch.device(f"cuda:{current_device}")
@@ -507,7 +506,7 @@ if __name__ == "__main__":
 		}
 	)
 
-	nvcc_info: Dict[str, str] = get_nvcc_info()
+	nvcc_info: Dict[str, Any] = get_nvcc_info()
 	print("nvcc:")
 	print_info_dict(nvcc_info)
 
@@ -543,7 +542,7 @@ from jinja2 import Template
 try:
 	import tomllib  # Python 3.11+
 except ImportError:
-	import tomli as tomllib
+	import tomli as tomllib  # type: ignore
 
 TOOL_PATH: str = "tool.makefile.inline-todo"
 
@@ -892,7 +891,7 @@ import argparse
 from pathlib import Path
 from typing import Optional
 
-from pdoc.markdown2 import Markdown, _safe_mode
+from pdoc.markdown2 import Markdown, _safe_mode  # type: ignore
 
 
 def convert_file(
@@ -958,9 +957,10 @@ from typing import Any, List, Set
 try:
 	import tomllib  # Python 3.11+
 except ImportError:
-	import tomli as tomllib
+	import tomli as tomllib  # type: ignore
 
 TOOL_PATH: str = "tool.makefile.docs"
+DEFAULT_DOCS_DIR: str = "docs"
 
 
 def deep_get(d: dict, path: str, default: Any = None, sep: str = ".") -> Any:
@@ -974,13 +974,13 @@ def deep_get(d: dict, path: str, default: Any = None, sep: str = ".") -> Any:
 
 def read_config(pyproject_path: Path) -> tuple[Path, Set[Path]]:
 	if not pyproject_path.is_file():
-		return set()
+		return Path(DEFAULT_DOCS_DIR), set()
 
 	with pyproject_path.open("rb") as f:
 		config = tomllib.load(f)
 
 	preserved: List[str] = deep_get(config, f"{TOOL_PATH}.no_clean", [])
-	docs_dir: Path = Path(deep_get(config, f"{TOOL_PATH}.output_dir", "docs"))
+	docs_dir: Path = Path(deep_get(config, f"{TOOL_PATH}.output_dir", DEFAULT_DOCS_DIR))
 
 	# Convert to absolute paths and validate
 	preserve_set: Set[Path] = set()

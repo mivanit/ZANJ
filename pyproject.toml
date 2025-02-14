@@ -21,7 +21,7 @@
 
     dependencies = [
         "numpy>=1.24.4",
-        "muutils[array]>=0.6.1",
+        "muutils[array]>=0.8.0",
     ]
 
 
