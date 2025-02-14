@@ -27,6 +27,7 @@ from muutils.json_serialize.array import load_array
 from muutils.json_serialize.json_serialize import ObjectPath
 from muutils.json_serialize.util import (
     _FORMAT_KEY,
+    _REF_KEY,
     JSONdict,
     JSONitem,
     safe_getsource,
@@ -428,6 +429,6 @@ class LoadedZANJ:
             self._externals, self._json_data
         ):
             # replace the item with the external item
-            assert "$ref" in item  # type: ignore
-            assert item["$ref"] == ext_path  # type: ignore
+            assert _REF_KEY in item  # type: ignore
+            assert item[_REF_KEY] == ext_path  # type: ignore
             item["data"] = ext_item.data  # type: ignore
