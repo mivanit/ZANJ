@@ -21,92 +21,72 @@ jobs:
           fetch-depth: 0
 
       - name: Install linters
-        run: make setup-format RUN_GLOBAL=1
+        run: pip install -r .meta/requirements/requirements-lint.txt
 
       - name: Run Format Checks
         run: make check-format RUN_GLOBAL=1
-
-  
-  check-deps:
-    name: Check dependencies
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-
-      - name: Install Poetry
-        run: curl -sSL https://install.python-poetry.org | python3 -
-      
-      - name: Poetry Plugins
-        run: |
-          poetry self add poetry-plugin-export
-          poetry self show plugins
-
-      - name: Check poetry.lock and .github/dev-requirements.txt
-        run: make check-dep-dev
-
-      - name: Install uv
-        run: pip install uv
-
-      - name: Install dependencies
-        run: uv pip install -r .github/dev-requirements.txt --system --no-deps # we already should have all dependencies exported into .github/dev-requirements.txt
-      
-      - name: Install torch (special)
-        run: uv pip install torch==2.3.1+cpu --system --extra-index-url https://download.pytorch.org/whl/cpu
-
-      - name: Install zanj (local)
-        run: uv pip install . --system
 
   test:
     name: Test and Lint
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        versions:
-          - python: "3.8"
-            torch: "1.13.1"
-          - python: "3.9"
-            torch: "1.13.1"
-          - python: "3.10"
-            torch: "1.13.1"
-          - python: "3.10"
-            torch: "2.3.1"
-          - python: "3.11"
-            torch: "2.3.1"
-          - python: "3.12"
-            torch: "2.3.1"
+        python: [3.8, 3.9, 3.10, 3.11, 3.12, 3.13]
+        torch: ["1.13.1", "2.3.1", ""]
+        numpy: ["1.21.2", "2.2.0", ""]
+        # exclude:
+        #   - python: "3.8"
+        #     torch: "1.13.1"
+        #     numpy: "1.21.2"
+        #   - python: "3.9"
+        #     torch: "1.13.1"
+        #     numpy: "1.21.2"
+        #   - python: "3.10"
+        #     torch: "1.13.1"
+        #     numpy: "1.21.2"
+        #   - python: "3.10"
+        #     torch: "2.3.1"
+        #   - python: "3.11"
+        #     torch: "2.3.1"
+        #   - python: "3.12"
+        #     torch: "2.3.1"
+        #   - python: "3.13"
+        #     torch: "2.6.0"
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with: 
-          fetch-depth: 0
+          fetch-depth: 1
 
       - name: Set up python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.versions.python }}
 
-      - name: Install uv
-        run: pip install uv
+
+      - name: set up uv
+        run: curl -LsSf https://astral.sh/uv/install.sh | sh
   
-      - name: Install dependencies
-        # install torch first to avoid pytorch index messing things up
+      - name: check dependencies
+        run: make dep-check
+
+      - name: install dependencies and package
+        run: make dep
+
+      - name: Install pytorch
+        if: ${{ matrix.versions.torch != '' }}
         run: |
-          uv pip install -r .github/dev-requirements.txt --system --no-deps
-          uv pip install torch==${{ matrix.versions.torch}}+cpu --system --extra-index-url https://download.pytorch.org/whl/cpu
-        
-      - name: Install zanj
-        run: uv pip install . --system
-        
+          uv pip install torch==${{ matrix.versions.torch }}+cpu --extra-index-url https://download.pytorch.org/whl/cpu
+      
+      - name: Install numpy
+        if: ${{ matrix.versions.numpy != '' }}
+        run: uv pip install numpy==${{ matrix.versions.numpy }}
+      
+      - name: format check
+        run: make check-format
+
       - name: tests
-        run: make test RUN_GLOBAL=1
+        run: make test
 
       # - name: tests in strict mode
       #   # TODO: until zanj ported to 3.8 and 3.9
@@ -114,4 +94,4 @@ jobs:
       #   run: make test WARN_STRICT=1 RUN_GLOBAL=1
 
       - name: check typing
-        run: make typing RUN_GLOBAL=1
+        run: make typing
