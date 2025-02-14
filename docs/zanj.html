@@ -1,0 +1,756 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="pdoc 15.0.1"/>
+    <title>zanj API documentation</title>
+<link rel="stylesheet" href="resources/css/bootstrap-reboot.min.css"><link rel="stylesheet" href="resources/css/syntax-highlighting.css"><link rel="stylesheet" href="resources/css/theme.css"><link rel="stylesheet" href="resources/css/layout.css"><link rel="stylesheet" href="resources/css/content.css"><link rel="stylesheet" href="resources/css/custom.css"><script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+    };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+    /* Re-invoke MathJax when DOM content changes, for example during search. */
+    document.addEventListener("DOMContentLoaded", () => {
+        new MutationObserver(() => MathJax.typeset()).observe(
+            document.querySelector("main.pdoc").parentNode,
+            {childList: true}
+        );
+    })
+</script>
+<style>
+    mjx-container {
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+</style><style>
+    .pdoc .mermaid-pre {
+        border: none;
+        background: none;
+    }
+</style>
+<script type="module" defer>
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+
+    /* Re-invoke Mermaid when DOM content changes, for example during search. */
+    document.addEventListener("DOMContentLoaded", () => {
+        new MutationObserver(() => mermaid.run()).observe(
+            document.querySelector("main.pdoc").parentNode,
+            {childList: true}
+        );
+    })
+</script></head>
+<body>
+<div class="package-version">
+    docs for <a href="https://github.com/mivanit/zanj">zanj</a> v0.4.0<br>
+</div>
+    <nav class="pdoc">
+        <label id="navtoggle" for="togglestate" class="pdoc-button">
+            <img src="resources/svg/navtoggle.svg" alt="Toggle navigation"> 
+        </label>
+        <input id="togglestate" type="checkbox" aria-hidden="true" tabindex="-1">
+        <div>
+
+
+
+
+            <h2>API Documentation</h2>
+                <ul class="memberlist">
+            <li>
+                    <a class="function" href="#register_loader_handler">register_loader_handler</a>
+            </li>
+            <li>
+                    <a class="class" href="#ZANJ">ZANJ</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="function" href="#ZANJ.__init__">ZANJ</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ZANJ.external_array_threshold">external_array_threshold</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ZANJ.external_list_threshold">external_list_threshold</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ZANJ.custom_settings">custom_settings</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ZANJ.compress">compress</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#ZANJ.externals_info">externals_info</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#ZANJ.meta">meta</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#ZANJ.save">save</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#ZANJ.read">read</a>
+                        </li>
+                </ul>
+
+            </li>
+    </ul>
+
+
+    <hr/>
+    
+    <div>
+        <a href="coverage/html/index.html" class="pdoc-button" title="View test coverage report">
+            Coverage
+        </a>
+        <a href="other/todo-inline.html" class="pdoc-button" title="Table of TODOs scraped from source code, with links to create issues from them">
+            TODOs
+        </a>
+        <a href="other/lmcat.txt" class="pdoc-button" title="a view of the repo contents made for LLMs, using https://miv.name/lmcat">
+            lmcat
+        </a>
+    </div>
+
+
+        <a class="attribution" title="pdoc: Python API documentation generator" href="https://pdoc.dev" target="_blank">
+            built with <span class="visually-hidden">pdoc</span>
+            <img src="resources/svg/pdoc-logo.svg" alt="pdoc logo"/>
+        </a>
+</div>
+    </nav>
+    <main class="pdoc">
+            <section class="module-info">
+                        <a class="pdoc-button git-button" href="https://github.com/mivanit/zanj/blob/0.4.0__init__.py">View Source on GitHub</a>
+                    <h1 class="modulename">
+zanj    </h1>
+
+                
+                        <input id="mod-zanj-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+
+                        <div class="source-button-container">
+            <label class="pdoc-button view-source-button" for="mod-zanj-view-source"><span>View Source</span></label>
+            <div class="github-button-wrapper">
+                <a class="pdoc-button github-link-button" href="https://github.com/mivanit/zanj/blob/0.4.0__init__.py#L0-L5" target="_blank">
+                    <span>View on GitHub</span>
+                </a>
+            </div>
+        </div>
+
+                <br/>
+                        <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos">1</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+</span><span id="L-2"><a href="#L-2"><span class="linenos">2</span></a>
+</span><span id="L-3"><a href="#L-3"><span class="linenos">3</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">zanj.loading</span><span class="w"> </span><span class="kn">import</span> <span class="n">register_loader_handler</span>
+</span><span id="L-4"><a href="#L-4"><span class="linenos">4</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">zanj.zanj</span><span class="w"> </span><span class="kn">import</span> <span class="n">ZANJ</span>
+</span><span id="L-5"><a href="#L-5"><span class="linenos">5</span></a>
+</span><span id="L-6"><a href="#L-6"><span class="linenos">6</span></a><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;register_loader_handler&quot;</span><span class="p">,</span> <span class="s2">&quot;ZANJ&quot;</span><span class="p">]</span>
+</span></pre></div>
+
+
+                <br/>
+            </section>
+                <section id="register_loader_handler">
+                            <input id="register_loader_handler-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">register_loader_handler</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">handler</span><span class="p">:</span> <span class="n">zanj</span><span class="o">.</span><span class="n">loading</span><span class="o">.</span><span class="n">LoaderHandler</span></span><span class="return-annotation">):</span></span>
+
+                <div class="source-button-container">
+            <label class="pdoc-button view-source-button" for="register_loader_handler-view-source"><span>View Source</span></label>
+            <div class="github-button-wrapper">
+                <a class="pdoc-button github-link-button" href="https://github.com/mivanit/zanj/blob/0.4.0__init__.py#L234-L238" target="_blank">
+                    <span>View on GitHub</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+    <a class="headerlink" href="#register_loader_handler"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="register_loader_handler-235"><a href="#register_loader_handler-235"><span class="linenos">235</span></a><span class="k">def</span><span class="w"> </span><span class="nf">register_loader_handler</span><span class="p">(</span><span class="n">handler</span><span class="p">:</span> <span class="n">LoaderHandler</span><span class="p">):</span>
+</span><span id="register_loader_handler-236"><a href="#register_loader_handler-236"><span class="linenos">236</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;register a custom loader handler&quot;&quot;&quot;</span>
+</span><span id="register_loader_handler-237"><a href="#register_loader_handler-237"><span class="linenos">237</span></a>    <span class="k">global</span> <span class="n">LOADER_MAP</span><span class="p">,</span> <span class="n">LOADER_MAP_LOCK</span>
+</span><span id="register_loader_handler-238"><a href="#register_loader_handler-238"><span class="linenos">238</span></a>    <span class="k">with</span> <span class="n">LOADER_MAP_LOCK</span><span class="p">:</span>
+</span><span id="register_loader_handler-239"><a href="#register_loader_handler-239"><span class="linenos">239</span></a>        <span class="n">LOADER_MAP</span><span class="p">[</span><span class="n">handler</span><span class="o">.</span><span class="n">uid</span><span class="p">]</span> <span class="o">=</span> <span class="n">handler</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>register a custom loader handler</p>
+</div>
+
+
+                </section>
+                <section id="ZANJ">
+                            <input id="ZANJ-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">ZANJ</span><wbr>(<span class="base">muutils.json_serialize.json_serialize.JsonSerializer</span>):
+
+                <div class="source-button-container">
+            <label class="pdoc-button view-source-button" for="ZANJ-view-source"><span>View Source</span></label>
+            <div class="github-button-wrapper">
+                <a class="pdoc-button github-link-button" href="https://github.com/mivanit/zanj/blob/0.4.0__init__.py#L66-L247" target="_blank">
+                    <span>View on GitHub</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+    <a class="headerlink" href="#ZANJ"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ZANJ-67"><a href="#ZANJ-67"><span class="linenos"> 67</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ZANJ</span><span class="p">(</span><span class="n">JsonSerializer</span><span class="p">):</span>
+</span><span id="ZANJ-68"><a href="#ZANJ-68"><span class="linenos"> 68</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Zip up: Arrays in Numpy, JSON for everything else</span>
+</span><span id="ZANJ-69"><a href="#ZANJ-69"><span class="linenos"> 69</span></a>
+</span><span id="ZANJ-70"><a href="#ZANJ-70"><span class="linenos"> 70</span></a><span class="sd">    given an arbitrary object, throw into a zip file, with arrays stored in .npy files, and everything else stored in a json file</span>
+</span><span id="ZANJ-71"><a href="#ZANJ-71"><span class="linenos"> 71</span></a>
+</span><span id="ZANJ-72"><a href="#ZANJ-72"><span class="linenos"> 72</span></a><span class="sd">    (basically npz file with json)</span>
+</span><span id="ZANJ-73"><a href="#ZANJ-73"><span class="linenos"> 73</span></a>
+</span><span id="ZANJ-74"><a href="#ZANJ-74"><span class="linenos"> 74</span></a><span class="sd">    - numpy (or pytorch) arrays are stored in paths according to their name and structure in the object</span>
+</span><span id="ZANJ-75"><a href="#ZANJ-75"><span class="linenos"> 75</span></a><span class="sd">    - everything else about the object is stored in a json file `zanj.json` in the root of the archive, via `muutils.json_serialize.JsonSerializer`</span>
+</span><span id="ZANJ-76"><a href="#ZANJ-76"><span class="linenos"> 76</span></a><span class="sd">    - metadata about ZANJ configuration, and optionally packages and versions, is stored in a `__zanj_meta__.json` file in the root of the archive</span>
+</span><span id="ZANJ-77"><a href="#ZANJ-77"><span class="linenos"> 77</span></a>
+</span><span id="ZANJ-78"><a href="#ZANJ-78"><span class="linenos"> 78</span></a><span class="sd">    create a ZANJ-class via `z_cls = ZANJ().create(obj)`, and save/read instances of the object via `z_cls.save(obj, path)`, `z_cls.load(path)`. be sure to pass an **instance** of the object, to make sure that the attributes of the class can be correctly recognized</span>
+</span><span id="ZANJ-79"><a href="#ZANJ-79"><span class="linenos"> 79</span></a>
+</span><span id="ZANJ-80"><a href="#ZANJ-80"><span class="linenos"> 80</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="ZANJ-81"><a href="#ZANJ-81"><span class="linenos"> 81</span></a>
+</span><span id="ZANJ-82"><a href="#ZANJ-82"><span class="linenos"> 82</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+</span><span id="ZANJ-83"><a href="#ZANJ-83"><span class="linenos"> 83</span></a>        <span class="bp">self</span><span class="p">,</span>
+</span><span id="ZANJ-84"><a href="#ZANJ-84"><span class="linenos"> 84</span></a>        <span class="n">error_mode</span><span class="p">:</span> <span class="n">ErrorMode</span> <span class="o">=</span> <span class="n">ZANJ_GLOBAL_DEFAULTS</span><span class="o">.</span><span class="n">error_mode</span><span class="p">,</span>
+</span><span id="ZANJ-85"><a href="#ZANJ-85"><span class="linenos"> 85</span></a>        <span class="n">internal_array_mode</span><span class="p">:</span> <span class="n">ArrayMode</span> <span class="o">=</span> <span class="n">ZANJ_GLOBAL_DEFAULTS</span><span class="o">.</span><span class="n">internal_array_mode</span><span class="p">,</span>
+</span><span id="ZANJ-86"><a href="#ZANJ-86"><span class="linenos"> 86</span></a>        <span class="n">external_array_threshold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ZANJ_GLOBAL_DEFAULTS</span><span class="o">.</span><span class="n">external_array_threshold</span><span class="p">,</span>
+</span><span id="ZANJ-87"><a href="#ZANJ-87"><span class="linenos"> 87</span></a>        <span class="n">external_list_threshold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ZANJ_GLOBAL_DEFAULTS</span><span class="o">.</span><span class="n">external_list_threshold</span><span class="p">,</span>
+</span><span id="ZANJ-88"><a href="#ZANJ-88"><span class="linenos"> 88</span></a>        <span class="n">compress</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ZANJ_GLOBAL_DEFAULTS</span><span class="o">.</span><span class="n">compress</span><span class="p">,</span>
+</span><span id="ZANJ-89"><a href="#ZANJ-89"><span class="linenos"> 89</span></a>        <span class="n">custom_settings</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">ZANJ_GLOBAL_DEFAULTS</span><span class="o">.</span><span class="n">custom_settings</span><span class="p">,</span>
+</span><span id="ZANJ-90"><a href="#ZANJ-90"><span class="linenos"> 90</span></a>        <span class="n">handlers_pre</span><span class="p">:</span> <span class="n">MonoTuple</span><span class="p">[</span><span class="n">SerializerHandler</span><span class="p">]</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(),</span>
+</span><span id="ZANJ-91"><a href="#ZANJ-91"><span class="linenos"> 91</span></a>        <span class="n">handlers_default</span><span class="p">:</span> <span class="n">MonoTuple</span><span class="p">[</span>
+</span><span id="ZANJ-92"><a href="#ZANJ-92"><span class="linenos"> 92</span></a>            <span class="n">SerializerHandler</span>
+</span><span id="ZANJ-93"><a href="#ZANJ-93"><span class="linenos"> 93</span></a>        <span class="p">]</span> <span class="o">=</span> <span class="n">DEFAULT_SERIALIZER_HANDLERS_ZANJ</span><span class="p">,</span>
+</span><span id="ZANJ-94"><a href="#ZANJ-94"><span class="linenos"> 94</span></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="ZANJ-95"><a href="#ZANJ-95"><span class="linenos"> 95</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+</span><span id="ZANJ-96"><a href="#ZANJ-96"><span class="linenos"> 96</span></a>            <span class="n">array_mode</span><span class="o">=</span><span class="n">internal_array_mode</span><span class="p">,</span>
+</span><span id="ZANJ-97"><a href="#ZANJ-97"><span class="linenos"> 97</span></a>            <span class="n">error_mode</span><span class="o">=</span><span class="n">error_mode</span><span class="p">,</span>
+</span><span id="ZANJ-98"><a href="#ZANJ-98"><span class="linenos"> 98</span></a>            <span class="n">handlers_pre</span><span class="o">=</span><span class="n">handlers_pre</span><span class="p">,</span>
+</span><span id="ZANJ-99"><a href="#ZANJ-99"><span class="linenos"> 99</span></a>            <span class="n">handlers_default</span><span class="o">=</span><span class="n">handlers_default</span><span class="p">,</span>
+</span><span id="ZANJ-100"><a href="#ZANJ-100"><span class="linenos">100</span></a>        <span class="p">)</span>
+</span><span id="ZANJ-101"><a href="#ZANJ-101"><span class="linenos">101</span></a>
+</span><span id="ZANJ-102"><a href="#ZANJ-102"><span class="linenos">102</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">external_array_threshold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">external_array_threshold</span>
+</span><span id="ZANJ-103"><a href="#ZANJ-103"><span class="linenos">103</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">external_list_threshold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">external_list_threshold</span>
+</span><span id="ZANJ-104"><a href="#ZANJ-104"><span class="linenos">104</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">custom_settings</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">(</span>
+</span><span id="ZANJ-105"><a href="#ZANJ-105"><span class="linenos">105</span></a>            <span class="n">custom_settings</span> <span class="k">if</span> <span class="n">custom_settings</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">dict</span><span class="p">()</span>
+</span><span id="ZANJ-106"><a href="#ZANJ-106"><span class="linenos">106</span></a>        <span class="p">)</span>
+</span><span id="ZANJ-107"><a href="#ZANJ-107"><span class="linenos">107</span></a>
+</span><span id="ZANJ-108"><a href="#ZANJ-108"><span class="linenos">108</span></a>        <span class="c1"># process compression to int if bool given</span>
+</span><span id="ZANJ-109"><a href="#ZANJ-109"><span class="linenos">109</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">compress</span> <span class="o">=</span> <span class="n">compress</span>
+</span><span id="ZANJ-110"><a href="#ZANJ-110"><span class="linenos">110</span></a>        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">compress</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+</span><span id="ZANJ-111"><a href="#ZANJ-111"><span class="linenos">111</span></a>            <span class="k">if</span> <span class="n">compress</span><span class="p">:</span>
+</span><span id="ZANJ-112"><a href="#ZANJ-112"><span class="linenos">112</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">compress</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZIP_DEFLATED</span>
+</span><span id="ZANJ-113"><a href="#ZANJ-113"><span class="linenos">113</span></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="ZANJ-114"><a href="#ZANJ-114"><span class="linenos">114</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">compress</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZIP_STORED</span>
+</span><span id="ZANJ-115"><a href="#ZANJ-115"><span class="linenos">115</span></a>
+</span><span id="ZANJ-116"><a href="#ZANJ-116"><span class="linenos">116</span></a>        <span class="c1"># create the externals, leave it empty</span>
+</span><span id="ZANJ-117"><a href="#ZANJ-117"><span class="linenos">117</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_externals</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ExternalItem</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+</span><span id="ZANJ-118"><a href="#ZANJ-118"><span class="linenos">118</span></a>
+</span><span id="ZANJ-119"><a href="#ZANJ-119"><span class="linenos">119</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">externals_info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]:</span>
+</span><span id="ZANJ-120"><a href="#ZANJ-120"><span class="linenos">120</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;return information about the current externals&quot;&quot;&quot;</span>
+</span><span id="ZANJ-121"><a href="#ZANJ-121"><span class="linenos">121</span></a>        <span class="n">output</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+</span><span id="ZANJ-122"><a href="#ZANJ-122"><span class="linenos">122</span></a>
+</span><span id="ZANJ-123"><a href="#ZANJ-123"><span class="linenos">123</span></a>        <span class="n">key</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="ZANJ-124"><a href="#ZANJ-124"><span class="linenos">124</span></a>        <span class="n">item</span><span class="p">:</span> <span class="n">ExternalItem</span>
+</span><span id="ZANJ-125"><a href="#ZANJ-125"><span class="linenos">125</span></a>        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_externals</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span><span id="ZANJ-126"><a href="#ZANJ-126"><span class="linenos">126</span></a>            <span class="n">data</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">data</span>
+</span><span id="ZANJ-127"><a href="#ZANJ-127"><span class="linenos">127</span></a>            <span class="n">output</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="ZANJ-128"><a href="#ZANJ-128"><span class="linenos">128</span></a>                <span class="s2">&quot;item_type&quot;</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">item_type</span><span class="p">,</span>
+</span><span id="ZANJ-129"><a href="#ZANJ-129"><span class="linenos">129</span></a>                <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
+</span><span id="ZANJ-130"><a href="#ZANJ-130"><span class="linenos">130</span></a>                <span class="s2">&quot;type(data)&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)),</span>
+</span><span id="ZANJ-131"><a href="#ZANJ-131"><span class="linenos">131</span></a>                <span class="s2">&quot;len(data)&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+</span><span id="ZANJ-132"><a href="#ZANJ-132"><span class="linenos">132</span></a>            <span class="p">}</span>
+</span><span id="ZANJ-133"><a href="#ZANJ-133"><span class="linenos">133</span></a>
+</span><span id="ZANJ-134"><a href="#ZANJ-134"><span class="linenos">134</span></a>            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">item_type</span> <span class="o">==</span> <span class="s2">&quot;ndarray&quot;</span><span class="p">:</span>
+</span><span id="ZANJ-135"><a href="#ZANJ-135"><span class="linenos">135</span></a>                <span class="n">output</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">arr_metadata</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+</span><span id="ZANJ-136"><a href="#ZANJ-136"><span class="linenos">136</span></a>            <span class="k">elif</span> <span class="n">item</span><span class="o">.</span><span class="n">item_type</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;jsonl&quot;</span><span class="p">):</span>
+</span><span id="ZANJ-137"><a href="#ZANJ-137"><span class="linenos">137</span></a>                <span class="n">output</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s2">&quot;data[0]&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="ZANJ-138"><a href="#ZANJ-138"><span class="linenos">138</span></a>
+</span><span id="ZANJ-139"><a href="#ZANJ-139"><span class="linenos">139</span></a>        <span class="k">return</span> <span class="p">{</span>
+</span><span id="ZANJ-140"><a href="#ZANJ-140"><span class="linenos">140</span></a>            <span class="n">key</span><span class="p">:</span> <span class="n">val</span>
+</span><span id="ZANJ-141"><a href="#ZANJ-141"><span class="linenos">141</span></a>            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;path&quot;</span><span class="p">]))</span>
+</span><span id="ZANJ-142"><a href="#ZANJ-142"><span class="linenos">142</span></a>        <span class="p">}</span>
+</span><span id="ZANJ-143"><a href="#ZANJ-143"><span class="linenos">143</span></a>
+</span><span id="ZANJ-144"><a href="#ZANJ-144"><span class="linenos">144</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">meta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">JSONitem</span><span class="p">:</span>
+</span><span id="ZANJ-145"><a href="#ZANJ-145"><span class="linenos">145</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;return the metadata of the ZANJ archive&quot;&quot;&quot;</span>
+</span><span id="ZANJ-146"><a href="#ZANJ-146"><span class="linenos">146</span></a>
+</span><span id="ZANJ-147"><a href="#ZANJ-147"><span class="linenos">147</span></a>        <span class="n">serialization_handlers</span> <span class="o">=</span> <span class="p">{</span><span class="n">h</span><span class="o">.</span><span class="n">uid</span><span class="p">:</span> <span class="n">h</span><span class="o">.</span><span class="n">serialize</span><span class="p">()</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">handlers</span><span class="p">}</span>
+</span><span id="ZANJ-148"><a href="#ZANJ-148"><span class="linenos">148</span></a>        <span class="n">load_handlers</span> <span class="o">=</span> <span class="p">{</span><span class="n">h</span><span class="o">.</span><span class="n">uid</span><span class="p">:</span> <span class="n">h</span><span class="o">.</span><span class="n">serialize</span><span class="p">()</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">LOADER_MAP</span><span class="o">.</span><span class="n">values</span><span class="p">()}</span>
+</span><span id="ZANJ-149"><a href="#ZANJ-149"><span class="linenos">149</span></a>
+</span><span id="ZANJ-150"><a href="#ZANJ-150"><span class="linenos">150</span></a>        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
+</span><span id="ZANJ-151"><a href="#ZANJ-151"><span class="linenos">151</span></a>            <span class="c1"># configuration of this ZANJ instance</span>
+</span><span id="ZANJ-152"><a href="#ZANJ-152"><span class="linenos">152</span></a>            <span class="n">zanj_cfg</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+</span><span id="ZANJ-153"><a href="#ZANJ-153"><span class="linenos">153</span></a>                <span class="n">error_mode</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">error_mode</span><span class="p">),</span>
+</span><span id="ZANJ-154"><a href="#ZANJ-154"><span class="linenos">154</span></a>                <span class="n">array_mode</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">array_mode</span><span class="p">),</span>
+</span><span id="ZANJ-155"><a href="#ZANJ-155"><span class="linenos">155</span></a>                <span class="n">external_array_threshold</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">external_array_threshold</span><span class="p">,</span>
+</span><span id="ZANJ-156"><a href="#ZANJ-156"><span class="linenos">156</span></a>                <span class="n">external_list_threshold</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">external_list_threshold</span><span class="p">,</span>
+</span><span id="ZANJ-157"><a href="#ZANJ-157"><span class="linenos">157</span></a>                <span class="n">compress</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">compress</span><span class="p">,</span>
+</span><span id="ZANJ-158"><a href="#ZANJ-158"><span class="linenos">158</span></a>                <span class="n">serialization_handlers</span><span class="o">=</span><span class="n">serialization_handlers</span><span class="p">,</span>
+</span><span id="ZANJ-159"><a href="#ZANJ-159"><span class="linenos">159</span></a>                <span class="n">load_handlers</span><span class="o">=</span><span class="n">load_handlers</span><span class="p">,</span>
+</span><span id="ZANJ-160"><a href="#ZANJ-160"><span class="linenos">160</span></a>            <span class="p">),</span>
+</span><span id="ZANJ-161"><a href="#ZANJ-161"><span class="linenos">161</span></a>            <span class="c1"># system info (python, pip packages, torch &amp; cuda, platform info, git info)</span>
+</span><span id="ZANJ-162"><a href="#ZANJ-162"><span class="linenos">162</span></a>            <span class="n">sysinfo</span><span class="o">=</span><span class="n">json_serialize</span><span class="p">(</span><span class="n">SysInfo</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;pytorch&quot;</span><span class="p">))),</span>
+</span><span id="ZANJ-163"><a href="#ZANJ-163"><span class="linenos">163</span></a>            <span class="n">externals_info</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">externals_info</span><span class="p">(),</span>
+</span><span id="ZANJ-164"><a href="#ZANJ-164"><span class="linenos">164</span></a>            <span class="n">timestamp</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span>
+</span><span id="ZANJ-165"><a href="#ZANJ-165"><span class="linenos">165</span></a>        <span class="p">)</span>
+</span><span id="ZANJ-166"><a href="#ZANJ-166"><span class="linenos">166</span></a>
+</span><span id="ZANJ-167"><a href="#ZANJ-167"><span class="linenos">167</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="ZANJ-168"><a href="#ZANJ-168"><span class="linenos">168</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;save the object to a ZANJ archive. returns the path to the archive&quot;&quot;&quot;</span>
+</span><span id="ZANJ-169"><a href="#ZANJ-169"><span class="linenos">169</span></a>
+</span><span id="ZANJ-170"><a href="#ZANJ-170"><span class="linenos">170</span></a>        <span class="c1"># adjust extension</span>
+</span><span id="ZANJ-171"><a href="#ZANJ-171"><span class="linenos">171</span></a>        <span class="n">file_path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+</span><span id="ZANJ-172"><a href="#ZANJ-172"><span class="linenos">172</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">file_path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.zanj&quot;</span><span class="p">):</span>
+</span><span id="ZANJ-173"><a href="#ZANJ-173"><span class="linenos">173</span></a>            <span class="n">file_path</span> <span class="o">+=</span> <span class="s2">&quot;.zanj&quot;</span>
+</span><span id="ZANJ-174"><a href="#ZANJ-174"><span class="linenos">174</span></a>
+</span><span id="ZANJ-175"><a href="#ZANJ-175"><span class="linenos">175</span></a>        <span class="c1"># make directory</span>
+</span><span id="ZANJ-176"><a href="#ZANJ-176"><span class="linenos">176</span></a>        <span class="n">dir_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+</span><span id="ZANJ-177"><a href="#ZANJ-177"><span class="linenos">177</span></a>        <span class="k">if</span> <span class="n">dir_path</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+</span><span id="ZANJ-178"><a href="#ZANJ-178"><span class="linenos">178</span></a>            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dir_path</span><span class="p">):</span>
+</span><span id="ZANJ-179"><a href="#ZANJ-179"><span class="linenos">179</span></a>                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">dir_path</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span><span id="ZANJ-180"><a href="#ZANJ-180"><span class="linenos">180</span></a>
+</span><span id="ZANJ-181"><a href="#ZANJ-181"><span class="linenos">181</span></a>        <span class="c1"># clear the externals!</span>
+</span><span id="ZANJ-182"><a href="#ZANJ-182"><span class="linenos">182</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_externals</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+</span><span id="ZANJ-183"><a href="#ZANJ-183"><span class="linenos">183</span></a>
+</span><span id="ZANJ-184"><a href="#ZANJ-184"><span class="linenos">184</span></a>        <span class="c1"># serialize the object -- this will populate self._externals</span>
+</span><span id="ZANJ-185"><a href="#ZANJ-185"><span class="linenos">185</span></a>        <span class="c1"># TODO: calling self.json_serialize again here might be slow</span>
+</span><span id="ZANJ-186"><a href="#ZANJ-186"><span class="linenos">186</span></a>        <span class="n">json_data</span><span class="p">:</span> <span class="n">JSONitem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">json_serialize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">json_serialize</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
+</span><span id="ZANJ-187"><a href="#ZANJ-187"><span class="linenos">187</span></a>
+</span><span id="ZANJ-188"><a href="#ZANJ-188"><span class="linenos">188</span></a>        <span class="c1"># open the zip file</span>
+</span><span id="ZANJ-189"><a href="#ZANJ-189"><span class="linenos">189</span></a>        <span class="n">zipf</span><span class="p">:</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span>
+</span><span id="ZANJ-190"><a href="#ZANJ-190"><span class="linenos">190</span></a>            <span class="n">file</span><span class="o">=</span><span class="n">file_path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">compression</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">compress</span>
+</span><span id="ZANJ-191"><a href="#ZANJ-191"><span class="linenos">191</span></a>        <span class="p">)</span>
+</span><span id="ZANJ-192"><a href="#ZANJ-192"><span class="linenos">192</span></a>
+</span><span id="ZANJ-193"><a href="#ZANJ-193"><span class="linenos">193</span></a>        <span class="c1"># store base json data and metadata</span>
+</span><span id="ZANJ-194"><a href="#ZANJ-194"><span class="linenos">194</span></a>        <span class="n">zipf</span><span class="o">.</span><span class="n">writestr</span><span class="p">(</span>
+</span><span id="ZANJ-195"><a href="#ZANJ-195"><span class="linenos">195</span></a>            <span class="n">ZANJ_META</span><span class="p">,</span>
+</span><span id="ZANJ-196"><a href="#ZANJ-196"><span class="linenos">196</span></a>            <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
+</span><span id="ZANJ-197"><a href="#ZANJ-197"><span class="linenos">197</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">json_serialize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">()),</span>
+</span><span id="ZANJ-198"><a href="#ZANJ-198"><span class="linenos">198</span></a>                <span class="n">indent</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span>
+</span><span id="ZANJ-199"><a href="#ZANJ-199"><span class="linenos">199</span></a>            <span class="p">),</span>
+</span><span id="ZANJ-200"><a href="#ZANJ-200"><span class="linenos">200</span></a>        <span class="p">)</span>
+</span><span id="ZANJ-201"><a href="#ZANJ-201"><span class="linenos">201</span></a>        <span class="n">zipf</span><span class="o">.</span><span class="n">writestr</span><span class="p">(</span>
+</span><span id="ZANJ-202"><a href="#ZANJ-202"><span class="linenos">202</span></a>            <span class="n">ZANJ_MAIN</span><span class="p">,</span>
+</span><span id="ZANJ-203"><a href="#ZANJ-203"><span class="linenos">203</span></a>            <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
+</span><span id="ZANJ-204"><a href="#ZANJ-204"><span class="linenos">204</span></a>                <span class="n">json_data</span><span class="p">,</span>
+</span><span id="ZANJ-205"><a href="#ZANJ-205"><span class="linenos">205</span></a>                <span class="n">indent</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span>
+</span><span id="ZANJ-206"><a href="#ZANJ-206"><span class="linenos">206</span></a>            <span class="p">),</span>
+</span><span id="ZANJ-207"><a href="#ZANJ-207"><span class="linenos">207</span></a>        <span class="p">)</span>
+</span><span id="ZANJ-208"><a href="#ZANJ-208"><span class="linenos">208</span></a>
+</span><span id="ZANJ-209"><a href="#ZANJ-209"><span class="linenos">209</span></a>        <span class="c1"># store externals</span>
+</span><span id="ZANJ-210"><a href="#ZANJ-210"><span class="linenos">210</span></a>        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="p">(</span><span class="n">ext_type</span><span class="p">,</span> <span class="n">ext_data</span><span class="p">,</span> <span class="n">ext_path</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_externals</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span><span id="ZANJ-211"><a href="#ZANJ-211"><span class="linenos">211</span></a>            <span class="c1"># why force zip64? numpy.savez does it</span>
+</span><span id="ZANJ-212"><a href="#ZANJ-212"><span class="linenos">212</span></a>            <span class="k">with</span> <span class="n">zipf</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">force_zip64</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+</span><span id="ZANJ-213"><a href="#ZANJ-213"><span class="linenos">213</span></a>                <span class="n">EXTERNAL_STORE_FUNCS</span><span class="p">[</span><span class="n">ext_type</span><span class="p">](</span><span class="bp">self</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">ext_data</span><span class="p">)</span>
+</span><span id="ZANJ-214"><a href="#ZANJ-214"><span class="linenos">214</span></a>
+</span><span id="ZANJ-215"><a href="#ZANJ-215"><span class="linenos">215</span></a>        <span class="n">zipf</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span id="ZANJ-216"><a href="#ZANJ-216"><span class="linenos">216</span></a>
+</span><span id="ZANJ-217"><a href="#ZANJ-217"><span class="linenos">217</span></a>        <span class="c1"># clear the externals, again</span>
+</span><span id="ZANJ-218"><a href="#ZANJ-218"><span class="linenos">218</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_externals</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+</span><span id="ZANJ-219"><a href="#ZANJ-219"><span class="linenos">219</span></a>
+</span><span id="ZANJ-220"><a href="#ZANJ-220"><span class="linenos">220</span></a>        <span class="k">return</span> <span class="n">file_path</span>
+</span><span id="ZANJ-221"><a href="#ZANJ-221"><span class="linenos">221</span></a>
+</span><span id="ZANJ-222"><a href="#ZANJ-222"><span class="linenos">222</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span>
+</span><span id="ZANJ-223"><a href="#ZANJ-223"><span class="linenos">223</span></a>        <span class="bp">self</span><span class="p">,</span>
+</span><span id="ZANJ-224"><a href="#ZANJ-224"><span class="linenos">224</span></a>        <span class="n">file_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+</span><span id="ZANJ-225"><a href="#ZANJ-225"><span class="linenos">225</span></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+</span><span id="ZANJ-226"><a href="#ZANJ-226"><span class="linenos">226</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;load the object from a ZANJ archive</span>
+</span><span id="ZANJ-227"><a href="#ZANJ-227"><span class="linenos">227</span></a><span class="sd">        # TODO: load only some part of the zanj file by passing an ObjectPath</span>
+</span><span id="ZANJ-228"><a href="#ZANJ-228"><span class="linenos">228</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="ZANJ-229"><a href="#ZANJ-229"><span class="linenos">229</span></a>        <span class="n">file_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+</span><span id="ZANJ-230"><a href="#ZANJ-230"><span class="linenos">230</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">file_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+</span><span id="ZANJ-231"><a href="#ZANJ-231"><span class="linenos">231</span></a>            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;file not found: </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="ZANJ-232"><a href="#ZANJ-232"><span class="linenos">232</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">file_path</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+</span><span id="ZANJ-233"><a href="#ZANJ-233"><span class="linenos">233</span></a>            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;not a file: </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="ZANJ-234"><a href="#ZANJ-234"><span class="linenos">234</span></a>
+</span><span id="ZANJ-235"><a href="#ZANJ-235"><span class="linenos">235</span></a>        <span class="n">loaded_zanj</span><span class="p">:</span> <span class="n">LoadedZANJ</span> <span class="o">=</span> <span class="n">LoadedZANJ</span><span class="p">(</span>
+</span><span id="ZANJ-236"><a href="#ZANJ-236"><span class="linenos">236</span></a>            <span class="n">path</span><span class="o">=</span><span class="n">file_path</span><span class="p">,</span>
+</span><span id="ZANJ-237"><a href="#ZANJ-237"><span class="linenos">237</span></a>            <span class="n">zanj</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+</span><span id="ZANJ-238"><a href="#ZANJ-238"><span class="linenos">238</span></a>        <span class="p">)</span>
+</span><span id="ZANJ-239"><a href="#ZANJ-239"><span class="linenos">239</span></a>
+</span><span id="ZANJ-240"><a href="#ZANJ-240"><span class="linenos">240</span></a>        <span class="n">loaded_zanj</span><span class="o">.</span><span class="n">populate_externals</span><span class="p">()</span>
+</span><span id="ZANJ-241"><a href="#ZANJ-241"><span class="linenos">241</span></a>
+</span><span id="ZANJ-242"><a href="#ZANJ-242"><span class="linenos">242</span></a>        <span class="k">return</span> <span class="n">load_item_recursive</span><span class="p">(</span>
+</span><span id="ZANJ-243"><a href="#ZANJ-243"><span class="linenos">243</span></a>            <span class="n">loaded_zanj</span><span class="o">.</span><span class="n">_json_data</span><span class="p">,</span>
+</span><span id="ZANJ-244"><a href="#ZANJ-244"><span class="linenos">244</span></a>            <span class="n">path</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(),</span>
+</span><span id="ZANJ-245"><a href="#ZANJ-245"><span class="linenos">245</span></a>            <span class="n">zanj</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+</span><span id="ZANJ-246"><a href="#ZANJ-246"><span class="linenos">246</span></a>            <span class="n">error_mode</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">error_mode</span><span class="p">,</span>
+</span><span id="ZANJ-247"><a href="#ZANJ-247"><span class="linenos">247</span></a>            <span class="c1"># lh_map=loader_handlers,</span>
+</span><span id="ZANJ-248"><a href="#ZANJ-248"><span class="linenos">248</span></a>        <span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Zip up: Arrays in Numpy, JSON for everything else</p>
+
+<p>given an arbitrary object, throw into a zip file, with arrays stored in .npy files, and everything else stored in a json file</p>
+
+<p>(basically npz file with json)</p>
+
+<ul>
+<li>numpy (or pytorch) arrays are stored in paths according to their name and structure in the object</li>
+<li>everything else about the object is stored in a json file <code>zanj.json</code> in the root of the archive, via <code>muutils.json_serialize.JsonSerializer</code></li>
+<li>metadata about ZANJ configuration, and optionally packages and versions, is stored in a <code>__zanj_meta__.json</code> file in the root of the archive</li>
+</ul>
+
+<p>create a ZANJ-class via <code>z_cls = ZANJ().create(obj)</code>, and save/read instances of the object via <code>z_cls.save(obj, path)</code>, <code>z_cls.load(path)</code>. be sure to pass an <strong>instance</strong> of the object, to make sure that the attributes of the class can be correctly recognized</p>
+</div>
+
+
+                            <div id="ZANJ.__init__" class="classattr">
+                                        <input id="ZANJ.__init__-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="name">ZANJ</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">error_mode</span><span class="p">:</span> <span class="n">muutils</span><span class="o">.</span><span class="n">errormode</span><span class="o">.</span><span class="n">ErrorMode</span> <span class="o">=</span> <span class="n">ErrorMode</span><span class="o">.</span><span class="n">Except</span>,</span><span class="param">	<span class="n">internal_array_mode</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;list&#39;</span><span class="p">,</span> <span class="s1">&#39;array_list_meta&#39;</span><span class="p">,</span> <span class="s1">&#39;array_hex_meta&#39;</span><span class="p">,</span> <span class="s1">&#39;array_b64_meta&#39;</span><span class="p">,</span> <span class="s1">&#39;external&#39;</span><span class="p">,</span> <span class="s1">&#39;zero_dim&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;array_list_meta&#39;</span>,</span><span class="param">	<span class="n">external_array_threshold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">256</span>,</span><span class="param">	<span class="n">external_list_threshold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">256</span>,</span><span class="param">	<span class="n">compress</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">True</span>,</span><span class="param">	<span class="n">custom_settings</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">handlers_pre</span><span class="p">:</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">()</span>,</span><span class="param">	<span class="n">handlers_default</span><span class="p">:</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span><span class="n">ZANJSerializerHandler</span><span class="p">(</span><span class="n">check</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">serialize_func</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">uid</span><span class="o">=</span><span class="s1">&#39;numpy.ndarray:external&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;external numpy array&#39;</span><span class="p">,</span> <span class="n">source_pckg</span><span class="o">=</span><span class="s1">&#39;zanj&#39;</span><span class="p">),</span> <span class="n">ZANJSerializerHandler</span><span class="p">(</span><span class="n">check</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">serialize_func</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">uid</span><span class="o">=</span><span class="s1">&#39;torch.Tensor:external&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;external torch tensor&#39;</span><span class="p">,</span> <span class="n">source_pckg</span><span class="o">=</span><span class="s1">&#39;zanj&#39;</span><span class="p">),</span> <span class="n">ZANJSerializerHandler</span><span class="p">(</span><span class="n">check</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">serialize_func</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">uid</span><span class="o">=</span><span class="s1">&#39;list:external&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;external list&#39;</span><span class="p">,</span> <span class="n">source_pckg</span><span class="o">=</span><span class="s1">&#39;zanj&#39;</span><span class="p">),</span> <span class="n">ZANJSerializerHandler</span><span class="p">(</span><span class="n">check</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">serialize_func</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">uid</span><span class="o">=</span><span class="s1">&#39;tuple:external&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;external tuple&#39;</span><span class="p">,</span> <span class="n">source_pckg</span><span class="o">=</span><span class="s1">&#39;zanj&#39;</span><span class="p">),</span> <span class="n">ZANJSerializerHandler</span><span class="p">(</span><span class="n">check</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">serialize_func</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">uid</span><span class="o">=</span><span class="s1">&#39;pandas.DataFrame:external&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;external pandas DataFrame&#39;</span><span class="p">,</span> <span class="n">source_pckg</span><span class="o">=</span><span class="s1">&#39;zanj&#39;</span><span class="p">),</span> <span class="n">SerializerHandler</span><span class="p">(</span><span class="n">check</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">serialize_func</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">uid</span><span class="o">=</span><span class="s1">&#39;base types&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;base types (bool, int, float, str, None)&#39;</span><span class="p">),</span> <span class="n">SerializerHandler</span><span class="p">(</span><span class="n">check</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">serialize_func</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">uid</span><span class="o">=</span><span class="s1">&#39;dictionaries&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;dictionaries&#39;</span><span class="p">),</span> <span class="n">SerializerHandler</span><span class="p">(</span><span class="n">check</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">serialize_func</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">uid</span><span class="o">=</span><span class="s1">&#39;(list, tuple) -&gt; list&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;lists and tuples as lists&#39;</span><span class="p">),</span> <span class="n">SerializerHandler</span><span class="p">(</span><span class="n">check</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">serialize_func</span><span class="o">=&lt;</span><span class="n">function</span> <span class="n">_serialize_override_serialize_func</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">uid</span><span class="o">=</span><span class="s1">&#39;.serialize override&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;objects with .serialize method&#39;</span><span class="p">),</span> <span class="n">SerializerHandler</span><span class="p">(</span><span class="n">check</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">serialize_func</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">uid</span><span class="o">=</span><span class="s1">&#39;namedtuple -&gt; dict&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;namedtuples as dicts&#39;</span><span class="p">),</span> <span class="n">SerializerHandler</span><span class="p">(</span><span class="n">check</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">serialize_func</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">uid</span><span class="o">=</span><span class="s1">&#39;dataclass -&gt; dict&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;dataclasses as dicts&#39;</span><span class="p">),</span> <span class="n">SerializerHandler</span><span class="p">(</span><span class="n">check</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">serialize_func</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">uid</span><span class="o">=</span><span class="s1">&#39;path -&gt; str&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;Path objects as posix strings&#39;</span><span class="p">),</span> <span class="n">SerializerHandler</span><span class="p">(</span><span class="n">check</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">serialize_func</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">uid</span><span class="o">=</span><span class="s1">&#39;obj -&gt; str(obj)&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;directly serialize objects in `SERIALIZE_DIRECT_AS_STR` to strings&#39;</span><span class="p">),</span> <span class="n">SerializerHandler</span><span class="p">(</span><span class="n">check</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">serialize_func</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">uid</span><span class="o">=</span><span class="s1">&#39;numpy.ndarray&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;numpy arrays&#39;</span><span class="p">),</span> <span class="n">SerializerHandler</span><span class="p">(</span><span class="n">check</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">serialize_func</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">uid</span><span class="o">=</span><span class="s1">&#39;torch.Tensor&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;pytorch tensors&#39;</span><span class="p">),</span> <span class="n">SerializerHandler</span><span class="p">(</span><span class="n">check</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">serialize_func</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">uid</span><span class="o">=</span><span class="s1">&#39;pandas.DataFrame&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;pandas DataFrames&#39;</span><span class="p">),</span> <span class="n">SerializerHandler</span><span class="p">(</span><span class="n">check</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">serialize_func</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">uid</span><span class="o">=</span><span class="s1">&#39;(set, list, tuple, Iterable) -&gt; list&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;sets, lists, tuples, and Iterables as lists&#39;</span><span class="p">),</span> <span class="n">SerializerHandler</span><span class="p">(</span><span class="n">check</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">serialize_func</span><span class="o">=&lt;</span><span class="n">function</span> <span class="o">&lt;</span><span class="k">lambda</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">uid</span><span class="o">=</span><span class="s1">&#39;fallback&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;fallback handler -- serialize object attributes and special functions as strings&#39;</span><span class="p">))</span></span>)</span>
+
+                <div class="source-button-container">
+            <label class="pdoc-button view-source-button" for="ZANJ.__init__-view-source"><span>View Source</span></label>
+            <div class="github-button-wrapper">
+                <a class="pdoc-button github-link-button" href="https://github.com/mivanit/zanj/blob/0.4.0__init__.py#L81-L116" target="_blank">
+                    <span>View on GitHub</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+    <a class="headerlink" href="#ZANJ.__init__"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ZANJ.__init__-82"><a href="#ZANJ.__init__-82"><span class="linenos"> 82</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+</span><span id="ZANJ.__init__-83"><a href="#ZANJ.__init__-83"><span class="linenos"> 83</span></a>        <span class="bp">self</span><span class="p">,</span>
+</span><span id="ZANJ.__init__-84"><a href="#ZANJ.__init__-84"><span class="linenos"> 84</span></a>        <span class="n">error_mode</span><span class="p">:</span> <span class="n">ErrorMode</span> <span class="o">=</span> <span class="n">ZANJ_GLOBAL_DEFAULTS</span><span class="o">.</span><span class="n">error_mode</span><span class="p">,</span>
+</span><span id="ZANJ.__init__-85"><a href="#ZANJ.__init__-85"><span class="linenos"> 85</span></a>        <span class="n">internal_array_mode</span><span class="p">:</span> <span class="n">ArrayMode</span> <span class="o">=</span> <span class="n">ZANJ_GLOBAL_DEFAULTS</span><span class="o">.</span><span class="n">internal_array_mode</span><span class="p">,</span>
+</span><span id="ZANJ.__init__-86"><a href="#ZANJ.__init__-86"><span class="linenos"> 86</span></a>        <span class="n">external_array_threshold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ZANJ_GLOBAL_DEFAULTS</span><span class="o">.</span><span class="n">external_array_threshold</span><span class="p">,</span>
+</span><span id="ZANJ.__init__-87"><a href="#ZANJ.__init__-87"><span class="linenos"> 87</span></a>        <span class="n">external_list_threshold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ZANJ_GLOBAL_DEFAULTS</span><span class="o">.</span><span class="n">external_list_threshold</span><span class="p">,</span>
+</span><span id="ZANJ.__init__-88"><a href="#ZANJ.__init__-88"><span class="linenos"> 88</span></a>        <span class="n">compress</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ZANJ_GLOBAL_DEFAULTS</span><span class="o">.</span><span class="n">compress</span><span class="p">,</span>
+</span><span id="ZANJ.__init__-89"><a href="#ZANJ.__init__-89"><span class="linenos"> 89</span></a>        <span class="n">custom_settings</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">ZANJ_GLOBAL_DEFAULTS</span><span class="o">.</span><span class="n">custom_settings</span><span class="p">,</span>
+</span><span id="ZANJ.__init__-90"><a href="#ZANJ.__init__-90"><span class="linenos"> 90</span></a>        <span class="n">handlers_pre</span><span class="p">:</span> <span class="n">MonoTuple</span><span class="p">[</span><span class="n">SerializerHandler</span><span class="p">]</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(),</span>
+</span><span id="ZANJ.__init__-91"><a href="#ZANJ.__init__-91"><span class="linenos"> 91</span></a>        <span class="n">handlers_default</span><span class="p">:</span> <span class="n">MonoTuple</span><span class="p">[</span>
+</span><span id="ZANJ.__init__-92"><a href="#ZANJ.__init__-92"><span class="linenos"> 92</span></a>            <span class="n">SerializerHandler</span>
+</span><span id="ZANJ.__init__-93"><a href="#ZANJ.__init__-93"><span class="linenos"> 93</span></a>        <span class="p">]</span> <span class="o">=</span> <span class="n">DEFAULT_SERIALIZER_HANDLERS_ZANJ</span><span class="p">,</span>
+</span><span id="ZANJ.__init__-94"><a href="#ZANJ.__init__-94"><span class="linenos"> 94</span></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="ZANJ.__init__-95"><a href="#ZANJ.__init__-95"><span class="linenos"> 95</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+</span><span id="ZANJ.__init__-96"><a href="#ZANJ.__init__-96"><span class="linenos"> 96</span></a>            <span class="n">array_mode</span><span class="o">=</span><span class="n">internal_array_mode</span><span class="p">,</span>
+</span><span id="ZANJ.__init__-97"><a href="#ZANJ.__init__-97"><span class="linenos"> 97</span></a>            <span class="n">error_mode</span><span class="o">=</span><span class="n">error_mode</span><span class="p">,</span>
+</span><span id="ZANJ.__init__-98"><a href="#ZANJ.__init__-98"><span class="linenos"> 98</span></a>            <span class="n">handlers_pre</span><span class="o">=</span><span class="n">handlers_pre</span><span class="p">,</span>
+</span><span id="ZANJ.__init__-99"><a href="#ZANJ.__init__-99"><span class="linenos"> 99</span></a>            <span class="n">handlers_default</span><span class="o">=</span><span class="n">handlers_default</span><span class="p">,</span>
+</span><span id="ZANJ.__init__-100"><a href="#ZANJ.__init__-100"><span class="linenos">100</span></a>        <span class="p">)</span>
+</span><span id="ZANJ.__init__-101"><a href="#ZANJ.__init__-101"><span class="linenos">101</span></a>
+</span><span id="ZANJ.__init__-102"><a href="#ZANJ.__init__-102"><span class="linenos">102</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">external_array_threshold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">external_array_threshold</span>
+</span><span id="ZANJ.__init__-103"><a href="#ZANJ.__init__-103"><span class="linenos">103</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">external_list_threshold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">external_list_threshold</span>
+</span><span id="ZANJ.__init__-104"><a href="#ZANJ.__init__-104"><span class="linenos">104</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">custom_settings</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">(</span>
+</span><span id="ZANJ.__init__-105"><a href="#ZANJ.__init__-105"><span class="linenos">105</span></a>            <span class="n">custom_settings</span> <span class="k">if</span> <span class="n">custom_settings</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">dict</span><span class="p">()</span>
+</span><span id="ZANJ.__init__-106"><a href="#ZANJ.__init__-106"><span class="linenos">106</span></a>        <span class="p">)</span>
+</span><span id="ZANJ.__init__-107"><a href="#ZANJ.__init__-107"><span class="linenos">107</span></a>
+</span><span id="ZANJ.__init__-108"><a href="#ZANJ.__init__-108"><span class="linenos">108</span></a>        <span class="c1"># process compression to int if bool given</span>
+</span><span id="ZANJ.__init__-109"><a href="#ZANJ.__init__-109"><span class="linenos">109</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">compress</span> <span class="o">=</span> <span class="n">compress</span>
+</span><span id="ZANJ.__init__-110"><a href="#ZANJ.__init__-110"><span class="linenos">110</span></a>        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">compress</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+</span><span id="ZANJ.__init__-111"><a href="#ZANJ.__init__-111"><span class="linenos">111</span></a>            <span class="k">if</span> <span class="n">compress</span><span class="p">:</span>
+</span><span id="ZANJ.__init__-112"><a href="#ZANJ.__init__-112"><span class="linenos">112</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">compress</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZIP_DEFLATED</span>
+</span><span id="ZANJ.__init__-113"><a href="#ZANJ.__init__-113"><span class="linenos">113</span></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="ZANJ.__init__-114"><a href="#ZANJ.__init__-114"><span class="linenos">114</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">compress</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZIP_STORED</span>
+</span><span id="ZANJ.__init__-115"><a href="#ZANJ.__init__-115"><span class="linenos">115</span></a>
+</span><span id="ZANJ.__init__-116"><a href="#ZANJ.__init__-116"><span class="linenos">116</span></a>        <span class="c1"># create the externals, leave it empty</span>
+</span><span id="ZANJ.__init__-117"><a href="#ZANJ.__init__-117"><span class="linenos">117</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_externals</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ExternalItem</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+</span></pre></div>
+
+
+    
+
+                            </div>
+                            <div id="ZANJ.external_array_threshold" class="classattr">
+                                <div class="attr variable">
+            <span class="name">external_array_threshold</span><span class="annotation">: int</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ZANJ.external_array_threshold"></a>
+    
+    
+
+                            </div>
+                            <div id="ZANJ.external_list_threshold" class="classattr">
+                                <div class="attr variable">
+            <span class="name">external_list_threshold</span><span class="annotation">: int</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ZANJ.external_list_threshold"></a>
+    
+    
+
+                            </div>
+                            <div id="ZANJ.custom_settings" class="classattr">
+                                <div class="attr variable">
+            <span class="name">custom_settings</span><span class="annotation">: dict</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ZANJ.custom_settings"></a>
+    
+    
+
+                            </div>
+                            <div id="ZANJ.compress" class="classattr">
+                                <div class="attr variable">
+            <span class="name">compress</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ZANJ.compress"></a>
+    
+    
+
+                            </div>
+                            <div id="ZANJ.externals_info" class="classattr">
+                                        <input id="ZANJ.externals_info-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">externals_info</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">) -> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span>:</span></span>
+
+                <div class="source-button-container">
+            <label class="pdoc-button view-source-button" for="ZANJ.externals_info-view-source"><span>View Source</span></label>
+            <div class="github-button-wrapper">
+                <a class="pdoc-button github-link-button" href="https://github.com/mivanit/zanj/blob/0.4.0__init__.py#L118-L141" target="_blank">
+                    <span>View on GitHub</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+    <a class="headerlink" href="#ZANJ.externals_info"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ZANJ.externals_info-119"><a href="#ZANJ.externals_info-119"><span class="linenos">119</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">externals_info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]:</span>
+</span><span id="ZANJ.externals_info-120"><a href="#ZANJ.externals_info-120"><span class="linenos">120</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;return information about the current externals&quot;&quot;&quot;</span>
+</span><span id="ZANJ.externals_info-121"><a href="#ZANJ.externals_info-121"><span class="linenos">121</span></a>        <span class="n">output</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+</span><span id="ZANJ.externals_info-122"><a href="#ZANJ.externals_info-122"><span class="linenos">122</span></a>
+</span><span id="ZANJ.externals_info-123"><a href="#ZANJ.externals_info-123"><span class="linenos">123</span></a>        <span class="n">key</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="ZANJ.externals_info-124"><a href="#ZANJ.externals_info-124"><span class="linenos">124</span></a>        <span class="n">item</span><span class="p">:</span> <span class="n">ExternalItem</span>
+</span><span id="ZANJ.externals_info-125"><a href="#ZANJ.externals_info-125"><span class="linenos">125</span></a>        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_externals</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span><span id="ZANJ.externals_info-126"><a href="#ZANJ.externals_info-126"><span class="linenos">126</span></a>            <span class="n">data</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">data</span>
+</span><span id="ZANJ.externals_info-127"><a href="#ZANJ.externals_info-127"><span class="linenos">127</span></a>            <span class="n">output</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="ZANJ.externals_info-128"><a href="#ZANJ.externals_info-128"><span class="linenos">128</span></a>                <span class="s2">&quot;item_type&quot;</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">item_type</span><span class="p">,</span>
+</span><span id="ZANJ.externals_info-129"><a href="#ZANJ.externals_info-129"><span class="linenos">129</span></a>                <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
+</span><span id="ZANJ.externals_info-130"><a href="#ZANJ.externals_info-130"><span class="linenos">130</span></a>                <span class="s2">&quot;type(data)&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)),</span>
+</span><span id="ZANJ.externals_info-131"><a href="#ZANJ.externals_info-131"><span class="linenos">131</span></a>                <span class="s2">&quot;len(data)&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+</span><span id="ZANJ.externals_info-132"><a href="#ZANJ.externals_info-132"><span class="linenos">132</span></a>            <span class="p">}</span>
+</span><span id="ZANJ.externals_info-133"><a href="#ZANJ.externals_info-133"><span class="linenos">133</span></a>
+</span><span id="ZANJ.externals_info-134"><a href="#ZANJ.externals_info-134"><span class="linenos">134</span></a>            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">item_type</span> <span class="o">==</span> <span class="s2">&quot;ndarray&quot;</span><span class="p">:</span>
+</span><span id="ZANJ.externals_info-135"><a href="#ZANJ.externals_info-135"><span class="linenos">135</span></a>                <span class="n">output</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">arr_metadata</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+</span><span id="ZANJ.externals_info-136"><a href="#ZANJ.externals_info-136"><span class="linenos">136</span></a>            <span class="k">elif</span> <span class="n">item</span><span class="o">.</span><span class="n">item_type</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;jsonl&quot;</span><span class="p">):</span>
+</span><span id="ZANJ.externals_info-137"><a href="#ZANJ.externals_info-137"><span class="linenos">137</span></a>                <span class="n">output</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s2">&quot;data[0]&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="ZANJ.externals_info-138"><a href="#ZANJ.externals_info-138"><span class="linenos">138</span></a>
+</span><span id="ZANJ.externals_info-139"><a href="#ZANJ.externals_info-139"><span class="linenos">139</span></a>        <span class="k">return</span> <span class="p">{</span>
+</span><span id="ZANJ.externals_info-140"><a href="#ZANJ.externals_info-140"><span class="linenos">140</span></a>            <span class="n">key</span><span class="p">:</span> <span class="n">val</span>
+</span><span id="ZANJ.externals_info-141"><a href="#ZANJ.externals_info-141"><span class="linenos">141</span></a>            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;path&quot;</span><span class="p">]))</span>
+</span><span id="ZANJ.externals_info-142"><a href="#ZANJ.externals_info-142"><span class="linenos">142</span></a>        <span class="p">}</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>return information about the current externals</p>
+</div>
+
+
+                            </div>
+                            <div id="ZANJ.meta" class="classattr">
+                                        <input id="ZANJ.meta-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">meta</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="bp">self</span></span><span class="return-annotation">) -> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">NoneType</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">NoneType</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">NoneType</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]]</span>:</span></span>
+
+                <div class="source-button-container">
+            <label class="pdoc-button view-source-button" for="ZANJ.meta-view-source"><span>View Source</span></label>
+            <div class="github-button-wrapper">
+                <a class="pdoc-button github-link-button" href="https://github.com/mivanit/zanj/blob/0.4.0__init__.py#L143-L164" target="_blank">
+                    <span>View on GitHub</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+    <a class="headerlink" href="#ZANJ.meta"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ZANJ.meta-144"><a href="#ZANJ.meta-144"><span class="linenos">144</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">meta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">JSONitem</span><span class="p">:</span>
+</span><span id="ZANJ.meta-145"><a href="#ZANJ.meta-145"><span class="linenos">145</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;return the metadata of the ZANJ archive&quot;&quot;&quot;</span>
+</span><span id="ZANJ.meta-146"><a href="#ZANJ.meta-146"><span class="linenos">146</span></a>
+</span><span id="ZANJ.meta-147"><a href="#ZANJ.meta-147"><span class="linenos">147</span></a>        <span class="n">serialization_handlers</span> <span class="o">=</span> <span class="p">{</span><span class="n">h</span><span class="o">.</span><span class="n">uid</span><span class="p">:</span> <span class="n">h</span><span class="o">.</span><span class="n">serialize</span><span class="p">()</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">handlers</span><span class="p">}</span>
+</span><span id="ZANJ.meta-148"><a href="#ZANJ.meta-148"><span class="linenos">148</span></a>        <span class="n">load_handlers</span> <span class="o">=</span> <span class="p">{</span><span class="n">h</span><span class="o">.</span><span class="n">uid</span><span class="p">:</span> <span class="n">h</span><span class="o">.</span><span class="n">serialize</span><span class="p">()</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">LOADER_MAP</span><span class="o">.</span><span class="n">values</span><span class="p">()}</span>
+</span><span id="ZANJ.meta-149"><a href="#ZANJ.meta-149"><span class="linenos">149</span></a>
+</span><span id="ZANJ.meta-150"><a href="#ZANJ.meta-150"><span class="linenos">150</span></a>        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
+</span><span id="ZANJ.meta-151"><a href="#ZANJ.meta-151"><span class="linenos">151</span></a>            <span class="c1"># configuration of this ZANJ instance</span>
+</span><span id="ZANJ.meta-152"><a href="#ZANJ.meta-152"><span class="linenos">152</span></a>            <span class="n">zanj_cfg</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+</span><span id="ZANJ.meta-153"><a href="#ZANJ.meta-153"><span class="linenos">153</span></a>                <span class="n">error_mode</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">error_mode</span><span class="p">),</span>
+</span><span id="ZANJ.meta-154"><a href="#ZANJ.meta-154"><span class="linenos">154</span></a>                <span class="n">array_mode</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">array_mode</span><span class="p">),</span>
+</span><span id="ZANJ.meta-155"><a href="#ZANJ.meta-155"><span class="linenos">155</span></a>                <span class="n">external_array_threshold</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">external_array_threshold</span><span class="p">,</span>
+</span><span id="ZANJ.meta-156"><a href="#ZANJ.meta-156"><span class="linenos">156</span></a>                <span class="n">external_list_threshold</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">external_list_threshold</span><span class="p">,</span>
+</span><span id="ZANJ.meta-157"><a href="#ZANJ.meta-157"><span class="linenos">157</span></a>                <span class="n">compress</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">compress</span><span class="p">,</span>
+</span><span id="ZANJ.meta-158"><a href="#ZANJ.meta-158"><span class="linenos">158</span></a>                <span class="n">serialization_handlers</span><span class="o">=</span><span class="n">serialization_handlers</span><span class="p">,</span>
+</span><span id="ZANJ.meta-159"><a href="#ZANJ.meta-159"><span class="linenos">159</span></a>                <span class="n">load_handlers</span><span class="o">=</span><span class="n">load_handlers</span><span class="p">,</span>
+</span><span id="ZANJ.meta-160"><a href="#ZANJ.meta-160"><span class="linenos">160</span></a>            <span class="p">),</span>
+</span><span id="ZANJ.meta-161"><a href="#ZANJ.meta-161"><span class="linenos">161</span></a>            <span class="c1"># system info (python, pip packages, torch &amp; cuda, platform info, git info)</span>
+</span><span id="ZANJ.meta-162"><a href="#ZANJ.meta-162"><span class="linenos">162</span></a>            <span class="n">sysinfo</span><span class="o">=</span><span class="n">json_serialize</span><span class="p">(</span><span class="n">SysInfo</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;pytorch&quot;</span><span class="p">))),</span>
+</span><span id="ZANJ.meta-163"><a href="#ZANJ.meta-163"><span class="linenos">163</span></a>            <span class="n">externals_info</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">externals_info</span><span class="p">(),</span>
+</span><span id="ZANJ.meta-164"><a href="#ZANJ.meta-164"><span class="linenos">164</span></a>            <span class="n">timestamp</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span>
+</span><span id="ZANJ.meta-165"><a href="#ZANJ.meta-165"><span class="linenos">165</span></a>        <span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>return the metadata of the ZANJ archive</p>
+</div>
+
+
+                            </div>
+                            <div id="ZANJ.save" class="classattr">
+                                        <input id="ZANJ.save-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">save</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">obj</span><span class="p">:</span> <span class="n">Any</span>, </span><span class="param"><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span></span><span class="return-annotation">) -> <span class="nb">str</span>:</span></span>
+
+                <div class="source-button-container">
+            <label class="pdoc-button view-source-button" for="ZANJ.save-view-source"><span>View Source</span></label>
+            <div class="github-button-wrapper">
+                <a class="pdoc-button github-link-button" href="https://github.com/mivanit/zanj/blob/0.4.0__init__.py#L166-L219" target="_blank">
+                    <span>View on GitHub</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+    <a class="headerlink" href="#ZANJ.save"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ZANJ.save-167"><a href="#ZANJ.save-167"><span class="linenos">167</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="ZANJ.save-168"><a href="#ZANJ.save-168"><span class="linenos">168</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;save the object to a ZANJ archive. returns the path to the archive&quot;&quot;&quot;</span>
+</span><span id="ZANJ.save-169"><a href="#ZANJ.save-169"><span class="linenos">169</span></a>
+</span><span id="ZANJ.save-170"><a href="#ZANJ.save-170"><span class="linenos">170</span></a>        <span class="c1"># adjust extension</span>
+</span><span id="ZANJ.save-171"><a href="#ZANJ.save-171"><span class="linenos">171</span></a>        <span class="n">file_path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+</span><span id="ZANJ.save-172"><a href="#ZANJ.save-172"><span class="linenos">172</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">file_path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.zanj&quot;</span><span class="p">):</span>
+</span><span id="ZANJ.save-173"><a href="#ZANJ.save-173"><span class="linenos">173</span></a>            <span class="n">file_path</span> <span class="o">+=</span> <span class="s2">&quot;.zanj&quot;</span>
+</span><span id="ZANJ.save-174"><a href="#ZANJ.save-174"><span class="linenos">174</span></a>
+</span><span id="ZANJ.save-175"><a href="#ZANJ.save-175"><span class="linenos">175</span></a>        <span class="c1"># make directory</span>
+</span><span id="ZANJ.save-176"><a href="#ZANJ.save-176"><span class="linenos">176</span></a>        <span class="n">dir_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+</span><span id="ZANJ.save-177"><a href="#ZANJ.save-177"><span class="linenos">177</span></a>        <span class="k">if</span> <span class="n">dir_path</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+</span><span id="ZANJ.save-178"><a href="#ZANJ.save-178"><span class="linenos">178</span></a>            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dir_path</span><span class="p">):</span>
+</span><span id="ZANJ.save-179"><a href="#ZANJ.save-179"><span class="linenos">179</span></a>                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">dir_path</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span><span id="ZANJ.save-180"><a href="#ZANJ.save-180"><span class="linenos">180</span></a>
+</span><span id="ZANJ.save-181"><a href="#ZANJ.save-181"><span class="linenos">181</span></a>        <span class="c1"># clear the externals!</span>
+</span><span id="ZANJ.save-182"><a href="#ZANJ.save-182"><span class="linenos">182</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_externals</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+</span><span id="ZANJ.save-183"><a href="#ZANJ.save-183"><span class="linenos">183</span></a>
+</span><span id="ZANJ.save-184"><a href="#ZANJ.save-184"><span class="linenos">184</span></a>        <span class="c1"># serialize the object -- this will populate self._externals</span>
+</span><span id="ZANJ.save-185"><a href="#ZANJ.save-185"><span class="linenos">185</span></a>        <span class="c1"># TODO: calling self.json_serialize again here might be slow</span>
+</span><span id="ZANJ.save-186"><a href="#ZANJ.save-186"><span class="linenos">186</span></a>        <span class="n">json_data</span><span class="p">:</span> <span class="n">JSONitem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">json_serialize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">json_serialize</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
+</span><span id="ZANJ.save-187"><a href="#ZANJ.save-187"><span class="linenos">187</span></a>
+</span><span id="ZANJ.save-188"><a href="#ZANJ.save-188"><span class="linenos">188</span></a>        <span class="c1"># open the zip file</span>
+</span><span id="ZANJ.save-189"><a href="#ZANJ.save-189"><span class="linenos">189</span></a>        <span class="n">zipf</span><span class="p">:</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span>
+</span><span id="ZANJ.save-190"><a href="#ZANJ.save-190"><span class="linenos">190</span></a>            <span class="n">file</span><span class="o">=</span><span class="n">file_path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">compression</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">compress</span>
+</span><span id="ZANJ.save-191"><a href="#ZANJ.save-191"><span class="linenos">191</span></a>        <span class="p">)</span>
+</span><span id="ZANJ.save-192"><a href="#ZANJ.save-192"><span class="linenos">192</span></a>
+</span><span id="ZANJ.save-193"><a href="#ZANJ.save-193"><span class="linenos">193</span></a>        <span class="c1"># store base json data and metadata</span>
+</span><span id="ZANJ.save-194"><a href="#ZANJ.save-194"><span class="linenos">194</span></a>        <span class="n">zipf</span><span class="o">.</span><span class="n">writestr</span><span class="p">(</span>
+</span><span id="ZANJ.save-195"><a href="#ZANJ.save-195"><span class="linenos">195</span></a>            <span class="n">ZANJ_META</span><span class="p">,</span>
+</span><span id="ZANJ.save-196"><a href="#ZANJ.save-196"><span class="linenos">196</span></a>            <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
+</span><span id="ZANJ.save-197"><a href="#ZANJ.save-197"><span class="linenos">197</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">json_serialize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">()),</span>
+</span><span id="ZANJ.save-198"><a href="#ZANJ.save-198"><span class="linenos">198</span></a>                <span class="n">indent</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span>
+</span><span id="ZANJ.save-199"><a href="#ZANJ.save-199"><span class="linenos">199</span></a>            <span class="p">),</span>
+</span><span id="ZANJ.save-200"><a href="#ZANJ.save-200"><span class="linenos">200</span></a>        <span class="p">)</span>
+</span><span id="ZANJ.save-201"><a href="#ZANJ.save-201"><span class="linenos">201</span></a>        <span class="n">zipf</span><span class="o">.</span><span class="n">writestr</span><span class="p">(</span>
+</span><span id="ZANJ.save-202"><a href="#ZANJ.save-202"><span class="linenos">202</span></a>            <span class="n">ZANJ_MAIN</span><span class="p">,</span>
+</span><span id="ZANJ.save-203"><a href="#ZANJ.save-203"><span class="linenos">203</span></a>            <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
+</span><span id="ZANJ.save-204"><a href="#ZANJ.save-204"><span class="linenos">204</span></a>                <span class="n">json_data</span><span class="p">,</span>
+</span><span id="ZANJ.save-205"><a href="#ZANJ.save-205"><span class="linenos">205</span></a>                <span class="n">indent</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span>
+</span><span id="ZANJ.save-206"><a href="#ZANJ.save-206"><span class="linenos">206</span></a>            <span class="p">),</span>
+</span><span id="ZANJ.save-207"><a href="#ZANJ.save-207"><span class="linenos">207</span></a>        <span class="p">)</span>
+</span><span id="ZANJ.save-208"><a href="#ZANJ.save-208"><span class="linenos">208</span></a>
+</span><span id="ZANJ.save-209"><a href="#ZANJ.save-209"><span class="linenos">209</span></a>        <span class="c1"># store externals</span>
+</span><span id="ZANJ.save-210"><a href="#ZANJ.save-210"><span class="linenos">210</span></a>        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="p">(</span><span class="n">ext_type</span><span class="p">,</span> <span class="n">ext_data</span><span class="p">,</span> <span class="n">ext_path</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_externals</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span><span id="ZANJ.save-211"><a href="#ZANJ.save-211"><span class="linenos">211</span></a>            <span class="c1"># why force zip64? numpy.savez does it</span>
+</span><span id="ZANJ.save-212"><a href="#ZANJ.save-212"><span class="linenos">212</span></a>            <span class="k">with</span> <span class="n">zipf</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">force_zip64</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+</span><span id="ZANJ.save-213"><a href="#ZANJ.save-213"><span class="linenos">213</span></a>                <span class="n">EXTERNAL_STORE_FUNCS</span><span class="p">[</span><span class="n">ext_type</span><span class="p">](</span><span class="bp">self</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">ext_data</span><span class="p">)</span>
+</span><span id="ZANJ.save-214"><a href="#ZANJ.save-214"><span class="linenos">214</span></a>
+</span><span id="ZANJ.save-215"><a href="#ZANJ.save-215"><span class="linenos">215</span></a>        <span class="n">zipf</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span id="ZANJ.save-216"><a href="#ZANJ.save-216"><span class="linenos">216</span></a>
+</span><span id="ZANJ.save-217"><a href="#ZANJ.save-217"><span class="linenos">217</span></a>        <span class="c1"># clear the externals, again</span>
+</span><span id="ZANJ.save-218"><a href="#ZANJ.save-218"><span class="linenos">218</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_externals</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+</span><span id="ZANJ.save-219"><a href="#ZANJ.save-219"><span class="linenos">219</span></a>
+</span><span id="ZANJ.save-220"><a href="#ZANJ.save-220"><span class="linenos">220</span></a>        <span class="k">return</span> <span class="n">file_path</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>save the object to a ZANJ archive. returns the path to the archive</p>
+</div>
+
+
+                            </div>
+                            <div id="ZANJ.read" class="classattr">
+                                        <input id="ZANJ.read-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">read</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">file_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">]</span></span><span class="return-annotation">) -> <span class="n">Any</span>:</span></span>
+
+                <div class="source-button-container">
+            <label class="pdoc-button view-source-button" for="ZANJ.read-view-source"><span>View Source</span></label>
+            <div class="github-button-wrapper">
+                <a class="pdoc-button github-link-button" href="https://github.com/mivanit/zanj/blob/0.4.0__init__.py#L221-L247" target="_blank">
+                    <span>View on GitHub</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+    <a class="headerlink" href="#ZANJ.read"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ZANJ.read-222"><a href="#ZANJ.read-222"><span class="linenos">222</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span>
+</span><span id="ZANJ.read-223"><a href="#ZANJ.read-223"><span class="linenos">223</span></a>        <span class="bp">self</span><span class="p">,</span>
+</span><span id="ZANJ.read-224"><a href="#ZANJ.read-224"><span class="linenos">224</span></a>        <span class="n">file_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+</span><span id="ZANJ.read-225"><a href="#ZANJ.read-225"><span class="linenos">225</span></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+</span><span id="ZANJ.read-226"><a href="#ZANJ.read-226"><span class="linenos">226</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;load the object from a ZANJ archive</span>
+</span><span id="ZANJ.read-227"><a href="#ZANJ.read-227"><span class="linenos">227</span></a><span class="sd">        # TODO: load only some part of the zanj file by passing an ObjectPath</span>
+</span><span id="ZANJ.read-228"><a href="#ZANJ.read-228"><span class="linenos">228</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="ZANJ.read-229"><a href="#ZANJ.read-229"><span class="linenos">229</span></a>        <span class="n">file_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+</span><span id="ZANJ.read-230"><a href="#ZANJ.read-230"><span class="linenos">230</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">file_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+</span><span id="ZANJ.read-231"><a href="#ZANJ.read-231"><span class="linenos">231</span></a>            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;file not found: </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="ZANJ.read-232"><a href="#ZANJ.read-232"><span class="linenos">232</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">file_path</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+</span><span id="ZANJ.read-233"><a href="#ZANJ.read-233"><span class="linenos">233</span></a>            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;not a file: </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="ZANJ.read-234"><a href="#ZANJ.read-234"><span class="linenos">234</span></a>
+</span><span id="ZANJ.read-235"><a href="#ZANJ.read-235"><span class="linenos">235</span></a>        <span class="n">loaded_zanj</span><span class="p">:</span> <span class="n">LoadedZANJ</span> <span class="o">=</span> <span class="n">LoadedZANJ</span><span class="p">(</span>
+</span><span id="ZANJ.read-236"><a href="#ZANJ.read-236"><span class="linenos">236</span></a>            <span class="n">path</span><span class="o">=</span><span class="n">file_path</span><span class="p">,</span>
+</span><span id="ZANJ.read-237"><a href="#ZANJ.read-237"><span class="linenos">237</span></a>            <span class="n">zanj</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+</span><span id="ZANJ.read-238"><a href="#ZANJ.read-238"><span class="linenos">238</span></a>        <span class="p">)</span>
+</span><span id="ZANJ.read-239"><a href="#ZANJ.read-239"><span class="linenos">239</span></a>
+</span><span id="ZANJ.read-240"><a href="#ZANJ.read-240"><span class="linenos">240</span></a>        <span class="n">loaded_zanj</span><span class="o">.</span><span class="n">populate_externals</span><span class="p">()</span>
+</span><span id="ZANJ.read-241"><a href="#ZANJ.read-241"><span class="linenos">241</span></a>
+</span><span id="ZANJ.read-242"><a href="#ZANJ.read-242"><span class="linenos">242</span></a>        <span class="k">return</span> <span class="n">load_item_recursive</span><span class="p">(</span>
+</span><span id="ZANJ.read-243"><a href="#ZANJ.read-243"><span class="linenos">243</span></a>            <span class="n">loaded_zanj</span><span class="o">.</span><span class="n">_json_data</span><span class="p">,</span>
+</span><span id="ZANJ.read-244"><a href="#ZANJ.read-244"><span class="linenos">244</span></a>            <span class="n">path</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(),</span>
+</span><span id="ZANJ.read-245"><a href="#ZANJ.read-245"><span class="linenos">245</span></a>            <span class="n">zanj</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+</span><span id="ZANJ.read-246"><a href="#ZANJ.read-246"><span class="linenos">246</span></a>            <span class="n">error_mode</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">error_mode</span><span class="p">,</span>
+</span><span id="ZANJ.read-247"><a href="#ZANJ.read-247"><span class="linenos">247</span></a>            <span class="c1"># lh_map=loader_handlers,</span>
+</span><span id="ZANJ.read-248"><a href="#ZANJ.read-248"><span class="linenos">248</span></a>        <span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>load the object from a ZANJ archive</p>
+
+<h1 id="todo-load-only-some-part-of-the-zanj-file-by-passing-an-objectpath">TODO: load only some part of the zanj file by passing an ObjectPath</h1>
+</div>
+
+
+                            </div>
+                            <div class="inherited">
+                                <h5>Inherited Members</h5>
+                                <dl>
+                                    <div><dt>muutils.json_serialize.json_serialize.JsonSerializer</dt>
+                                <dd id="ZANJ.array_mode" class="variable">array_mode</dd>
+                <dd id="ZANJ.error_mode" class="variable">error_mode</dd>
+                <dd id="ZANJ.write_only_format" class="variable">write_only_format</dd>
+                <dd id="ZANJ.handlers" class="variable">handlers</dd>
+                <dd id="ZANJ.json_serialize" class="function">json_serialize</dd>
+                <dd id="ZANJ.hashify" class="function">hashify</dd>
+
+            </div>
+                                </dl>
+                            </div>
+                </section>
+    </main>
+</body>
+</html>
