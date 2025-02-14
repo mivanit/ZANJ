@@ -1,12 +1,12 @@
 Name                                        Stmts   Miss  Cover   Missing
 -------------------------------------------------------------------------
-tests\test_bool_array.py                       46     41    11%   9-89
+tests\test_bool_array.py                       46     41    11%   9-87
 tests\test_get_module_device.py                27     23    15%   9-53
 tests\test_isolate_zanj_handler_store.py       47     39    17%   16-78
 tests\test_zanj_basic.py                       35     28    20%   12-79
 tests\test_zanj_populate_nested.py             24     18    25%   15-57
 tests\test_zanj_sdc_modelcfg.py                90     81    10%   18-169
-tests\test_zanj_serializable_dataclass.py     128    119     7%   18-238
+tests\test_zanj_serializable_dataclass.py     128    119     7%   18-237
 tests\test_zanj_torch.py                       88     81     8%   15-169
 tests\test_zanj_torch_cfgmismatch.py           59     54     8%   22-161
 zanj\__init__.py                                4      2    50%   4-6

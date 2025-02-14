@@ -7669,7 +7669,7 @@ os.path.getsize(path) = 2509
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="nd">@serializable_dataclass</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">Complicated</span><span class="p">(</span><span class="n">SerializableDataclass</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Complicated2</span><span class="p">(</span><span class="n">SerializableDataclass</span><span class="p">):</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">device</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">serializable_field</span><span class="p">(</span>
         <span class="n">serialization_fn</span><span class="o">=</span><span class="k">lambda</span> <span class="bp">self</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">),</span>
