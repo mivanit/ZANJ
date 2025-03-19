@@ -1,19 +1,21 @@
-Name                                        Stmts   Miss  Cover   Missing
--------------------------------------------------------------------------
-tests\test_bool_array.py                       46      0   100%
-tests\test_get_module_device.py                27      8    70%   28-41
-tests\test_isolate_zanj_handler_store.py       47      1    98%   78
-tests\test_zanj_basic.py                       35      0   100%
-tests\test_zanj_populate_nested.py             24      0   100%
-tests\test_zanj_sdc_modelcfg.py                90      0   100%
-tests\test_zanj_serializable_dataclass.py     128      1    99%   182
-tests\test_zanj_torch.py                       88      4    95%   39, 100, 111, 130
-tests\test_zanj_torch_cfgmismatch.py           59      3    95%   43, 107, 143
-zanj\__init__.py                                4      4     0%   5-10
-zanj\externals.py                              21      1    95%   48
-zanj\loading.py                               126     25    80%   17-21, 58, 65-68, 73, 75-79, 127-134, 255, 343-346, 379-380
-zanj\serializing.py                            59      4    93%   118, 120, 138, 152
-zanj\torchutil.py                             113     13    88%   56, 90, 92, 122-124, 142, 187-190, 208, 215, 277-278
-zanj\zanj.py                                   83      5    94%   113, 134, 172, 230, 232
--------------------------------------------------------------------------
-TOTAL                                         950     69    93%
+Name                                                      Stmts   Miss  Cover   Missing
+---------------------------------------------------------------------------------------
+tests/unit/no_torch/test_bool_array.py                       31      0   100%
+tests/unit/no_torch/test_isolate_zanj_handler_store.py       47      1    98%   78
+tests/unit/no_torch/test_zanj_basic.py                       35      0   100%
+tests/unit/no_torch/test_zanj_populate_nested.py             24      0   100%
+tests/unit/no_torch/test_zanj_serializable_dataclass.py      91      0   100%
+tests/unit/with_torch/test_bool_array_torch.py               19      0   100%
+tests/unit/with_torch/test_get_module_device.py              33      1    97%   26
+tests/unit/with_torch/test_sdc_torch.py                      59      1    98%   80
+tests/unit/with_torch/test_zanj_sdc_modelcfg.py              90      0   100%
+tests/unit/with_torch/test_zanj_torch.py                     88      4    95%   39, 100, 111, 130
+tests/unit/with_torch/test_zanj_torch_cfgmismatch.py         59      3    95%   43, 107, 143
+zanj/__init__.py                                              4      0   100%
+zanj/externals.py                                            21      1    95%   48
+zanj/loading.py                                             132     28    79%   17-21, 56, 63-66, 71, 73-77, 125-132, 153-155, 269, 357-360, 393-394
+zanj/serializing.py                                          58      4    93%   123, 125, 143, 157
+zanj/torchutil.py                                           116     14    88%   15-16, 101, 103, 133-135, 153, 198-201, 219, 226, 288-289
+zanj/zanj.py                                                 83      6    93%   113, 134, 172, 178, 230, 232
+---------------------------------------------------------------------------------------
+TOTAL                                                       990     63    94%

@@ -1,41 +1,47 @@
 # Stats
-- 23 files
-- 3382 (3.4K) lines
-- 108131 (108K) chars
-- 10439 (10K) `whitespace-split` tokens
+- 26 files
+- 3501 (3.5K) lines
+- 111718 (112K) chars
+- 10764 (11K) `whitespace-split` tokens
 
 # File Tree
 
 ```
-ZANJ                                         
-├── .github                                  
-│   └── workflows                            
-│    └── checks.yml                          [  106L     2,569C   280T]
-├── tests                                    
-│   ├── input_data                           
-│   │   ├── brain_networks.csv               [  924L 1,075,910C   924T]
-│   │   └── iris.csv                         [  151L     3,857C   151T]
-│   ├── test_bool_array.py                   [   87L     1,749C   165T]
-│   ├── test_get_module_device.py            [   53L     1,566C   176T]
-│   ├── test_isolate_zanj_handler_store.py   [   78L     1,784C   158T]
-│   ├── test_zanj_basic.py                   [   86L     2,607C   197T]
-│   ├── test_zanj_populate_nested.py         [   57L     1,386C   103T]
-│   ├── test_zanj_sdc_modelcfg.py            [  169L     4,716C   372T]
-│   ├── test_zanj_serializable_dataclass.py  [  237L     5,962C   523T]
-│   ├── test_zanj_torch.py                   [  169L     4,974C   344T]
-│   └── test_zanj_torch_cfgmismatch.py       [  161L     3,949C   331T]
-├── zanj                                     
-│   ├── __init__.py                          [   19L       275C    30T]
-│   ├── externals.py                         [   52L     1,530C   166T]
-│   ├── loading.py                           [  434L    16,324C 1,526T]
-│   ├── py.typed                             [    0L         0C     0T]
-│   ├── serializing.py                       [  246L     8,548C   771T]
-│   ├── torchutil.py                         [  283L     9,837C   869T]
-│   └── zanj.py                              [  250L     8,705C   798T]
-├── README.md                                [  233L    10,853C 1,364T]
-├── demo.ipynb                               [  306L     8,941C   920T]
-├── makefile                                 [1,442L    43,772C 5,280T]
-├── pyproject.toml                           [  154L     4,175C   446T]
+ZANJ                                                 
+├── .github                                          
+│   └── workflows                                    
+│    └── checks.yml                                  [  109L     2,661C   296T]
+├── tests                                            
+│   ├── input_data                                   
+│   │   ├── brain_networks.csv                       [  924L 1,075,910C   924T]
+│   │   └── iris.csv                                 [  151L     3,857C   151T]
+│   ├── unit                                         
+│   │   ├── no_torch                                 
+│   │   │   ├── test_bool_array.py                   [   60L     1,169C   113T]
+│   │   │   ├── test_isolate_zanj_handler_store.py   [   78L     1,784C   158T]
+│   │   │   ├── test_zanj_basic.py                   [   86L     2,607C   197T]
+│   │   │   ├── test_zanj_populate_nested.py         [   57L     1,386C   103T]
+│   │   │   └── test_zanj_serializable_dataclass.py  [  168L     4,351C   404T]
+│   │   └── with_torch                               
+│   │    ├── test_bool_array_torch.py                [   35L       759C    69T]
+│   │    ├── test_get_module_device.py               [   61L     1,836C   200T]
+│   │    ├── test_sdc_torch.py                       [  105L     2,521C   216T]
+│   │    ├── test_zanj_sdc_modelcfg.py               [  169L     4,716C   372T]
+│   │    ├── test_zanj_torch.py                      [  169L     4,974C   344T]
+│   │    └── test_zanj_torch_cfgmismatch.py          [  161L     3,949C   331T]
+│   └── assert_no_torch.py                           [    6L        94C     7T]
+├── zanj                                             
+│   ├── __init__.py                                  [   19L       299C    30T]
+│   ├── externals.py                                 [   52L     1,530C   166T]
+│   ├── loading.py                                   [  448L    16,677C 1,576T]
+│   ├── py.typed                                     [    0L         0C     0T]
+│   ├── serializing.py                               [  251L     8,535C   769T]
+│   ├── torchutil.py                                 [  294L    10,142C   912T]
+│   └── zanj.py                                      [  250L     8,705C   798T]
+├── README.md                                        [  233L    10,853C 1,364T]
+├── demo.ipynb                                       [  306L     8,941C   920T]
+├── makefile                                         [1,638L    50,222C 6,004T]
+├── pyproject.toml                                   [  156L     4,223C   450T]
 ```
 
 # File Contents
@@ -82,6 +88,9 @@ jobs:
           - torch: ""
             numpy: ""
             group: "latest"
+          - torch: "None"
+            numpy: ""
+            group: "notorch"
         exclude:
           - python: "3.12"
             pkg:
@@ -89,21 +98,6 @@ jobs:
           - python: "3.13"
             pkg:
               group: "legacy"
-
-        #   - python: "3.9"
-        #     torch: "1.13.1"
-        #     numpy: "1.21.2"
-        #   - python: "3.10"
-        #     torch: "1.13.1"
-        #     numpy: "1.21.2"
-        #   - python: "3.10"
-        #     torch: "2.3.1"
-        #   - python: "3.11"
-        #     torch: "2.3.1"
-        #   - python: "3.12"
-        #     torch: "2.3.1"
-        #   - python: "3.13"
-        #     torch: "2.6.0"
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -125,20 +119,35 @@ jobs:
       - name: install dependencies and package
         run: make dep
 
-      - name: Install different pytorch version
-        if: ${{ matrix.pkg.torch != '' }}
-        run: |
-          uv pip install torch==${{ matrix.pkg.torch }}+cpu --extra-index-url https://download.pytorch.org/whl/cpu
-      
       - name: Install different numpy version
         if: ${{ matrix.pkg.numpy != '' }}
         run: uv pip install numpy==${{ matrix.pkg.numpy }}
+
+      - name: Install different pytorch version
+        if: ${{ matrix.pkg.torch != '' && matrix.pkg.torch != 'None' }}
+        run: |
+          uv pip install torch==${{ matrix.pkg.torch }}+cpu --extra-index-url https://download.pytorch.org/whl/cpu
+
+      - name: remove torch if testing torchless
+        if: ${{ matrix.pkg.torch == 'None' }}
+        run: uv pip uninstall torch
+
+      - name: make info
+        run: make info
+
+      - name: torch dep info
+        run: make dep-check-torch
       
       - name: format check
         run: make format-check
 
       - name: tests
+        if: ${{ matrix.pkg.torch != 'None' }}
         run: make test
+
+      - name: tests without torch
+        if: ${{ matrix.pkg.torch == 'None' }}
+        run: make test-notorch
 
       # - name: tests in strict mode
       #   # TODO: until zanj ported to 3.8 and 3.9
@@ -168,11 +177,11 @@ sepal_length,sepal_width,petal_length,petal_width,species
 ... (truncated)
 ``````{ end_of_file="tests/input_data/iris.csv" }
 
-``````{ path="tests/test_bool_array.py"  }
+``````{ path="tests/unit/no_torch/test_bool_array.py"  }
 from pathlib import Path
 
 import numpy as np
-import torch
+
 from muutils.json_serialize import SerializableDataclass, serializable_dataclass
 
 from zanj import ZANJ
@@ -230,93 +239,9 @@ def test_np_bool_array():
 
     assert c == c2
 
+``````{ end_of_file="tests/unit/no_torch/test_bool_array.py" }
 
-@serializable_dataclass
-class MyClass_torch(SerializableDataclass):
-    name: str
-    arr_1: torch.Tensor
-    arr_2: torch.Tensor
-
-
-def test_torch_bool_array():
-    fname: Path = TEST_DATA_PATH / "test_torch_bool_array.zanj"
-    c: MyClass_torch = MyClass_torch(
-        name="test",
-        arr_1=torch.tensor([True, False, True]),
-        arr_2=torch.tensor([True, False, True]),
-    )
-
-    z = ZANJ()
-
-    z.save(c, fname)
-
-    c2: MyClass_torch = z.read(fname)
-
-    assert c2.arr_1.dtype == torch.bool
-    assert c2.arr_2.dtype == torch.bool
-
-    assert c == c2
-
-``````{ end_of_file="tests/test_bool_array.py" }
-
-``````{ path="tests/test_get_module_device.py"  }
-from __future__ import annotations
-
-import pytest
-import torch
-
-from zanj.torchutil import get_module_device
-
-
-def test_get_module_device_single_device():
-    # Create a model and move it to a device
-    model = torch.nn.Linear(10, 2)
-    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    model.to(device)
-
-    # Run the function
-    is_single, device_or_dict = get_module_device(model)
-
-    # Assert that all parameters are on the same device and that device is returned
-    assert is_single
-    assert device_or_dict == device
-
-
-def test_get_module_device_multiple_devices():
-    # Create a model with parameters on different devices
-    if torch.cuda.device_count() < 1:
-        pytest.skip("This test requires at least one CUDA device")
-
-    model = torch.nn.Linear(10, 2)
-    model.weight.to("cuda:0")
-    model.bias.to("cpu")
-
-    # Run the function
-    is_single, device_or_dict = get_module_device(model)
-
-    # Assert that not all parameters are on the same device and a dict is returned
-    assert not is_single
-    assert isinstance(device_or_dict, dict)
-
-    # Check that the dict maps the correct devices
-    assert device_or_dict["weight"] == torch.device("cuda:0")
-    assert device_or_dict["bias"] == torch.device("cpu")
-
-
-def test_get_module_device_no_parameters():
-    # Create a model with no parameters
-    model = torch.nn.Sequential()
-
-    # Run the function
-    is_single, device_or_dict = get_module_device(model)
-
-    # Assert that an empty dict is returned
-    assert not is_single
-    assert device_or_dict == {}
-
-``````{ end_of_file="tests/test_get_module_device.py" }
-
-``````{ path="tests/test_isolate_zanj_handler_store.py"  }
+``````{ path="tests/unit/no_torch/test_isolate_zanj_handler_store.py"  }
 from __future__ import annotations
 
 import json
@@ -396,9 +321,9 @@ def test_isolate_handlers():
 if __name__ == "__main__":
     test_isolate_handlers()
 
-``````{ end_of_file="tests/test_isolate_zanj_handler_store.py" }
+``````{ end_of_file="tests/unit/no_torch/test_isolate_zanj_handler_store.py" }
 
-``````{ path="tests/test_zanj_basic.py"  }
+``````{ path="tests/unit/no_torch/test_zanj_basic.py"  }
 from __future__ import annotations
 
 import json
@@ -486,9 +411,9 @@ def test_jsonl():
         ]
     )
 
-``````{ end_of_file="tests/test_zanj_basic.py" }
+``````{ end_of_file="tests/unit/no_torch/test_zanj_basic.py" }
 
-``````{ path="tests/test_zanj_populate_nested.py"  }
+``````{ path="tests/unit/no_torch/test_zanj_populate_nested.py"  }
 from __future__ import annotations
 
 import typing
@@ -547,9 +472,394 @@ def test_nested_populate():
     recovered = z.read(path)
     assert instance == recovered
 
-``````{ end_of_file="tests/test_zanj_populate_nested.py" }
+``````{ end_of_file="tests/unit/no_torch/test_zanj_populate_nested.py" }
 
-``````{ path="tests/test_zanj_sdc_modelcfg.py"  }
+``````{ path="tests/unit/no_torch/test_zanj_serializable_dataclass.py"  }
+from __future__ import annotations
+
+import json
+import sys
+import typing
+from pathlib import Path
+
+import numpy as np
+import pandas as pd  # type: ignore[import]
+from muutils.json_serialize import (
+    SerializableDataclass,
+    serializable_dataclass,
+    serializable_field,
+)
+
+from zanj import ZANJ
+
+np.random.seed(0)
+
+TEST_DATA_PATH: Path = Path("tests/junk_data")
+
+SUPPORTS_KW_ONLY: bool = bool(sys.version_info >= (3, 10))
+
+
+@serializable_dataclass
+class BasicZanj(SerializableDataclass):
+    a: str
+    q: int = 42
+    c: typing.List[int] = serializable_field(default_factory=list)
+
+
+def test_Basic():
+    instance = BasicZanj("hello", 42, [1, 2, 3])
+
+    z = ZANJ()
+    path = TEST_DATA_PATH / "test_BasicZanj.zanj"
+    z.save(instance, path)
+    recovered = z.read(path)
+    assert instance == recovered
+
+
+@serializable_dataclass
+class Nested(SerializableDataclass):
+    name: str
+    basic: BasicZanj
+    val: float
+
+
+def test_Nested():
+    instance = Nested("hello", BasicZanj("hello", 42, [1, 2, 3]), 3.14)
+
+    z = ZANJ()
+    path = TEST_DATA_PATH / "test_Nested.zanj"
+    z.save(instance, path)
+    recovered = z.read(path)
+    assert instance == recovered
+
+
+@serializable_dataclass
+class Nested_with_container(SerializableDataclass):
+    name: str
+    basic: BasicZanj
+    val: float
+    container: typing.List[Nested] = serializable_field(default_factory=list)
+
+
+def test_Nested_with_container():
+    instance = Nested_with_container(
+        "hello",
+        basic=BasicZanj("hello", 42, [1, 2, 3]),
+        val=3.14,
+        container=[
+            Nested("n1", BasicZanj("n1_b", 123, [4, 5, 7]), 2.71),
+            Nested("n2", BasicZanj("n2_b", 456, [7, 8, 9]), 6.28),
+        ],
+    )
+
+    z = ZANJ()
+    path = TEST_DATA_PATH / "test_Nested_with_container.zanj"
+    z.save(instance, path)
+    recovered = z.read(path)
+    assert instance == recovered
+
+
+@serializable_dataclass
+class sdc_with_np_array(SerializableDataclass):
+    name: str
+    arr1: np.ndarray
+    arr2: np.ndarray
+
+
+def test_sdc_with_np_array_small():
+    instance = sdc_with_np_array("small arrays", np.random.rand(10), np.random.rand(20))
+
+    z = ZANJ()
+    path = TEST_DATA_PATH / "test_sdc_with_np_array.zanj"
+    z.save(instance, path)
+    recovered = z.read(path)
+    assert instance == recovered
+
+
+def test_sdc_with_np_array():
+    instance = sdc_with_np_array(
+        "bigger arrays", np.random.rand(128, 128), np.random.rand(256, 256)
+    )
+
+    z = ZANJ()
+    path = TEST_DATA_PATH / "test_sdc_with_np_array.zanj"
+    z.save(instance, path)
+    recovered = z.read(path)
+    assert instance == recovered
+
+
+@serializable_dataclass
+class sdc_with_df(SerializableDataclass):
+    name: str
+    iris_data: pd.DataFrame
+    brain_data: pd.DataFrame
+
+
+def test_sdc_with_df():
+    instance = sdc_with_df(
+        "downloaded_data",
+        iris_data=pd.read_csv("tests/input_data/iris.csv"),
+        brain_data=pd.read_csv("tests/input_data/brain_networks.csv"),
+    )
+
+    z = ZANJ()
+    path = TEST_DATA_PATH / "test_sdc_with_df.zanj"
+    z.save(instance, path)
+    recovered = z.read(path)
+    assert instance == recovered
+
+
+@serializable_dataclass
+class sdc_container_explicit(SerializableDataclass):
+    name: str
+    container: typing.List[Nested] = serializable_field(
+        default_factory=list,
+        # as jsonl string, for whatever reason
+        serialization_fn=lambda c: "\n".join([json.dumps(n.serialize()) for n in c]),
+        loading_fn=lambda data: [
+            Nested.load(json.loads(n)) for n in data["container"].split("\n")
+        ],
+        # TODO: explicitly specifying the following does not work, since it gets automatically converted before we call load in `loading_fn`:
+        # serialization_fn=lambda c: [n.serialize() for n in c],
+        # loading_fn=lambda data: [Nested.load(n) for n in data["container"]],
+    )
+
+
+def test_sdc_container_explicit():
+    instance = sdc_container_explicit(
+        "container explicit",
+        container=[
+            Nested(
+                f"n-{n}",
+                BasicZanj(f"n-{n}_b", n * 10 + 1, [n + 1, n + 2, n + 10]),
+                n * np.pi,
+            )
+            for n in range(10)
+        ],
+    )
+
+    z = ZANJ()
+    path = TEST_DATA_PATH / "test_sdc_container_explicit.zanj"
+    z.save(instance, path)
+    recovered = z.read(path)
+    assert instance == recovered
+
+``````{ end_of_file="tests/unit/no_torch/test_zanj_serializable_dataclass.py" }
+
+``````{ path="tests/unit/with_torch/test_bool_array_torch.py"  }
+from pathlib import Path
+
+import torch
+from muutils.json_serialize import SerializableDataclass, serializable_dataclass
+
+from zanj import ZANJ
+
+TEST_DATA_PATH: Path = Path("tests/junk_data")
+
+
+@serializable_dataclass
+class MyClass_torch(SerializableDataclass):
+    name: str
+    arr_1: torch.Tensor
+    arr_2: torch.Tensor
+
+
+def test_torch_bool_array():
+    fname: Path = TEST_DATA_PATH / "test_torch_bool_array.zanj"
+    c: MyClass_torch = MyClass_torch(
+        name="test",
+        arr_1=torch.tensor([True, False, True]),
+        arr_2=torch.tensor([True, False, True]),
+    )
+
+    z = ZANJ()
+
+    z.save(c, fname)
+
+    c2: MyClass_torch = z.read(fname)
+
+    assert c2.arr_1.dtype == torch.bool
+    assert c2.arr_2.dtype == torch.bool
+
+    assert c == c2
+
+``````{ end_of_file="tests/unit/with_torch/test_bool_array_torch.py" }
+
+``````{ path="tests/unit/with_torch/test_get_module_device.py"  }
+from __future__ import annotations
+
+import pytest
+import torch
+
+from zanj.torchutil import get_module_device
+
+
+def test_get_module_device_single_device():
+    # Create a model and move it to a device
+    model = torch.nn.Linear(10, 2)
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    model.to(device)
+
+    # Run the function
+    is_single, device_or_dict = get_module_device(model)
+
+    # Assert that all parameters are on the same device and that device is returned
+    assert is_single
+    assert device_or_dict == device
+
+
+def test_get_module_device_multiple_devices():
+    # Create a model with parameters on different devices
+    if torch.cuda.device_count() < 1:
+        pytest.skip("This test requires at least one CUDA device")
+
+    with torch.no_grad():
+        model = torch.nn.Linear(10, 2)
+        print(f"{model = }")
+        model.weight = torch.nn.Parameter(model.weight.to("meta"))
+        model.bias = torch.nn.Parameter(model.bias.to("cpu"))
+
+    print(f"{model = }")
+    print(f"{model.weight = }")
+    print(f"{model.bias = }")
+
+    # Run the function
+    is_single, device_or_dict = get_module_device(model)
+
+    print(f"{is_single = }, {device_or_dict = }")
+
+    # Assert that not all parameters are on the same device and a dict is returned
+    assert not is_single
+    assert isinstance(device_or_dict, dict)
+
+    # Check that the dict maps the correct devices
+    assert device_or_dict["weight"] == torch.device("meta")
+    assert device_or_dict["bias"] == torch.device("cpu")
+
+
+def test_get_module_device_no_parameters():
+    # Create a model with no parameters
+    model = torch.nn.Sequential()
+
+    # Run the function
+    is_single, device_or_dict = get_module_device(model)
+
+    # Assert that an empty dict is returned
+    assert not is_single
+    assert device_or_dict == {}
+
+``````{ end_of_file="tests/unit/with_torch/test_get_module_device.py" }
+
+``````{ path="tests/unit/with_torch/test_sdc_torch.py"  }
+from __future__ import annotations
+
+import sys
+import typing
+from pathlib import Path
+
+import numpy as np
+import pandas as pd  # type: ignore[import]
+import torch
+from muutils.json_serialize import (
+    SerializableDataclass,
+    serializable_dataclass,
+    serializable_field,
+)
+
+from zanj import ZANJ
+
+np.random.seed(0)
+
+TEST_DATA_PATH: Path = Path("tests/junk_data")
+
+SUPPORTS_KW_ONLY: bool = bool(sys.version_info >= (3, 10))
+
+
+@serializable_dataclass
+class BasicZanjTorch(SerializableDataclass):
+    a: str
+    q: int = 42
+    c: typing.List[int] = serializable_field(default_factory=list)
+
+
+@serializable_dataclass
+class NestedTorch(SerializableDataclass):
+    name: str
+    basic: BasicZanjTorch
+    val: float
+
+
+@serializable_dataclass
+class sdc_with_torch_tensor(SerializableDataclass):
+    name: str
+    tensor1: torch.Tensor
+    tensor2: torch.Tensor
+
+
+def test_sdc_tensor_small():
+    instance = sdc_with_torch_tensor("small tensors", torch.rand(8), torch.rand(16))
+
+    z = ZANJ()
+    path = TEST_DATA_PATH / "test_sdc_tensor_small.zanj"
+    z.save(instance, path)
+    recovered = z.read(path)
+    assert instance == recovered
+
+
+def test_sdc_tensor():
+    instance = sdc_with_torch_tensor(
+        "bigger tensors", torch.rand(128, 128), torch.rand(256, 256)
+    )
+
+    z = ZANJ()
+    path = TEST_DATA_PATH / "test_sdc_tensor.zanj"
+    z.save(instance, path)
+    recovered = z.read(path)
+    assert instance == recovered
+
+
+@serializable_dataclass(kw_only=SUPPORTS_KW_ONLY)
+class sdc_complicated(SerializableDataclass):
+    name: str
+    arr1: np.ndarray
+    arr2: np.ndarray
+    iris_data: pd.DataFrame
+    brain_data: pd.DataFrame
+    container: typing.List[NestedTorch]
+
+    tensor: torch.Tensor
+
+    def __eq__(self, value):
+        return super().__eq__(value)
+
+
+def test_sdc_complicated():
+    instance = sdc_complicated(
+        name="complicated data",
+        arr1=np.random.rand(128, 128),
+        arr2=np.random.rand(256, 256),
+        iris_data=pd.read_csv("tests/input_data/iris.csv"),
+        brain_data=pd.read_csv("tests/input_data/brain_networks.csv"),
+        container=[
+            NestedTorch(
+                f"n-{n}",
+                BasicZanjTorch(f"n-{n}_b", n * 10 + 1, [n + 1, n + 2, n + 10]),
+                n * np.pi,
+            )
+            for n in range(10)
+        ],
+        tensor=torch.rand(512, 512),
+    )
+
+    z = ZANJ()
+    path = TEST_DATA_PATH / "test_sdc_complicated.zanj"
+    z.save(instance, path)
+    recovered = z.read(path)
+    assert instance == recovered
+
+``````{ end_of_file="tests/unit/with_torch/test_sdc_torch.py" }
+
+``````{ path="tests/unit/with_torch/test_zanj_sdc_modelcfg.py"  }
 from __future__ import annotations
 
 import json
@@ -720,250 +1030,9 @@ def test_adv_config_holder_zanj():
     assert isinstance(recovered.model_cfg, BaseGPTConfig)
     assert instance_adv == recovered
 
-``````{ end_of_file="tests/test_zanj_sdc_modelcfg.py" }
+``````{ end_of_file="tests/unit/with_torch/test_zanj_sdc_modelcfg.py" }
 
-``````{ path="tests/test_zanj_serializable_dataclass.py"  }
-from __future__ import annotations
-
-import sys
-import typing
-from pathlib import Path
-
-import numpy as np
-import pandas as pd  # type: ignore[import]
-import torch
-from muutils.json_serialize import (
-    SerializableDataclass,
-    serializable_dataclass,
-    serializable_field,
-)
-
-from zanj import ZANJ
-
-np.random.seed(0)
-
-# pylint: disable=missing-function-docstring,missing-class-docstring
-
-TEST_DATA_PATH: Path = Path("tests/junk_data")
-
-SUPPORTS_KW_ONLY: bool = bool(sys.version_info >= (3, 10))
-
-
-@serializable_dataclass
-class BasicZanj(SerializableDataclass):
-    a: str
-    q: int = 42
-    c: typing.List[int] = serializable_field(default_factory=list)
-
-
-def test_Basic():
-    instance = BasicZanj("hello", 42, [1, 2, 3])
-
-    z = ZANJ()
-    path = TEST_DATA_PATH / "test_BasicZanj.zanj"
-    z.save(instance, path)
-    recovered = z.read(path)
-    assert instance == recovered
-
-
-@serializable_dataclass
-class Nested(SerializableDataclass):
-    name: str
-    basic: BasicZanj
-    val: float
-
-
-def test_Nested():
-    instance = Nested("hello", BasicZanj("hello", 42, [1, 2, 3]), 3.14)
-
-    z = ZANJ()
-    path = TEST_DATA_PATH / "test_Nested.zanj"
-    z.save(instance, path)
-    recovered = z.read(path)
-    assert instance == recovered
-
-
-@serializable_dataclass
-class Nested_with_container(SerializableDataclass):
-    name: str
-    basic: BasicZanj
-    val: float
-    container: typing.List[Nested] = serializable_field(
-        default_factory=list,
-        serialization_fn=lambda c: [n.serialize() for n in c],
-        loading_fn=lambda data: [Nested.load(n) for n in data["container"]],
-    )
-
-
-def test_Nested_with_container():
-    instance = Nested_with_container(
-        "hello",
-        basic=BasicZanj("hello", 42, [1, 2, 3]),
-        val=3.14,
-        container=[
-            Nested("n1", BasicZanj("n1_b", 123, [4, 5, 7]), 2.71),
-            Nested("n2", BasicZanj("n2_b", 456, [7, 8, 9]), 6.28),
-        ],
-    )
-
-    z = ZANJ()
-    path = TEST_DATA_PATH / "test_Nested_with_container.zanj"
-    z.save(instance, path)
-    recovered = z.read(path)
-    assert instance == recovered
-
-
-@serializable_dataclass
-class sdc_with_np_array(SerializableDataclass):
-    name: str
-    arr1: np.ndarray
-    arr2: np.ndarray
-
-
-def test_sdc_with_np_array_small():
-    instance = sdc_with_np_array("small arrays", np.random.rand(10), np.random.rand(20))
-
-    z = ZANJ()
-    path = TEST_DATA_PATH / "test_sdc_with_np_array.zanj"
-    z.save(instance, path)
-    recovered = z.read(path)
-    assert instance == recovered
-
-
-def test_sdc_with_np_array():
-    instance = sdc_with_np_array(
-        "bigger arrays", np.random.rand(128, 128), np.random.rand(256, 256)
-    )
-
-    z = ZANJ()
-    path = TEST_DATA_PATH / "test_sdc_with_np_array.zanj"
-    z.save(instance, path)
-    recovered = z.read(path)
-    assert instance == recovered
-
-
-@serializable_dataclass
-class sdc_with_torch_tensor(SerializableDataclass):
-    name: str
-    tensor1: torch.Tensor
-    tensor2: torch.Tensor
-
-
-def test_sdc_tensor_small():
-    instance = sdc_with_torch_tensor("small tensors", torch.rand(8), torch.rand(16))
-
-    z = ZANJ()
-    path = TEST_DATA_PATH / "test_sdc_tensor_small.zanj"
-    z.save(instance, path)
-    recovered = z.read(path)
-    assert instance == recovered
-
-
-def test_sdc_tensor():
-    instance = sdc_with_torch_tensor(
-        "bigger tensors", torch.rand(128, 128), torch.rand(256, 256)
-    )
-
-    z = ZANJ()
-    path = TEST_DATA_PATH / "test_sdc_tensor.zanj"
-    z.save(instance, path)
-    recovered = z.read(path)
-    assert instance == recovered
-
-
-@serializable_dataclass
-class sdc_with_df(SerializableDataclass):
-    name: str
-    iris_data: pd.DataFrame
-    brain_data: pd.DataFrame
-
-
-def test_sdc_with_df():
-    instance = sdc_with_df(
-        "downloaded_data",
-        iris_data=pd.read_csv("tests/input_data/iris.csv"),
-        brain_data=pd.read_csv("tests/input_data/brain_networks.csv"),
-    )
-
-    z = ZANJ()
-    path = TEST_DATA_PATH / "test_sdc_with_df.zanj"
-    z.save(instance, path)
-    recovered = z.read(path)
-    assert instance == recovered
-
-
-@serializable_dataclass(kw_only=SUPPORTS_KW_ONLY)
-class sdc_complicated(SerializableDataclass):
-    name: str
-    arr1: np.ndarray
-    arr2: np.ndarray
-    iris_data: pd.DataFrame
-    brain_data: pd.DataFrame
-    container: typing.List[Nested]
-
-    tensor: torch.Tensor
-
-    def __eq__(self, value):
-        return super().__eq__(value)
-
-
-def test_sdc_complicated():
-    instance = sdc_complicated(
-        name="complicated data",
-        arr1=np.random.rand(128, 128),
-        arr2=np.random.rand(256, 256),
-        iris_data=pd.read_csv("tests/input_data/iris.csv"),
-        brain_data=pd.read_csv("tests/input_data/brain_networks.csv"),
-        container=[
-            Nested(
-                f"n-{n}",
-                BasicZanj(f"n-{n}_b", n * 10 + 1, [n + 1, n + 2, n + 10]),
-                n * np.pi,
-            )
-            for n in range(10)
-        ],
-        tensor=torch.rand(512, 512),
-    )
-
-    z = ZANJ()
-    path = TEST_DATA_PATH / "test_sdc_complicated.zanj"
-    z.save(instance, path)
-    recovered = z.read(path)
-    assert instance == recovered
-
-
-@serializable_dataclass
-class sdc_container_explicit(SerializableDataclass):
-    name: str
-    container: typing.List[Nested] = serializable_field(
-        default_factory=list,
-        serialization_fn=lambda c: [n.serialize() for n in c],
-        loading_fn=lambda data: [Nested.load(n) for n in data["container"]],
-    )
-
-
-def test_sdc_container_explicit():
-    instance = sdc_container_explicit(
-        "container explicit",
-        container=[
-            Nested(
-                f"n-{n}",
-                BasicZanj(f"n-{n}_b", n * 10 + 1, [n + 1, n + 2, n + 10]),
-                n * np.pi,
-            )
-            for n in range(10)
-        ],
-    )
-
-    z = ZANJ()
-    path = TEST_DATA_PATH / "test_sdc_container_explicit.zanj"
-    z.save(instance, path)
-    recovered = z.read(path)
-    assert instance == recovered
-
-``````{ end_of_file="tests/test_zanj_serializable_dataclass.py" }
-
-``````{ path="tests/test_zanj_torch.py"  }
+``````{ path="tests/unit/with_torch/test_zanj_torch.py"  }
 from __future__ import annotations
 
 from pathlib import Path
@@ -1134,9 +1203,9 @@ def test_torch_configmodel():
     compare_state_dicts(model.state_dict(), model3.state_dict())
     assert_model_exact_equality(model, model3)
 
-``````{ end_of_file="tests/test_zanj_torch.py" }
+``````{ end_of_file="tests/unit/with_torch/test_zanj_torch.py" }
 
-``````{ path="tests/test_zanj_torch_cfgmismatch.py"  }
+``````{ path="tests/unit/with_torch/test_zanj_torch_cfgmismatch.py"  }
 from __future__ import annotations
 
 from typing import Any
@@ -1299,7 +1368,17 @@ def test_incorrect_instance():
     except AssertionError as exc:
         assert str(exc) == "model_b must be a ConfiguredModel"
 
-``````{ end_of_file="tests/test_zanj_torch_cfgmismatch.py" }
+``````{ end_of_file="tests/unit/with_torch/test_zanj_torch_cfgmismatch.py" }
+
+``````{ path="tests/assert_no_torch.py"  }
+import pytest
+
+
+def test_assert_no_torch():
+    with pytest.raises(ImportError):
+        pass
+
+``````{ end_of_file="tests/assert_no_torch.py" }
 
 ``````{ path="zanj/__init__.py"  }
 """
@@ -1312,14 +1391,14 @@ from zanj.loading import register_loader_handler
 from zanj.zanj import ZANJ
 
 __all__ = [
-	"register_loader_handler",
-	"ZANJ",
-	# modules
-	"externals",
-	"loading",
-	"serializing",
-	"torchutil",
-	"zanj",
+    "register_loader_handler",
+    "ZANJ",
+    # modules
+    "externals",
+    "loading",
+    "serializing",
+    "torchutil",
+    "zanj",
 ]
 
 ``````{ end_of_file="zanj/__init__.py" }
@@ -1404,7 +1483,6 @@ except ImportError:
             raise ImportError("cannot load pandas DataFrame, pandas is not installed")
 
 
-import torch
 from muutils.errormode import ErrorMode
 from muutils.json_serialize.array import load_array
 from muutils.json_serialize.json_serialize import ObjectPath
@@ -1416,7 +1494,6 @@ from muutils.json_serialize.util import (
     safe_getsource,
     string_as_lines,
 )
-from muutils.tensor_utils import DTYPE_MAP, TORCH_DTYPE_MAP
 
 from zanj.externals import (
     GET_EXTERNAL_LOAD_FUNC,
@@ -1526,6 +1603,24 @@ class LoaderHandler:
         )
 
 
+def _torch_loaderhandler_load(
+    json_item: JSONitem,
+    path: ObjectPath,
+    z: _ZANJ_pre | None = None,
+) -> "torch.Tensor":  # noqa: F821
+    """load a torch tensor from a json item"""
+    try:
+        import torch
+        from muutils.tensor_utils import TORCH_DTYPE_MAP
+    except ImportError as e:
+        err_msg: str = f"could not import torch, which we need to load the object at {path = }: {json_item = }"
+        raise ImportError(err_msg) from e
+
+    return torch.tensor(
+        load_array(json_item), dtype=TORCH_DTYPE_MAP[json_item["dtype"]]
+    )
+
+
 # NOTE: there are type ignores on the loaders, since the type checking should be the responsibility of the check function
 
 LOADER_MAP_LOCK = threading.Lock()
@@ -1543,7 +1638,7 @@ LOADER_MAP: dict[str, LoaderHandler] = {
                 # and tuple(json_item["data"].shape) == tuple(json_item["shape"])
             ),
             load=lambda json_item, path=None, z=None: np.array(  # type: ignore[misc]
-                load_array(json_item), dtype=DTYPE_MAP[json_item["dtype"]]
+                load_array(json_item), dtype=np.dtype(json_item["dtype"])
             ),
             uid="numpy.ndarray",
             source_pckg="zanj",
@@ -1557,9 +1652,7 @@ LOADER_MAP: dict[str, LoaderHandler] = {
                 # and json_item["data"].dtype.name == json_item["dtype"]
                 # and tuple(json_item["data"].shape) == tuple(json_item["shape"])
             ),
-            load=lambda json_item, path=None, z=None: torch.tensor(  # type: ignore[misc]
-                load_array(json_item), dtype=TORCH_DTYPE_MAP[json_item["dtype"]]
-            ),
+            load=_torch_loaderhandler_load,
             uid="torch.Tensor",
             source_pckg="zanj",
             desc="torch.Tensor loader",
@@ -1837,8 +1930,13 @@ from muutils.json_serialize.json_serialize import (  # JsonSerializer,
     ObjectPath,
     SerializerHandler,
 )
-from muutils.json_serialize.util import JSONdict, JSONitem, MonoTuple, _FORMAT_KEY, _REF_KEY
-from muutils.tensor_utils import NDArray
+from muutils.json_serialize.util import (
+    JSONdict,
+    JSONitem,
+    MonoTuple,
+    _FORMAT_KEY,
+    _REF_KEY,
+)
 
 from zanj.externals import ExternalItem, ExternalItemType, _ZANJ_pre
 
@@ -1869,7 +1967,7 @@ def jsonl_metadata(data: list[JSONdict]) -> dict:
     }
 
 
-def store_npy(self: _ZANJ_pre, fp: IO[bytes], data: NDArray) -> None:
+def store_npy(self: _ZANJ_pre, fp: IO[bytes], data: np.ndarray) -> None:
     """store numpy array to given file as .npy"""
     np.lib.format.write_array(
         fp=fp,
@@ -2073,6 +2171,11 @@ DEFAULT_SERIALIZER_HANDLERS_ZANJ: MonoTuple[ZANJSerializerHandler] = tuple(
 ``````{ end_of_file="zanj/serializing.py" }
 
 ``````{ path="zanj/torchutil.py"  }
+"""torch utilities for zanj -- in particular the `ConfiguredModel` base class
+
+note that this requires torch
+"""
+
 from __future__ import annotations
 
 import abc
@@ -2080,7 +2183,13 @@ import typing
 import warnings
 from typing import Any, Type, TypeVar
 
-import torch
+try:
+    import torch
+except ImportError as e:
+    raise ImportError(
+        "torch is required for zanj.torchutil, please install it with `pip install torch` or `pip install zanj[torch]`"
+    ) from e
+
 from muutils.json_serialize import SerializableDataclass
 from muutils.json_serialize.json_serialize import ObjectPath
 from muutils.json_serialize.util import safe_getsource, string_as_lines, _FORMAT_KEY
@@ -3096,17 +3205,25 @@ format-check:
 	...
 
 # runs type checks with mypy
-# at some point, need to add back --check-untyped-defs to mypy call
-# but it complains when we specify arguments by keyword where positional is fine
-# not sure how to fix this
 .PHONY: typing
 typing: clean
 	@echo "running type checks"
 	...
 
+# generates a report of the mypy output
+.PHONY: typing-report
+typing-report:
+	@echo "generate a report of the type check output -- errors per file"
+	...
+
 .PHONY: test
 test: clean
 	@echo "running tests"
+	...
+
+.PHONY: test-notorch
+test-notorch: clean
+	@echo "running only tests without torch"
 	...
 
 .PHONY: check
@@ -3232,7 +3349,7 @@ help: help-targets info
 ``````{ path="pyproject.toml"  }
 [project]
     name = "zanj"
-    version = "0.4.0"
+    version = "0.5.0"
     description = "save and load complex objects to disk without pickling"
     license = "GPL-3.0-only"
     authors = [
@@ -3252,13 +3369,15 @@ help: help-targets info
     ]
 
     dependencies = [
+        "muutils>=0.8.0",
         "numpy>=1.24.4",
-        "muutils[array]>=0.8.0",
+        "jaxtyping>=0.2.12",
     ]
 
 
 [project.optional-dependencies]
 pandas = ["pandas>=1.5.3"]
+torch = ["torch>=1.13.1"]
 
 [project.urls]
     Homepage = "https://miv.name/zanj"
