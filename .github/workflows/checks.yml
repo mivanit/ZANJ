@@ -95,19 +95,11 @@ jobs:
 
       - name: tests
         if: ${{ matrix.pkg.torch != 'None' }}
-        run: |
-          uv sync
-          uv pip show torch
-          uv pip show numpy
-          make test
+        run: make test UV_NOSYNC=1
 
       - name: tests without torch
         if: ${{ matrix.pkg.torch == 'None' }}
-        run: |
-          uv sync
-          uv pip show torch
-          uv pip show numpy
-          make test-notorch
+        run: make test-notorch UV_NOSYNC=1
 
       # - name: tests in strict mode
       #   # TODO: until zanj ported to 3.8 and 3.9
