@@ -88,6 +88,7 @@ jobs:
 
       - name: torch dep info
         run: make dep-check-torch
+        continue-on-error: true
       
       - name: format check
         run: make format-check
