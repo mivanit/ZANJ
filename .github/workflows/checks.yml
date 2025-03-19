@@ -82,6 +82,12 @@ jobs:
       - name: remove torch if testing torchless
         if: ${{ matrix.pkg.torch == 'None' }}
         run: uv pip uninstall torch
+
+      - name: make info
+        run: make info
+
+      - name: torch dep info
+        run: make dep-check-torch
       
       - name: format check
         run: make format-check
