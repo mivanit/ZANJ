@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import typing
 from pathlib import Path
 
 import pytest
@@ -233,10 +234,15 @@ def test_configmodel_with_custom_settings():
 def test_complex_nested_structure():
     """Test saving and loading a complex nested structure with tensors"""
 
+    # Define classes with proper forward references
     @serializable_dataclass
     class NestedConfig(SerializableDataclass):
-        tensor_list: list = serializable_field(default_factory=list)
-        tensor_dict: dict = serializable_field(default_factory=dict)
+        tensor_list: typing.List[torch.Tensor] = serializable_field(
+            default_factory=list
+        )
+        tensor_dict: typing.Dict[
+            str, typing.Union[torch.Tensor, typing.Dict[str, torch.Tensor]]
+        ] = serializable_field(default_factory=dict)
 
     @serializable_dataclass
     class ComplexConfig(SerializableDataclass):
@@ -272,19 +278,37 @@ def test_complex_nested_structure():
     ZANJ().save(model, path)
     loaded_model = ComplexModel.read(path)
 
+    # Check the model config size parameter
+    assert loaded_model.zanj_model_config.size == model.zanj_model_config.size
+
+    # Check that the nested config was loaded
+    assert isinstance(loaded_model.zanj_model_config.nested, NestedConfig)
+
+    # Check the tensor list lengths
+    assert len(loaded_model.zanj_model_config.nested.tensor_list) == len(
+        model.zanj_model_config.nested.tensor_list
+    )
+
     # Check the nested tensors
     for i, tensor in enumerate(model.zanj_model_config.nested.tensor_list):
         loaded_tensor = loaded_model.zanj_model_config.nested.tensor_list[i]
         assert torch.allclose(tensor, loaded_tensor)
 
-    for key, tensor in model.zanj_model_config.nested.tensor_dict.items():
-        if isinstance(tensor, dict):
-            # Handle nested dict
-            for subkey, subtensor in tensor.items():
-                loaded_subtensor = loaded_model.zanj_model_config.nested.tensor_dict[
-                    key
-                ][subkey]
-                assert torch.allclose(subtensor, loaded_subtensor)
-        else:
-            loaded_tensor = loaded_model.zanj_model_config.nested.tensor_dict[key]
-            assert torch.allclose(tensor, loaded_tensor)
+    # Check tensor dict keys
+    assert set(loaded_model.zanj_model_config.nested.tensor_dict.keys()) == set(
+        model.zanj_model_config.nested.tensor_dict.keys()
+    )
+
+    # Check the tensors in the dictionary
+    for key in ["a", "b"]:
+        tensor = model.zanj_model_config.nested.tensor_dict[key]
+        loaded_tensor = loaded_model.zanj_model_config.nested.tensor_dict[key]
+        assert torch.allclose(tensor, loaded_tensor)
+
+    # Check the nested dictionary
+    nested_dict = model.zanj_model_config.nested.tensor_dict["c"]
+    loaded_nested_dict = loaded_model.zanj_model_config.nested.tensor_dict["c"]
+    assert set(nested_dict.keys()) == set(loaded_nested_dict.keys())
+
+    for key in nested_dict.keys():
+        assert torch.allclose(nested_dict[key], loaded_nested_dict[key])
