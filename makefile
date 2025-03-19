@@ -1372,12 +1372,12 @@ typing-report:
 .PHONY: test
 test: clean
 	@echo "running tests"
-	$(PYTHON) -m pytest $(PYTEST_OPTIONS) $(TESTS_DIR)
+	$(PYTHON) -m pytest $(PYTEST_OPTIONS) $(TESTS_DIR)/unit
 
 .PHONY: test-notorch
 test-notorch: clean
 	@echo "running only tests without torch"
-	$(PYTHON) -m pytest $(PYTEST_OPTIONS) $(TESTS_DIR)/no_torch/
+	$(PYTHON) -m pytest $(PYTEST_OPTIONS) $(TESTS_DIR)/unit/no_torch/ $(TESTS_DIR)/assert_no_torch.py
 
 .PHONY: check
 check: clean format-check test typing

@@ -21,7 +21,6 @@ except ImportError:
             raise ImportError("cannot load pandas DataFrame, pandas is not installed")
 
 
-import torch
 from muutils.errormode import ErrorMode
 from muutils.json_serialize.array import load_array
 from muutils.json_serialize.json_serialize import ObjectPath
@@ -146,7 +145,7 @@ def _torch_loaderhandler_load(
     json_item: JSONitem,
     path: ObjectPath,
     z: _ZANJ_pre | None = None,
-) -> "torch.Tensor":
+) -> "torch.Tensor": # noqa: F821
     """load a torch tensor from a json item"""
     try:
         import torch
