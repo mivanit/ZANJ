@@ -84,14 +84,14 @@ jobs:
         run: uv pip uninstall torch
 
       - name: make info
-        run: make info-long
+        run: make info-long UV_NOSYNC=1
 
       - name: torch dep info
-        run: make dep-check-torch
+        run: make dep-check-torch UV_NOSYNC=1
         continue-on-error: true
       
       - name: format check
-        run: make format-check
+        run: make format-check UV_NOSYNC=1
 
       - name: tests
         if: ${{ matrix.pkg.torch != 'None' }}
