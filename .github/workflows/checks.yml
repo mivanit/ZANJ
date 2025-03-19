@@ -89,6 +89,10 @@ jobs:
       - name: torch dep info
         run: make dep-check-torch
         continue-on-error: true
+
+      - name: uv pip show torch
+        run: uv pip show torch
+        continue-on-error: true
       
       - name: format check
         run: make format-check
