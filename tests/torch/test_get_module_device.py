@@ -25,12 +25,20 @@ def test_get_module_device_multiple_devices():
     if torch.cuda.device_count() < 1:
         pytest.skip("This test requires at least one CUDA device")
 
-    model = torch.nn.Linear(10, 2)
-    model.weight.to("meta")
-    model.bias.to("cpu")
+    with torch.no_grad():
+        model = torch.nn.Linear(10, 2)
+        print(f"{model = }")
+        model.weight = torch.nn.Parameter(model.weight.to("meta"))
+        model.bias = torch.nn.Parameter(model.bias.to("cpu"))
+
+    print(f"{model = }")
+    print(f"{model.weight = }")
+    print(f"{model.bias = }")
 
     # Run the function
     is_single, device_or_dict = get_module_device(model)
+
+    print(f"{is_single = }, {device_or_dict = }")
 
     # Assert that not all parameters are on the same device and a dict is returned
     assert not is_single
