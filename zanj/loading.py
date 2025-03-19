@@ -149,7 +149,7 @@ def _torch_loaderhandler_load(
 ):
     """load a torch tensor from a json item"""
     try:
-        import torch
+        import torch  # type: ignore[import-not-found]
         from muutils.tensor_utils import TORCH_DTYPE_MAP
     except ImportError as e:
         err_msg: str = f"could not import torch, which we need to load the object at {path = }: {json_item = }"

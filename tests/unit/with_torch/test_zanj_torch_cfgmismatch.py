@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
-import torch
+import torch  # type: ignore[import-not-found]
 from muutils.json_serialize import (
     SerializableDataclass,
     serializable_dataclass,

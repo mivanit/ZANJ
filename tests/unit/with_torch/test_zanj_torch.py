@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 import numpy as np
-import torch
+import torch  # type: ignore[import-not-found]
 from muutils.json_serialize import (
     SerializableDataclass,
     serializable_dataclass,
@@ -73,7 +73,7 @@ def test_torch_configmodel_minimal():
 
 
 def test_torch_configmodel():
-    import torch
+    import torch  # type: ignore[import-not-found]
 
     from zanj.torchutil import ConfiguredModel, set_config_class
 

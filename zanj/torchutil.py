@@ -11,7 +11,7 @@ import warnings
 from typing import Any, Type, TypeVar
 
 try:
-    import torch
+    import torch  # type: ignore[import-not-found]
 except ImportError as e:
     raise ImportError(
         "torch is required for zanj.torchutil, please install it with `pip install torch` or `pip install zanj[torch]`"

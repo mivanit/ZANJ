@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pytest
-import torch
+import torch  # type: ignore[import-not-found]
 
 from zanj.torchutil import get_module_device
 

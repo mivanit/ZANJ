@@ -6,7 +6,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd  # type: ignore[import]
-import torch
+import torch  # type: ignore[import-not-found]
 from muutils.json_serialize import (
     SerializableDataclass,
     serializable_dataclass,

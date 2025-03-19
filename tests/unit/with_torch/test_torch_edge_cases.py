@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 import pytest
-import torch
+import torch  # type: ignore[import-not-found]
 from muutils.json_serialize import (
     SerializableDataclass,
     serializable_dataclass,
