@@ -2,7 +2,7 @@
 #| python project makefile template                                 |
 #| originally by Michael Ivanitskiy (mivanits@umich.edu)            |
 #| https://github.com/mivanit/python-project-makefile-template      |
-#| version: v0.3.2                                                  |
+#| version: v0.3.3                                                  |
 #| license: https://creativecommons.org/licenses/by-sa/4.0/         |
 #| modifications from the original should be denoted with `~~~~~`   |
 #| as this makes it easier to find edits when updating makefile     |
@@ -523,6 +523,7 @@ def get_torch_info() -> Tuple[List[Exception], Dict[str, Any]]:
 
 	except Exception as e:  # noqa: BLE001
 		exceptions.append(e)
+		info["torch.__version__"] = "not available"
 
 	return exceptions, info
 
@@ -1369,6 +1370,8 @@ typing-report:
 	@echo "generate a report of the type check output -- errors per file"
 	$(PYTHON) -m mypy --config-file $(PYPROJECT) $(TYPECHECK_ARGS) . | $(PYTHON) -c "$$SCRIPT_MYPY_REPORT" --mode toml
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 .PHONY: test
 test: clean
 	@echo "running tests"
@@ -1378,6 +1381,8 @@ test: clean
 test-notorch: clean
 	@echo "running only tests without torch"
 	$(PYTHON) -m pytest $(PYTEST_OPTIONS) $(TESTS_DIR)/unit/no_torch/ $(TESTS_DIR)/assert_no_torch.py
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .PHONY: check
 check: clean format-check test typing
