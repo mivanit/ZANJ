@@ -1,4 +1,5 @@
 version = 1
+revision = 1
 requires-python = ">=3.8"
 resolution-markers = [
     "python_full_version >= '3.13'",
@@ -2486,18 +2487,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/e3/99/af101467bd227291d1adcaa340261a73f144aa11711a804eeebc7da859b9/muutils-0.8.0.tar.gz", hash = "sha256:73d1c714e980e4e371a1e09a54f7115e18fb1d5a1f406f064fc310df1d593ff5", size = 2458843 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/b1/3b/013ace104e284b6a4fddd19e74d62ee05ad97357b258561782c7e9a4f14f/muutils-0.8.0-py3-none-any.whl", hash = "sha256:de8d9567aea388f94d960d381a0553c30e820b99b7e4ae3c6f317bf61a06ad60", size = 107336 },
-]
-
-[package.optional-dependencies]
-array = [
-    { name = "jaxtyping", version = "0.2.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
-    { name = "jaxtyping", version = "0.2.36", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.9.*'" },
-    { name = "jaxtyping", version = "0.2.38", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "numpy", version = "1.24.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
-    { name = "numpy", version = "2.0.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.9.*'" },
-    { name = "numpy", version = "2.2.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "torch", version = "2.4.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
-    { name = "torch", version = "2.6.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9'" },
 ]
 
 [[package]]
@@ -5017,10 +5006,13 @@ wheels = [
 
 [[package]]
 name = "zanj"
-version = "0.4.0"
+version = "0.5.0"
 source = { editable = "." }
 dependencies = [
-    { name = "muutils", extra = ["array"] },
+    { name = "jaxtyping", version = "0.2.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
+    { name = "jaxtyping", version = "0.2.36", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.9.*'" },
+    { name = "jaxtyping", version = "0.2.38", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
+    { name = "muutils" },
     { name = "numpy", version = "1.24.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
     { name = "numpy", version = "2.0.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.9.*'" },
     { name = "numpy", version = "2.2.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
@@ -5030,6 +5022,10 @@ dependencies = [
 pandas = [
     { name = "pandas", version = "2.0.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
     { name = "pandas", version = "2.2.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9'" },
+]
+torch = [
+    { name = "torch", version = "2.4.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
+    { name = "torch", version = "2.6.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9'" },
 ]
 
 [package.dev-dependencies]
@@ -5059,10 +5055,13 @@ lint = [
 
 [package.metadata]
 requires-dist = [
-    { name = "muutils", extras = ["array"], specifier = ">=0.8.0" },
+    { name = "jaxtyping", specifier = ">=0.2.12" },
+    { name = "muutils", specifier = ">=0.8.0" },
     { name = "numpy", specifier = ">=1.24.4" },
     { name = "pandas", marker = "extra == 'pandas'", specifier = ">=1.5.3" },
+    { name = "torch", marker = "extra == 'torch'", specifier = ">=1.13.1" },
 ]
+provides-extras = ["pandas", "torch"]
 
 [package.metadata.requires-dev]
 dev = [

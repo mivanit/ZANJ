@@ -1,6 +1,6 @@
 [project]
     name = "zanj"
-    version = "0.4.0"
+    version = "0.5.0"
     description = "save and load complex objects to disk without pickling"
     license = "GPL-3.0-only"
     authors = [
@@ -20,13 +20,15 @@
     ]
 
     dependencies = [
+        "muutils>=0.8.0",
         "numpy>=1.24.4",
-        "muutils[array]>=0.8.0",
+        "jaxtyping>=0.2.12",
     ]
 
 
 [project.optional-dependencies]
 pandas = ["pandas>=1.5.3"]
+torch = ["torch>=1.13.1"]
 
 [project.urls]
     Homepage = "https://miv.name/zanj"
