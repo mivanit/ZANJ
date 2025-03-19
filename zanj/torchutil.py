@@ -1,3 +1,8 @@
+"""torch utilities for zanj -- in particular the `ConfiguredModel` base class
+
+note that this requires torch
+"""
+
 from __future__ import annotations
 
 import abc
@@ -5,7 +10,13 @@ import typing
 import warnings
 from typing import Any, Type, TypeVar
 
-import torch
+try:
+    import torch
+except ImportError as e:
+    raise ImportError(
+        "torch is required for zanj.torchutil, please install it with `pip install torch` or `pip install zanj[torch]`"
+    ) from e
+
 from muutils.json_serialize import SerializableDataclass
 from muutils.json_serialize.json_serialize import ObjectPath
 from muutils.json_serialize.util import safe_getsource, string_as_lines, _FORMAT_KEY

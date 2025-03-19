@@ -33,7 +33,6 @@ from muutils.json_serialize.util import (
     safe_getsource,
     string_as_lines,
 )
-from muutils.tensor_utils import DTYPE_MAP, TORCH_DTYPE_MAP
 
 from zanj.externals import (
     GET_EXTERNAL_LOAD_FUNC,
@@ -143,6 +142,24 @@ class LoaderHandler:
         )
 
 
+def _torch_loaderhandler_load(
+    json_item: JSONitem,
+    path: ObjectPath,
+    z: _ZANJ_pre | None = None,
+) -> "torch.Tensor":
+    """load a torch tensor from a json item"""
+    try:
+        import torch
+        from muutils.tensor_utils import TORCH_DTYPE_MAP
+    except ImportError as e:
+        err_msg: str = f"could not import torch, which we need to load the object at {path = }: {json_item = }"
+        raise ImportError(err_msg) from e
+
+    return torch.tensor(
+        load_array(json_item), dtype=TORCH_DTYPE_MAP[json_item["dtype"]]
+    )
+
+
 # NOTE: there are type ignores on the loaders, since the type checking should be the responsibility of the check function
 
 LOADER_MAP_LOCK = threading.Lock()
@@ -160,7 +177,7 @@ LOADER_MAP: dict[str, LoaderHandler] = {
                 # and tuple(json_item["data"].shape) == tuple(json_item["shape"])
             ),
             load=lambda json_item, path=None, z=None: np.array(  # type: ignore[misc]
-                load_array(json_item), dtype=DTYPE_MAP[json_item["dtype"]]
+                load_array(json_item), dtype=np.dtype(json_item["dtype"])
             ),
             uid="numpy.ndarray",
             source_pckg="zanj",
@@ -174,9 +191,7 @@ LOADER_MAP: dict[str, LoaderHandler] = {
                 # and json_item["data"].dtype.name == json_item["dtype"]
                 # and tuple(json_item["data"].shape) == tuple(json_item["shape"])
             ),
-            load=lambda json_item, path=None, z=None: torch.tensor(  # type: ignore[misc]
-                load_array(json_item), dtype=TORCH_DTYPE_MAP[json_item["dtype"]]
-            ),
+            load=_torch_loaderhandler_load,
             uid="torch.Tensor",
             source_pckg="zanj",
             desc="torch.Tensor loader",

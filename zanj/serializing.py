@@ -12,8 +12,13 @@ from muutils.json_serialize.json_serialize import (  # JsonSerializer,
     ObjectPath,
     SerializerHandler,
 )
-from muutils.json_serialize.util import JSONdict, JSONitem, MonoTuple, _FORMAT_KEY, _REF_KEY
-from muutils.tensor_utils import NDArray
+from muutils.json_serialize.util import (
+    JSONdict,
+    JSONitem,
+    MonoTuple,
+    _FORMAT_KEY,
+    _REF_KEY,
+)
 
 from zanj.externals import ExternalItem, ExternalItemType, _ZANJ_pre
 
@@ -44,7 +49,7 @@ def jsonl_metadata(data: list[JSONdict]) -> dict:
     }
 
 
-def store_npy(self: _ZANJ_pre, fp: IO[bytes], data: NDArray) -> None:
+def store_npy(self: _ZANJ_pre, fp: IO[bytes], data: np.ndarray) -> None:
     """store numpy array to given file as .npy"""
     np.lib.format.write_array(
         fp=fp,
