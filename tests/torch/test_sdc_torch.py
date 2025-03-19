@@ -23,16 +23,16 @@ SUPPORTS_KW_ONLY: bool = bool(sys.version_info >= (3, 10))
 
 
 @serializable_dataclass
-class BasicZanj(SerializableDataclass):
+class BasicZanjTorch(SerializableDataclass):
     a: str
     q: int = 42
     c: typing.List[int] = serializable_field(default_factory=list)
 
 
 @serializable_dataclass
-class Nested(SerializableDataclass):
+class NestedTorch(SerializableDataclass):
     name: str
-    basic: BasicZanj
+    basic: BasicZanjTorch
     val: float
 
 
@@ -72,7 +72,7 @@ class sdc_complicated(SerializableDataclass):
     arr2: np.ndarray
     iris_data: pd.DataFrame
     brain_data: pd.DataFrame
-    container: typing.List[Nested]
+    container: typing.List[NestedTorch]
 
     tensor: torch.Tensor
 
@@ -88,9 +88,9 @@ def test_sdc_complicated():
         iris_data=pd.read_csv("tests/input_data/iris.csv"),
         brain_data=pd.read_csv("tests/input_data/brain_networks.csv"),
         container=[
-            Nested(
+            NestedTorch(
                 f"n-{n}",
-                BasicZanj(f"n-{n}_b", n * 10 + 1, [n + 1, n + 2, n + 10]),
+                BasicZanjTorch(f"n-{n}_b", n * 10 + 1, [n + 1, n + 2, n + 10]),
                 n * np.pi,
             )
             for n in range(10)

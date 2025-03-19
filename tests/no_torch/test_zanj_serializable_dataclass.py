@@ -61,11 +61,7 @@ class Nested_with_container(SerializableDataclass):
     name: str
     basic: BasicZanj
     val: float
-    container: typing.List[Nested] = serializable_field(
-        default_factory=list,
-        serialization_fn=lambda c: [n.serialize() for n in c],
-        loading_fn=lambda data: [Nested.load(n) for n in data["container"]],
-    )
+    container: typing.List[Nested] = serializable_field(default_factory=list)
 
 
 def test_Nested_with_container():
