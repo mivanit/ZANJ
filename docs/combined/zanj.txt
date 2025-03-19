@@ -1,4 +1,4 @@
-  docs for zanj v0.4.0
+  docs for zanj v0.5.0
 
 Contents
 
@@ -621,7 +621,7 @@ return the metadata of the ZANJ archive
 
 def save
 
-    (self, obj: Any, file_path: str | pathlib.Path) -> str
+    (self, obj: Any, file_path: str | pathlib._local.Path) -> str
 
 View Source on GitHub
 
@@ -629,7 +629,7 @@ save the object to a ZANJ archive. returns the path to the archive
 
 def read
 
-    (self, file_path: Union[str, pathlib.Path]) -> Any
+    (self, file_path: Union[str, pathlib._local.Path]) -> Any
 
 View Source on GitHub
 
@@ -645,7 +645,7 @@ Inherited Members
 -   json_serialize
 -   hashify
 
-  docs for zanj v0.4.0
+  docs for zanj v0.5.0
 
 Contents
 
@@ -733,7 +733,7 @@ def GET_EXTERNAL_LOAD_FUNC
 
 View Source on GitHub
 
-  docs for zanj v0.4.0
+  docs for zanj v0.5.0
 
 API Documentation
 
@@ -801,7 +801,7 @@ __muutils_format__ attribute
 
 -   LOADER_MAP_LOCK = <unlocked _thread.lock object>
 
--   LOADER_MAP: dict[str, zanj.loading.LoaderHandler] = {'numpy.ndarray': LoaderHandler(check=<function <lambda>>, load=<function <lambda>>, uid='numpy.ndarray', source_pckg='zanj', priority=0, desc='numpy.ndarray loader'), 'torch.Tensor': LoaderHandler(check=<function <lambda>>, load=<function <lambda>>, uid='torch.Tensor', source_pckg='zanj', priority=0, desc='torch.Tensor loader'), 'pandas.DataFrame': LoaderHandler(check=<function <lambda>>, load=<function <lambda>>, uid='pandas.DataFrame', source_pckg='zanj', priority=0, desc='pandas.DataFrame loader'), 'list': LoaderHandler(check=<function <lambda>>, load=<function <lambda>>, uid='list', source_pckg='zanj', priority=0, desc='list loader, for externals'), 'tuple': LoaderHandler(check=<function <lambda>>, load=<function <lambda>>, uid='tuple', source_pckg='zanj', priority=0, desc='tuple loader, for externals')}
+-   LOADER_MAP: dict[str, zanj.loading.LoaderHandler] = {'numpy.ndarray': LoaderHandler(check=<function <lambda>>, load=<function <lambda>>, uid='numpy.ndarray', source_pckg='zanj', priority=0, desc='numpy.ndarray loader'), 'torch.Tensor': LoaderHandler(check=<function <lambda>>, load=<function _torch_loaderhandler_load>, uid='torch.Tensor', source_pckg='zanj', priority=0, desc='torch.Tensor loader'), 'pandas.DataFrame': LoaderHandler(check=<function <lambda>>, load=<function <lambda>>, uid='pandas.DataFrame', source_pckg='zanj', priority=0, desc='pandas.DataFrame loader'), 'list': LoaderHandler(check=<function <lambda>>, load=<function <lambda>>, uid='list', source_pckg='zanj', priority=0, desc='list loader, for externals'), 'tuple': LoaderHandler(check=<function <lambda>>, load=<function <lambda>>, uid='tuple', source_pckg='zanj', priority=0, desc='tuple loader, for externals')}
 
 def register_loader_handler
 
@@ -844,7 +844,7 @@ for loading a zanj file
 
 LoadedZANJ
 
-    (path: str | pathlib.Path, zanj: Any)
+    (path: str | pathlib._local.Path, zanj: Any)
 
 View Source on GitHub
 
@@ -856,7 +856,7 @@ View Source on GitHub
 
 put all external items into the main json data
 
-  docs for zanj v0.4.0
+  docs for zanj v0.5.0
 
 API Documentation
 
@@ -889,11 +889,7 @@ metadata about a jsonl object
 
 def store_npy
 
-    (
-        self: Any,
-        fp: IO[bytes],
-        data: muutils.tensor_utils.jaxtype_factory.<locals>._BaseArray
-    ) -> None
+    (self: Any, fp: IO[bytes], data: numpy.ndarray) -> None
 
 View Source on GitHub
 
@@ -973,7 +969,13 @@ Modifies:
 
 -   DEFAULT_SERIALIZER_HANDLERS_ZANJ: None = (ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='numpy.ndarray:external', desc='external numpy array', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='torch.Tensor:external', desc='external torch tensor', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='list:external', desc='external list', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='tuple:external', desc='external tuple', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='pandas.DataFrame:external', desc='external pandas DataFrame', source_pckg='zanj'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='base types', desc='base types (bool, int, float, str, None)'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='dictionaries', desc='dictionaries'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='(list, tuple) -> list', desc='lists and tuples as lists'), SerializerHandler(check=<function <lambda>>, serialize_func=<function _serialize_override_serialize_func>, uid='.serialize override', desc='objects with .serialize method'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='namedtuple -> dict', desc='namedtuples as dicts'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='dataclass -> dict', desc='dataclasses as dicts'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='path -> str', desc='Path objects as posix strings'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='obj -> str(obj)', desc='directly serialize objects inSERIALIZE_DIRECT_AS_STRto strings'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='numpy.ndarray', desc='numpy arrays'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='torch.Tensor', desc='pytorch tensors'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='pandas.DataFrame', desc='pandas DataFrames'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='(set, list, tuple, Iterable) -> list', desc='sets, lists, tuples, and Iterables as lists'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='fallback', desc='fallback handler -- serialize object attributes and special functions as strings'))
 
-  docs for zanj v0.4.0
+  docs for zanj v0.5.0
+
+Contents
+
+torch utilities for zanj – in particular the ConfiguredModel base class
+
+note that this requires torch
 
 API Documentation
 
@@ -989,6 +991,10 @@ API Documentation
 View Source on GitHub
 
 zanj.torchutil
+
+torch utilities for zanj – in particular the ConfiguredModel base class
+
+note that this requires torch
 
 View Source on GitHub
 
@@ -1218,7 +1224,7 @@ View Source on GitHub
 
 check the models are exactly equal, including state dict contents
 
-  docs for zanj v0.4.0
+  docs for zanj v0.5.0
 
 Contents
 
@@ -1330,7 +1336,7 @@ return the metadata of the ZANJ archive
 
 def save
 
-    (self, obj: Any, file_path: str | pathlib.Path) -> str
+    (self, obj: Any, file_path: str | pathlib._local.Path) -> str
 
 View Source on GitHub
 
@@ -1338,7 +1344,7 @@ save the object to a ZANJ archive. returns the path to the archive
 
 def read
 
-    (self, file_path: Union[str, pathlib.Path]) -> Any
+    (self, file_path: Union[str, pathlib._local.Path]) -> Any
 
 View Source on GitHub
 

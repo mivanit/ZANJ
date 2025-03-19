@@ -1,10 +1,10 @@
-> docs for [`zanj`](https://github.com/mivanit/zanj) v0.4.0
+> docs for [`zanj`](https://github.com/mivanit/zanj) v0.5.0
 
 ## Contents
 
 [![PyPI](https://img.shields.io/pypi/v/zanj)](https://pypi.org/project/zanj/)
 [![Checks](https://github.com/mivanit/zanj/actions/workflows/checks.yml/badge.svg)](https://github.com/mivanit/zanj/actions/workflows/checks.yml)
-[![Coverage](data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iOTkiIGhlaWdodD0iMjAiPg0KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYiIgeDI9IjAiIHkyPSIxMDAlIj4NCiAgICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYmJiIiBzdG9wLW9wYWNpdHk9Ii4xIi8+DQogICAgICAgIDxzdG9wIG9mZnNldD0iMSIgc3RvcC1vcGFjaXR5PSIuMSIvPg0KICAgIDwvbGluZWFyR3JhZGllbnQ+DQogICAgPG1hc2sgaWQ9ImEiPg0KICAgICAgICA8cmVjdCB3aWR0aD0iOTkiIGhlaWdodD0iMjAiIHJ4PSIzIiBmaWxsPSIjZmZmIi8+DQogICAgPC9tYXNrPg0KICAgIDxnIG1hc2s9InVybCgjYSkiPg0KICAgICAgICA8cGF0aCBmaWxsPSIjNTU1IiBkPSJNMCAwaDYzdjIwSDB6Ii8+DQogICAgICAgIDxwYXRoIGZpbGw9IiM5N0NBMDAiIGQ9Ik02MyAwaDM2djIwSDYzeiIvPg0KICAgICAgICA8cGF0aCBmaWxsPSJ1cmwoI2IpIiBkPSJNMCAwaDk5djIwSDB6Ii8+DQogICAgPC9nPg0KICAgIDxnIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJEZWphVnUgU2FucyxWZXJkYW5hLEdlbmV2YSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIj4NCiAgICAgICAgPHRleHQgeD0iMzEuNSIgeT0iMTUiIGZpbGw9IiMwMTAxMDEiIGZpbGwtb3BhY2l0eT0iLjMiPmNvdmVyYWdlPC90ZXh0Pg0KICAgICAgICA8dGV4dCB4PSIzMS41IiB5PSIxNCI+Y292ZXJhZ2U8L3RleHQ+DQogICAgICAgIDx0ZXh0IHg9IjgwIiB5PSIxNSIgZmlsbD0iIzAxMDEwMSIgZmlsbC1vcGFjaXR5PSIuMyI+OTMlPC90ZXh0Pg0KICAgICAgICA8dGV4dCB4PSI4MCIgeT0iMTQiPjkzJTwvdGV4dD4NCiAgICA8L2c+DQo8L3N2Zz4NCg==)](docs/coverage/coverage.txt)
+[![Coverage](data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5OSIgaGVpZ2h0PSIyMCI+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImIiIHgyPSIwIiB5Mj0iMTAwJSI+CiAgICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYmJiIiBzdG9wLW9wYWNpdHk9Ii4xIi8+CiAgICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLW9wYWNpdHk9Ii4xIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPG1hc2sgaWQ9ImEiPgogICAgICAgIDxyZWN0IHdpZHRoPSI5OSIgaGVpZ2h0PSIyMCIgcng9IjMiIGZpbGw9IiNmZmYiLz4KICAgIDwvbWFzaz4KICAgIDxnIG1hc2s9InVybCgjYSkiPgogICAgICAgIDxwYXRoIGZpbGw9IiM1NTUiIGQ9Ik0wIDBoNjN2MjBIMHoiLz4KICAgICAgICA8cGF0aCBmaWxsPSIjNGMxIiBkPSJNNjMgMGgzNnYyMEg2M3oiLz4KICAgICAgICA8cGF0aCBmaWxsPSJ1cmwoI2IpIiBkPSJNMCAwaDk5djIwSDB6Ii8+CiAgICA8L2c+CiAgICA8ZyBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMsVmVyZGFuYSxHZW5ldmEsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSI+CiAgICAgICAgPHRleHQgeD0iMzEuNSIgeT0iMTUiIGZpbGw9IiMwMTAxMDEiIGZpbGwtb3BhY2l0eT0iLjMiPmNvdmVyYWdlPC90ZXh0PgogICAgICAgIDx0ZXh0IHg9IjMxLjUiIHk9IjE0Ij5jb3ZlcmFnZTwvdGV4dD4KICAgICAgICA8dGV4dCB4PSI4MCIgeT0iMTUiIGZpbGw9IiMwMTAxMDEiIGZpbGwtb3BhY2l0eT0iLjMiPjk1JTwvdGV4dD4KICAgICAgICA8dGV4dCB4PSI4MCIgeT0iMTQiPjk1JTwvdGV4dD4KICAgIDwvZz4KPC9zdmc+Cg==)](docs/coverage/coverage.txt)
 ![code size,
 bytes](https://img.shields.io/github/languages/code-size/mivanit/zanj)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/zanj)
@@ -290,13 +290,13 @@ The on-disk format is a file `<filename>.zanj` is a zip file containing:
 - [`ZANJ`](#ZANJ)
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0__init__.py)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0__init__.py)
 
 # `zanj`
 
 [![PyPI](https://img.shields.io/pypi/v/zanj)](https://pypi.org/project/zanj/)
 [![Checks](https://github.com/mivanit/zanj/actions/workflows/checks.yml/badge.svg)](https://github.com/mivanit/zanj/actions/workflows/checks.yml)
-[![Coverage](data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iOTkiIGhlaWdodD0iMjAiPg0KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYiIgeDI9IjAiIHkyPSIxMDAlIj4NCiAgICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYmJiIiBzdG9wLW9wYWNpdHk9Ii4xIi8+DQogICAgICAgIDxzdG9wIG9mZnNldD0iMSIgc3RvcC1vcGFjaXR5PSIuMSIvPg0KICAgIDwvbGluZWFyR3JhZGllbnQ+DQogICAgPG1hc2sgaWQ9ImEiPg0KICAgICAgICA8cmVjdCB3aWR0aD0iOTkiIGhlaWdodD0iMjAiIHJ4PSIzIiBmaWxsPSIjZmZmIi8+DQogICAgPC9tYXNrPg0KICAgIDxnIG1hc2s9InVybCgjYSkiPg0KICAgICAgICA8cGF0aCBmaWxsPSIjNTU1IiBkPSJNMCAwaDYzdjIwSDB6Ii8+DQogICAgICAgIDxwYXRoIGZpbGw9IiM5N0NBMDAiIGQ9Ik02MyAwaDM2djIwSDYzeiIvPg0KICAgICAgICA8cGF0aCBmaWxsPSJ1cmwoI2IpIiBkPSJNMCAwaDk5djIwSDB6Ii8+DQogICAgPC9nPg0KICAgIDxnIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJEZWphVnUgU2FucyxWZXJkYW5hLEdlbmV2YSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIj4NCiAgICAgICAgPHRleHQgeD0iMzEuNSIgeT0iMTUiIGZpbGw9IiMwMTAxMDEiIGZpbGwtb3BhY2l0eT0iLjMiPmNvdmVyYWdlPC90ZXh0Pg0KICAgICAgICA8dGV4dCB4PSIzMS41IiB5PSIxNCI+Y292ZXJhZ2U8L3RleHQ+DQogICAgICAgIDx0ZXh0IHg9IjgwIiB5PSIxNSIgZmlsbD0iIzAxMDEwMSIgZmlsbC1vcGFjaXR5PSIuMyI+OTMlPC90ZXh0Pg0KICAgICAgICA8dGV4dCB4PSI4MCIgeT0iMTQiPjkzJTwvdGV4dD4NCiAgICA8L2c+DQo8L3N2Zz4NCg==)](docs/coverage/coverage.txt)
+[![Coverage](data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5OSIgaGVpZ2h0PSIyMCI+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImIiIHgyPSIwIiB5Mj0iMTAwJSI+CiAgICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYmJiIiBzdG9wLW9wYWNpdHk9Ii4xIi8+CiAgICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLW9wYWNpdHk9Ii4xIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPG1hc2sgaWQ9ImEiPgogICAgICAgIDxyZWN0IHdpZHRoPSI5OSIgaGVpZ2h0PSIyMCIgcng9IjMiIGZpbGw9IiNmZmYiLz4KICAgIDwvbWFzaz4KICAgIDxnIG1hc2s9InVybCgjYSkiPgogICAgICAgIDxwYXRoIGZpbGw9IiM1NTUiIGQ9Ik0wIDBoNjN2MjBIMHoiLz4KICAgICAgICA8cGF0aCBmaWxsPSIjNGMxIiBkPSJNNjMgMGgzNnYyMEg2M3oiLz4KICAgICAgICA8cGF0aCBmaWxsPSJ1cmwoI2IpIiBkPSJNMCAwaDk5djIwSDB6Ii8+CiAgICA8L2c+CiAgICA8ZyBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMsVmVyZGFuYSxHZW5ldmEsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSI+CiAgICAgICAgPHRleHQgeD0iMzEuNSIgeT0iMTUiIGZpbGw9IiMwMTAxMDEiIGZpbGwtb3BhY2l0eT0iLjMiPmNvdmVyYWdlPC90ZXh0PgogICAgICAgIDx0ZXh0IHg9IjMxLjUiIHk9IjE0Ij5jb3ZlcmFnZTwvdGV4dD4KICAgICAgICA8dGV4dCB4PSI4MCIgeT0iMTUiIGZpbGw9IiMwMTAxMDEiIGZpbGwtb3BhY2l0eT0iLjMiPjk1JTwvdGV4dD4KICAgICAgICA8dGV4dCB4PSI4MCIgeT0iMTQiPjk1JTwvdGV4dD4KICAgIDwvZz4KPC9zdmc+Cg==)](docs/coverage/coverage.txt)
 ![code size,
 bytes](https://img.shields.io/github/languages/code-size/mivanit/zanj)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/zanj)
@@ -571,7 +571,7 @@ containing:
 [safetensors](https://github.com/huggingface/safetensors/blob/main/README.md))
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0__init__.py#L0-L18)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0__init__.py#L0-L18)
 
 ### `def register_loader_handler`
 
@@ -580,14 +580,14 @@ GitHub](https://github.com/mivanit/zanj/blob/0.4.0__init__.py#L0-L18)
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0__init__.py#L235-L239)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0__init__.py#L251-L255)
 
 register a custom loader handler
 
 ### `class ZANJ(muutils.json_serialize.json_serialize.JsonSerializer):`
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0__init__.py#L66-L247)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0__init__.py#L66-L247)
 
 Zip up: Arrays in Numpy, JSON for everything else
 
@@ -626,7 +626,7 @@ attributes of the class can be correctly recognized
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0__init__.py#L81-L116)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0__init__.py#L81-L116)
 
 - `external_array_threshold: int`
 
@@ -643,7 +643,7 @@ GitHub](https://github.com/mivanit/zanj/blob/0.4.0__init__.py#L81-L116)
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0__init__.py#L118-L141)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0__init__.py#L118-L141)
 
 return information about the current externals
 
@@ -656,29 +656,29 @@ return information about the current externals
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0__init__.py#L143-L164)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0__init__.py#L143-L164)
 
 return the metadata of the ZANJ archive
 
 ### `def save`
 
 ``` python
-(self, obj: Any, file_path: str | pathlib.Path) -> str
+(self, obj: Any, file_path: str | pathlib._local.Path) -> str
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0__init__.py#L166-L219)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0__init__.py#L166-L219)
 
 save the object to a ZANJ archive. returns the path to the archive
 
 ### `def read`
 
 ``` python
-(self, file_path: Union[str, pathlib.Path]) -> Any
+(self, file_path: Union[str, pathlib._local.Path]) -> Any
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0__init__.py#L221-L247)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0__init__.py#L221-L247)
 
 load the object from a ZANJ archive \### TODO: load only some part of
 the zanj file by passing an ObjectPath
@@ -692,7 +692,7 @@ the zanj file by passing an ObjectPath
 - [`json_serialize`](#ZANJ.json_serialize)
 - [`hashify`](#ZANJ.hashify)
 
-> docs for [`zanj`](https://github.com/mivanit/zanj) v0.4.0
+> docs for [`zanj`](https://github.com/mivanit/zanj) v0.5.0
 
 ## Contents
 
@@ -711,14 +711,14 @@ for storing/retrieving an item externally in a ZANJ archive
 - [`GET_EXTERNAL_LOAD_FUNC`](#GET_EXTERNAL_LOAD_FUNC)
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0externals.py)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0externals.py)
 
 # `zanj.externals`
 
 for storing/retrieving an item externally in a ZANJ archive
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0externals.py#L0-L51)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0externals.py#L0-L51)
 
 - `ZANJ_MAIN: str = '__zanj__.json'`
 
@@ -771,7 +771,7 @@ Alias for field number 2
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0externals.py#L32-L33)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0externals.py#L32-L33)
 
 ### `def load_npy`
 
@@ -780,7 +780,7 @@ GitHub](https://github.com/mivanit/zanj/blob/0.4.0externals.py#L32-L33)
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0externals.py#L36-L37)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0externals.py#L36-L37)
 
 - `EXTERNAL_LOAD_FUNCS: dict[typing.Literal['jsonl', 'npy'], typing.Callable[[zanj.zanj.ZANJ, typing.IO[bytes]], typing.Any]] = {'jsonl': <function load_jsonl>, 'npy': <function load_npy>}`
 
@@ -791,9 +791,9 @@ GitHub](https://github.com/mivanit/zanj/blob/0.4.0externals.py#L36-L37)
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0externals.py#L46-L52)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0externals.py#L46-L52)
 
-> docs for [`zanj`](https://github.com/mivanit/zanj) v0.4.0
+> docs for [`zanj`](https://github.com/mivanit/zanj) v0.5.0
 
 ## API Documentation
 
@@ -806,17 +806,17 @@ GitHub](https://github.com/mivanit/zanj/blob/0.4.0externals.py#L46-L52)
 - [`LoadedZANJ`](#LoadedZANJ)
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0loading.py)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0loading.py)
 
 # `zanj.loading`
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0loading.py#L0-L433)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0loading.py#L0-L449)
 
 ### `class LoaderHandler:`
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0loading.py#L84-L143)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0loading.py#L82-L141)
 
 handler for loading an object from a json file or a ZANJ archive
 
@@ -854,7 +854,7 @@ handler for loading an object from a json file or a ZANJ archive
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0loading.py#L104-L122)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0loading.py#L102-L120)
 
 serialize the handler info
 
@@ -865,14 +865,14 @@ serialize the handler info
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0loading.py#L124-L143)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0loading.py#L122-L141)
 
 create a loader from a class with `serialize`, `load` methods and
 `__muutils_format__` attribute
 
 - `LOADER_MAP_LOCK = <unlocked _thread.lock object>`
 
-- `LOADER_MAP: dict[str, zanj.loading.LoaderHandler] = {'numpy.ndarray': LoaderHandler(check=<function <lambda>>, load=<function <lambda>>, uid='numpy.ndarray', source_pckg='zanj', priority=0, desc='numpy.ndarray loader'), 'torch.Tensor': LoaderHandler(check=<function <lambda>>, load=<function <lambda>>, uid='torch.Tensor', source_pckg='zanj', priority=0, desc='torch.Tensor loader'), 'pandas.DataFrame': LoaderHandler(check=<function <lambda>>, load=<function <lambda>>, uid='pandas.DataFrame', source_pckg='zanj', priority=0, desc='pandas.DataFrame loader'), 'list': LoaderHandler(check=<function <lambda>>, load=<function <lambda>>, uid='list', source_pckg='zanj', priority=0, desc='list loader, for externals'), 'tuple': LoaderHandler(check=<function <lambda>>, load=<function <lambda>>, uid='tuple', source_pckg='zanj', priority=0, desc='tuple loader, for externals')}`
+- `LOADER_MAP: dict[str, zanj.loading.LoaderHandler] = {'numpy.ndarray': LoaderHandler(check=<function <lambda>>, load=<function <lambda>>, uid='numpy.ndarray', source_pckg='zanj', priority=0, desc='numpy.ndarray loader'), 'torch.Tensor': LoaderHandler(check=<function <lambda>>, load=<function _torch_loaderhandler_load>, uid='torch.Tensor', source_pckg='zanj', priority=0, desc='torch.Tensor loader'), 'pandas.DataFrame': LoaderHandler(check=<function <lambda>>, load=<function <lambda>>, uid='pandas.DataFrame', source_pckg='zanj', priority=0, desc='pandas.DataFrame loader'), 'list': LoaderHandler(check=<function <lambda>>, load=<function <lambda>>, uid='list', source_pckg='zanj', priority=0, desc='list loader, for externals'), 'tuple': LoaderHandler(check=<function <lambda>>, load=<function <lambda>>, uid='tuple', source_pckg='zanj', priority=0, desc='tuple loader, for externals')}`
 
 ### `def register_loader_handler`
 
@@ -881,7 +881,7 @@ create a loader from a class with `serialize`, `load` methods and
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0loading.py#L235-L239)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0loading.py#L251-L255)
 
 register a custom loader handler
 
@@ -897,7 +897,7 @@ register a custom loader handler
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0loading.py#L242-L267)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0loading.py#L258-L283)
 
 get the loader for a json item
 
@@ -914,23 +914,23 @@ get the loader for a json item
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0loading.py#L270-L348)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0loading.py#L286-L364)
 
 ### `class LoadedZANJ:`
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0loading.py#L390-L434)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0loading.py#L406-L450)
 
 for loading a zanj file
 
 ### `LoadedZANJ`
 
 ``` python
-(path: str | pathlib.Path, zanj: Any)
+(path: str | pathlib._local.Path, zanj: Any)
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0loading.py#L393-L422)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0loading.py#L409-L438)
 
 ### `def populate_externals`
 
@@ -939,11 +939,11 @@ GitHub](https://github.com/mivanit/zanj/blob/0.4.0loading.py#L393-L422)
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0loading.py#L424-L434)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0loading.py#L440-L450)
 
 put all external items into the main json data
 
-> docs for [`zanj`](https://github.com/mivanit/zanj) v0.4.0
+> docs for [`zanj`](https://github.com/mivanit/zanj) v0.5.0
 
 ## API Documentation
 
@@ -957,12 +957,12 @@ put all external items into the main json data
 - [`DEFAULT_SERIALIZER_HANDLERS_ZANJ`](#DEFAULT_SERIALIZER_HANDLERS_ZANJ)
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0serializing.py)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0serializing.py)
 
 # `zanj.serializing`
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0serializing.py#L0-L245)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0serializing.py#L0-L250)
 
 - `KW_ONLY_KWARGS: dict = {'kw_only': True}`
 
@@ -975,22 +975,18 @@ GitHub](https://github.com/mivanit/zanj/blob/0.4.0serializing.py#L0-L245)
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0serializing.py#L28-L44)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0serializing.py#L33-L49)
 
 metadata about a jsonl object
 
 ### `def store_npy`
 
 ``` python
-(
-    self: Any,
-    fp: IO[bytes],
-    data: muutils.tensor_utils.jaxtype_factory.<locals>._BaseArray
-) -> None
+(self: Any, fp: IO[bytes], data: numpy.ndarray) -> None
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0serializing.py#L47-L53)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0serializing.py#L52-L58)
 
 store numpy array to given file as .npy
 
@@ -1005,7 +1001,7 @@ store numpy array to given file as .npy
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0serializing.py#L56-L61)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0serializing.py#L61-L66)
 
 store sequence to given file as .jsonl
 
@@ -1014,7 +1010,7 @@ store sequence to given file as .jsonl
 ### `class ZANJSerializerHandler(muutils.json_serialize.json_serialize.SerializerHandler):`
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0serializing.py#L72-L85)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0serializing.py#L77-L90)
 
 a handler for ZANJ serialization
 
@@ -1056,7 +1052,7 @@ a handler for ZANJ serialization
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0serializing.py#L88-L166)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0serializing.py#L93-L171)
 
 stores a numpy array or jsonl externally in a ZANJ object
 
@@ -1077,7 +1073,14 @@ stores a numpy array or jsonl externally in a ZANJ object
 
 - `DEFAULT_SERIALIZER_HANDLERS_ZANJ: None = (ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='numpy.ndarray:external', desc='external numpy array', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='torch.Tensor:external', desc='external torch tensor', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='list:external', desc='external list', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='tuple:external', desc='external tuple', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='pandas.DataFrame:external', desc='external pandas DataFrame', source_pckg='zanj'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='base types', desc='base types (bool, int, float, str, None)'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='dictionaries', desc='dictionaries'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='(list, tuple) -> list', desc='lists and tuples as lists'), SerializerHandler(check=<function <lambda>>, serialize_func=<function _serialize_override_serialize_func>, uid='.serialize override', desc='objects with .serialize method'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='namedtuple -> dict', desc='namedtuples as dicts'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='dataclass -> dict', desc='dataclasses as dicts'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='path -> str', desc='Path objects as posix strings'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='obj -> str(obj)', desc='directly serialize objects in`SERIALIZE_DIRECT_AS_STR`to strings'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='numpy.ndarray', desc='numpy arrays'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='torch.Tensor', desc='pytorch tensors'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='pandas.DataFrame', desc='pandas DataFrames'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='(set, list, tuple, Iterable) -> list', desc='sets, lists, tuples, and Iterables as lists'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='fallback', desc='fallback handler -- serialize object attributes and special functions as strings'))`
 
-> docs for [`zanj`](https://github.com/mivanit/zanj) v0.4.0
+> docs for [`zanj`](https://github.com/mivanit/zanj) v0.5.0
+
+## Contents
+
+torch utilities for zanj – in particular the `ConfiguredModel` base
+class
+
+note that this requires torch
 
 ## API Documentation
 
@@ -1091,12 +1094,17 @@ stores a numpy array or jsonl externally in a ZANJ object
 - [`assert_model_exact_equality`](#assert_model_exact_equality)
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0torchutil.py)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py)
 
 # `zanj.torchutil`
 
+torch utilities for zanj – in particular the `ConfiguredModel` base
+class
+
+note that this requires torch
+
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L0-L282)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L0-L293)
 
 - `KWArgs = typing.Any`
 
@@ -1107,7 +1115,7 @@ GitHub](https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L0-L282)
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L21-L37)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L32-L48)
 
 return total number of parameters in a model
 
@@ -1126,14 +1134,14 @@ https://stackoverflow.com/questions/49201236/check-the-total-number-of-parameter
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L40-L56)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L51-L67)
 
 get the current devices
 
 ### `class ConfiguredModel(torch.nn.modules.module.Module, typing.Generic[~T_config]):`
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L62-L208)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L73-L219)
 
 a model that has a configuration, for saving with ZANJ
 
@@ -1153,7 +1161,7 @@ ConfiguredModel must be the first class in the inheritance list
 - `zanj_config_class`
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L85-L85)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L96-L96)
 
 - `zanj_model_config: ~T_config`
 
@@ -1170,7 +1178,7 @@ GitHub](https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L85-L85)
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L99-L119)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L110-L130)
 
 ### `def save`
 
@@ -1179,7 +1187,7 @@ GitHub](https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L99-L119)
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L121-L124)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L132-L135)
 
 ### `def load`
 
@@ -1193,7 +1201,7 @@ GitHub](https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L121-L124)
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L135-L172)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L146-L183)
 
 load a model from a serialized object
 
@@ -1208,7 +1216,7 @@ load a model from a serialized object
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L174-L182)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L185-L193)
 
 read a model from a file
 
@@ -1223,7 +1231,7 @@ read a model from a file
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L184-L190)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L195-L201)
 
 read a model from a file
 
@@ -1234,7 +1242,7 @@ read a model from a file
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L192-L205)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L203-L216)
 
 ### `def num_params`
 
@@ -1243,7 +1251,7 @@ GitHub](https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L192-L205)
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L207-L208)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L218-L219)
 
 ### Inherited Members
 
@@ -1311,12 +1319,12 @@ GitHub](https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L207-L208)
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L211-L227)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L222-L238)
 
 ### `class ConfigMismatchException(builtins.ValueError):`
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L230-L236)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L241-L247)
 
 Inappropriate argument value (of correct type).
 
@@ -1327,7 +1335,7 @@ Inappropriate argument value (of correct type).
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L231-L233)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L242-L244)
 
 - `diff`
 
@@ -1347,7 +1355,7 @@ GitHub](https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L231-L233)
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L239-L260)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L250-L271)
 
 check both models are correct instances and have the same config
 
@@ -1364,11 +1372,11 @@ contain the diff
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0torchutil.py#L263-L283)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L274-L294)
 
 check the models are exactly equal, including state dict contents
 
-> docs for [`zanj`](https://github.com/mivanit/zanj) v0.4.0
+> docs for [`zanj`](https://github.com/mivanit/zanj) v0.5.0
 
 ## Contents
 
@@ -1391,7 +1399,7 @@ up with for me. not to be confused with:
 - [`ZANJ`](#ZANJ)
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0zanj.py)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0zanj.py)
 
 # `zanj.zanj`
 
@@ -1408,7 +1416,7 @@ up with for me. not to be confused with:
 - https://www.plutojournals.com/zanj/
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0zanj.py#L0-L249)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0zanj.py#L0-L249)
 
 - `ZANJitem = typing.Union[bool, int, float, str, NoneType, typing.List[typing.Union[bool, int, float, str, NoneType, typing.List[typing.Any], typing.Dict[str, typing.Any]]], typing.Dict[str, typing.Union[bool, int, float, str, NoneType, typing.List[typing.Any], typing.Dict[str, typing.Any]]], numpy.ndarray, ForwardRef('pd.DataFrame')]`
 
@@ -1417,7 +1425,7 @@ GitHub](https://github.com/mivanit/zanj/blob/0.4.0zanj.py#L0-L249)
 ### `class ZANJ(muutils.json_serialize.json_serialize.JsonSerializer):`
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0zanj.py#L66-L247)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0zanj.py#L66-L247)
 
 Zip up: Arrays in Numpy, JSON for everything else
 
@@ -1456,7 +1464,7 @@ attributes of the class can be correctly recognized
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0zanj.py#L81-L116)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0zanj.py#L81-L116)
 
 - `external_array_threshold: int`
 
@@ -1473,7 +1481,7 @@ GitHub](https://github.com/mivanit/zanj/blob/0.4.0zanj.py#L81-L116)
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0zanj.py#L118-L141)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0zanj.py#L118-L141)
 
 return information about the current externals
 
@@ -1486,29 +1494,29 @@ return information about the current externals
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0zanj.py#L143-L164)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0zanj.py#L143-L164)
 
 return the metadata of the ZANJ archive
 
 ### `def save`
 
 ``` python
-(self, obj: Any, file_path: str | pathlib.Path) -> str
+(self, obj: Any, file_path: str | pathlib._local.Path) -> str
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0zanj.py#L166-L219)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0zanj.py#L166-L219)
 
 save the object to a ZANJ archive. returns the path to the archive
 
 ### `def read`
 
 ``` python
-(self, file_path: Union[str, pathlib.Path]) -> Any
+(self, file_path: Union[str, pathlib._local.Path]) -> Any
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.4.0zanj.py#L221-L247)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.0zanj.py#L221-L247)
 
 load the object from a ZANJ archive \### TODO: load only some part of
 the zanj file by passing an ObjectPath

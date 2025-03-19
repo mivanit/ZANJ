@@ -2,20 +2,23 @@ Name                                                      Stmts   Miss  Cover   
 ---------------------------------------------------------------------------------------
 tests/unit/no_torch/test_bool_array.py                       31      0   100%
 tests/unit/no_torch/test_isolate_zanj_handler_store.py       47      1    98%   78
+tests/unit/no_torch/test_load_item_recursive.py              86      1    99%   199
 tests/unit/no_torch/test_zanj_basic.py                       35      0   100%
+tests/unit/no_torch/test_zanj_edge_cases.py                 152      2    99%   105, 118
 tests/unit/no_torch/test_zanj_populate_nested.py             24      0   100%
 tests/unit/no_torch/test_zanj_serializable_dataclass.py      91      0   100%
 tests/unit/with_torch/test_bool_array_torch.py               19      0   100%
 tests/unit/with_torch/test_get_module_device.py              33      1    97%   26
 tests/unit/with_torch/test_sdc_torch.py                      59      1    98%   80
+tests/unit/with_torch/test_torch_edge_cases.py              108      5    95%   68, 94, 134, 164, 208
 tests/unit/with_torch/test_zanj_sdc_modelcfg.py              90      0   100%
 tests/unit/with_torch/test_zanj_torch.py                     88      4    95%   39, 100, 111, 130
 tests/unit/with_torch/test_zanj_torch_cfgmismatch.py         59      3    95%   43, 107, 143
 zanj/__init__.py                                              4      0   100%
 zanj/externals.py                                            21      1    95%   48
-zanj/loading.py                                             132     28    79%   17-21, 56, 63-66, 71, 73-77, 125-132, 153-155, 269, 357-360, 393-394
+zanj/loading.py                                             132     28    79%   17-21, 56, 63-66, 71, 73-77, 125-132, 154-156, 271, 359-362, 395-396
 zanj/serializing.py                                          58      4    93%   123, 125, 143, 157
-zanj/torchutil.py                                           116     14    88%   15-16, 101, 103, 133-135, 153, 198-201, 219, 226, 288-289
-zanj/zanj.py                                                 83      6    93%   113, 134, 172, 178, 230, 232
+zanj/torchutil.py                                           116     12    90%   15-16, 101, 103, 133-135, 153, 219, 226, 288-289
+zanj/zanj.py                                                 83      1    99%   134
 ---------------------------------------------------------------------------------------
-TOTAL                                                       990     63    94%
+TOTAL                                                      1336     64    95%

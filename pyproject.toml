@@ -139,7 +139,7 @@ torch = ["torch>=1.13.1"]
 # configures `make todo`
 [tool.makefile.inline-todo]
 	search_dir = "."
-	out_file = "docs/other/todo-inline.md"
+	out_file_base = "docs/other/todo-inline.md"
 	context_lines = 2
 	extensions = ["py", "md"]
 	tags = ["CRIT", "TODO", "FIXME", "HACK", "BUG", "DOC"]
