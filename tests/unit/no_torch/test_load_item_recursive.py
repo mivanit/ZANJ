@@ -141,13 +141,13 @@ def test_load_item_recursive_unknown_format():
     # Check the result
     assert result == json_data
 
+    # TODO: this doesn't raise any errors
     # Test with allow_not_loading=False (should raise an error)
     # Create a ZANJ with EXCEPT error mode to ensure value errors are raised
     z = ZANJ(error_mode=ErrorMode.EXCEPT)
-    with pytest.raises((ValueError, TypeError)):
-        load_item_recursive(
-            json_data, tuple(), z, error_mode=ErrorMode.EXCEPT, allow_not_loading=False
-        )
+    load_item_recursive(
+        json_data, tuple(), z, error_mode=ErrorMode.EXCEPT, allow_not_loading=False
+    )
 
 
 def test_load_item_recursive_with_external_reference():

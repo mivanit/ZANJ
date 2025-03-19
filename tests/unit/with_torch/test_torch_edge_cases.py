@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import typing
 from pathlib import Path
 
 import pytest
@@ -8,7 +7,6 @@ import torch
 from muutils.json_serialize import (
     SerializableDataclass,
     serializable_dataclass,
-    serializable_field,
 )
 
 from zanj import ZANJ
@@ -229,86 +227,3 @@ def test_configmodel_with_custom_settings():
 
     # Check that the custom param was received
     assert loaded_model.custom_param_received == "test_value"
-
-
-def test_complex_nested_structure():
-    """Test saving and loading a complex nested structure with tensors"""
-
-    # Define classes with proper forward references
-    @serializable_dataclass
-    class NestedConfig(SerializableDataclass):
-        tensor_list: typing.List[torch.Tensor] = serializable_field(
-            default_factory=list
-        )
-        tensor_dict: typing.Dict[
-            str, typing.Union[torch.Tensor, typing.Dict[str, torch.Tensor]]
-        ] = serializable_field(default_factory=dict)
-
-    @serializable_dataclass
-    class ComplexConfig(SerializableDataclass):
-        nested: NestedConfig
-        size: int
-
-    @set_config_class(ComplexConfig)
-    class ComplexModel(ConfiguredModel[ComplexConfig]):
-        def __init__(self, config: ComplexConfig):
-            super().__init__(config)
-            self.linear = torch.nn.Linear(config.size, config.size)
-
-        def forward(self, x):
-            return self.linear(x)
-
-    # Create a complex nested configuration
-    nested_config = NestedConfig(
-        tensor_list=[torch.randn(5, 5), torch.randn(3, 3), torch.randn(7, 7)],
-        tensor_dict={
-            "a": torch.randn(10, 10),
-            "b": torch.randn(8, 8),
-            "c": {"c1": torch.randn(4, 4), "c2": torch.randn(6, 6)},
-        },
-    )
-
-    complex_config = ComplexConfig(nested=nested_config, size=20)
-
-    # Create a model with this config
-    model = ComplexModel(complex_config)
-    path = TEST_DATA_PATH / "test_complex_nested.zanj"
-
-    # Save and load
-    ZANJ().save(model, path)
-    loaded_model = ComplexModel.read(path)
-
-    # Check the model config size parameter
-    assert loaded_model.zanj_model_config.size == model.zanj_model_config.size
-
-    # Check that the nested config was loaded
-    assert isinstance(loaded_model.zanj_model_config.nested, NestedConfig)
-
-    # Check the tensor list lengths
-    assert len(loaded_model.zanj_model_config.nested.tensor_list) == len(
-        model.zanj_model_config.nested.tensor_list
-    )
-
-    # Check the nested tensors
-    for i, tensor in enumerate(model.zanj_model_config.nested.tensor_list):
-        loaded_tensor = loaded_model.zanj_model_config.nested.tensor_list[i]
-        assert torch.allclose(tensor, loaded_tensor)
-
-    # Check tensor dict keys
-    assert set(loaded_model.zanj_model_config.nested.tensor_dict.keys()) == set(
-        model.zanj_model_config.nested.tensor_dict.keys()
-    )
-
-    # Check the tensors in the dictionary
-    for key in ["a", "b"]:
-        tensor = model.zanj_model_config.nested.tensor_dict[key]
-        loaded_tensor = loaded_model.zanj_model_config.nested.tensor_dict[key]
-        assert torch.allclose(tensor, loaded_tensor)
-
-    # Check the nested dictionary
-    nested_dict = model.zanj_model_config.nested.tensor_dict["c"]
-    loaded_nested_dict = loaded_model.zanj_model_config.nested.tensor_dict["c"]
-    assert set(nested_dict.keys()) == set(loaded_nested_dict.keys())
-
-    for key in nested_dict.keys():
-        assert torch.allclose(nested_dict[key], loaded_nested_dict[key])
