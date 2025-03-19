@@ -156,7 +156,8 @@ def _torch_loaderhandler_load(
         raise ImportError(err_msg) from e
 
     return torch.tensor(
-        load_array(json_item), dtype=TORCH_DTYPE_MAP[json_item["dtype"]]
+        load_array(json_item),
+        dtype=TORCH_DTYPE_MAP[json_item["dtype"]],  # type: ignore[index, call-overload]
     )
 
 
