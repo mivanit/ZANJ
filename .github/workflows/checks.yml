@@ -71,11 +71,11 @@ jobs:
         run: make dep
 
       - name: Install different numpy version
-        if: ${{ matrix.pkg.numpy != '' && matrix.pkg.torch != 'None' }}
+        if: ${{ matrix.pkg.numpy != '' }}
         run: uv pip install numpy==${{ matrix.pkg.numpy }}
 
       - name: Install different pytorch version
-        if: ${{ matrix.pkg.torch != '' }}
+        if: ${{ matrix.pkg.torch != '' && matrix.pkg.torch != 'None' }}
         run: |
           uv pip install torch==${{ matrix.pkg.torch }}+cpu --extra-index-url https://download.pytorch.org/whl/cpu
 
