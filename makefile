@@ -1374,6 +1374,11 @@ test: clean
 	@echo "running tests"
 	$(PYTHON) -m pytest $(PYTEST_OPTIONS) $(TESTS_DIR)
 
+.PHONY: test-notorch
+test-notorch: clean
+	@echo "running only tests without torch"
+	$(PYTHON) -m pytest $(PYTEST_OPTIONS) $(TESTS_DIR)/no_torch/
+
 .PHONY: check
 check: clean format-check test typing
 	@echo "run format checks, tests, and typing checks"

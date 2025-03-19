@@ -26,7 +26,7 @@ def test_get_module_device_multiple_devices():
         pytest.skip("This test requires at least one CUDA device")
 
     model = torch.nn.Linear(10, 2)
-    model.weight.to("cuda:0")
+    model.weight.to("meta")
     model.bias.to("cpu")
 
     # Run the function
@@ -37,7 +37,7 @@ def test_get_module_device_multiple_devices():
     assert isinstance(device_or_dict, dict)
 
     # Check that the dict maps the correct devices
-    assert device_or_dict["weight"] == torch.device("cuda:0")
+    assert device_or_dict["weight"] == torch.device("meta")
     assert device_or_dict["bias"] == torch.device("cpu")
 
 
