@@ -71,7 +71,7 @@ jobs:
         run: make dep
 
       - name: Install different numpy version
-        if: ${{ matrix.pkg.numpy != '' }}
+        if: ${{ matrix.pkg.numpy != '' && matrix.pkg.torch != 'None' }}
         run: uv pip install numpy==${{ matrix.pkg.numpy }}
 
       - name: Install different pytorch version
