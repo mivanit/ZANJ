@@ -39,6 +39,9 @@ jobs:
           - torch: ""
             numpy: ""
             group: "latest"
+          - torch: "None"
+            numpy: ""
+            group: "notorch"
         exclude:
           - python: "3.12"
             pkg:
@@ -67,20 +70,29 @@ jobs:
       - name: install dependencies and package
         run: make dep
 
+      - name: Install different numpy version
+        if: ${{ matrix.pkg.numpy != '' }}
+        run: uv pip install numpy==${{ matrix.pkg.numpy }}
+
       - name: Install different pytorch version
         if: ${{ matrix.pkg.torch != '' }}
         run: |
           uv pip install torch==${{ matrix.pkg.torch }}+cpu --extra-index-url https://download.pytorch.org/whl/cpu
-      
-      - name: Install different numpy version
-        if: ${{ matrix.pkg.numpy != '' }}
-        run: uv pip install numpy==${{ matrix.pkg.numpy }}
+
+      - name: remove torch if testing torchless
+        if: ${{ matrix.pkg.torch == 'None' }}
+        run: uv pip uninstall torch
       
       - name: format check
         run: make format-check
 
       - name: tests
+        if: ${{ matrix.pkg.torch != 'None' }}
         run: make test
+
+      - name: tests without torch
+        if: ${{ matrix.pkg.torch == 'None' }}
+        run: make test-notorch
 
       # - name: tests in strict mode
       #   # TODO: until zanj ported to 3.8 and 3.9
