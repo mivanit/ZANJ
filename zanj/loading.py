@@ -145,7 +145,7 @@ def _torch_loaderhandler_load(
     json_item: JSONitem,
     path: ObjectPath,
     z: _ZANJ_pre | None = None,
-) -> "torch.Tensor": # noqa: F821
+) -> "torch.Tensor":  # noqa: F821
     """load a torch tensor from a json item"""
     try:
         import torch

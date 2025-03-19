@@ -139,7 +139,9 @@ class sdc_container_explicit(SerializableDataclass):
         default_factory=list,
         # as jsonl string, for whatever reason
         serialization_fn=lambda c: "\n".join([json.dumps(n.serialize()) for n in c]),
-        loading_fn=lambda data: [Nested.load(json.loads(n)) for n in data["container"].split("\n")],
+        loading_fn=lambda data: [
+            Nested.load(json.loads(n)) for n in data["container"].split("\n")
+        ],
         # TODO: explicitly specifying the following does not work, since it gets automatically converted before we call load in `loading_fn`:
         # serialization_fn=lambda c: [n.serialize() for n in c],
         # loading_fn=lambda data: [Nested.load(n) for n in data["container"]],
