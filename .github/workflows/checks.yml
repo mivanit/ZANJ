@@ -106,7 +106,8 @@ jobs:
         run: |
           uv sync
           uv pip show torch
-          uv pip show numpymake test-notorch
+          uv pip show numpy
+          make test-notorch
 
       # - name: tests in strict mode
       #   # TODO: until zanj ported to 3.8 and 3.9
