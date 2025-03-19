@@ -84,14 +84,10 @@ jobs:
         run: uv pip uninstall torch
 
       - name: make info
-        run: make info
+        run: make info-long
 
       - name: torch dep info
         run: make dep-check-torch
-        continue-on-error: true
-
-      - name: uv pip show torch
-        run: uv pip show torch
         continue-on-error: true
       
       - name: format check
@@ -99,11 +95,18 @@ jobs:
 
       - name: tests
         if: ${{ matrix.pkg.torch != 'None' }}
-        run: make test
+        run: |
+          uv sync
+          uv pip show torch
+          uv pip show numpy
+          make test
 
       - name: tests without torch
         if: ${{ matrix.pkg.torch == 'None' }}
-        run: make test-notorch
+        run: |
+          uv sync
+          uv pip show torch
+          uv pip show numpymake test-notorch
 
       # - name: tests in strict mode
       #   # TODO: until zanj ported to 3.8 and 3.9
