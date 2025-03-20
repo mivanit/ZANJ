@@ -191,7 +191,7 @@
 </span><span id="L-11"><a href="#L-11"><span class="linenos"> 11</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">TypeVar</span>
 </span><span id="L-12"><a href="#L-12"><span class="linenos"> 12</span></a>
 </span><span id="L-13"><a href="#L-13"><span class="linenos"> 13</span></a><span class="k">try</span><span class="p">:</span>
-</span><span id="L-14"><a href="#L-14"><span class="linenos"> 14</span></a>    <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+</span><span id="L-14"><a href="#L-14"><span class="linenos"> 14</span></a>    <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>  <span class="c1"># type: ignore[import-not-found]</span>
 </span><span id="L-15"><a href="#L-15"><span class="linenos"> 15</span></a><span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
 </span><span id="L-16"><a href="#L-16"><span class="linenos"> 16</span></a>    <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
 </span><span id="L-17"><a href="#L-17"><span class="linenos"> 17</span></a>        <span class="s2">&quot;torch is required for zanj.torchutil, please install it with `pip install torch` or `pip install zanj[torch]`&quot;</span>

@@ -1,8 +1,8 @@
 # Stats
 - 29 files
-- 4285 (4.3K) lines
-- 136210 (136K) chars
-- 13129 (13K) `whitespace-split` tokens
+- 4281 (4.3K) lines
+- 136553 (137K) chars
+- 13154 (13K) `whitespace-split` tokens
 
 # File Tree
 
@@ -10,7 +10,7 @@
 ZANJ                                                 
 ├── .github                                          
 │   └── workflows                                    
-│    └── checks.yml                                  [  114L     2,789C   311T]
+│    └── checks.yml                                  [  110L     2,758C   303T]
 ├── tests                                            
 │   ├── input_data                                   
 │   │   ├── brain_networks.csv                       [  924L 1,075,910C   924T]
@@ -25,25 +25,25 @@ ZANJ
 │   │   │   ├── test_zanj_populate_nested.py         [   57L     1,386C   103T]
 │   │   │   └── test_zanj_serializable_dataclass.py  [  168L     4,351C   404T]
 │   │   └── with_torch                               
-│   │    ├── test_bool_array_torch.py                [   35L       759C    69T]
-│   │    ├── test_get_module_device.py               [   61L     1,836C   200T]
-│   │    ├── test_sdc_torch.py                       [  105L     2,521C   216T]
-│   │    ├── test_torch_edge_cases.py                [  229L     7,148C   639T]
-│   │    ├── test_zanj_sdc_modelcfg.py               [  169L     4,716C   372T]
-│   │    ├── test_zanj_torch.py                      [  169L     4,974C   344T]
-│   │    └── test_zanj_torch_cfgmismatch.py          [  161L     3,949C   331T]
-│   └── assert_no_torch.py                           [    8L       133C     9T]
+│   │    ├── test_bool_array_torch.py                [   35L       793C    72T]
+│   │    ├── test_get_module_device.py               [   61L     1,870C   203T]
+│   │    ├── test_sdc_torch.py                       [  105L     2,555C   219T]
+│   │    ├── test_torch_edge_cases.py                [  229L     7,182C   642T]
+│   │    ├── test_zanj_sdc_modelcfg.py               [  169L     4,750C   375T]
+│   │    ├── test_zanj_torch.py                      [  169L     5,042C   350T]
+│   │    └── test_zanj_torch_cfgmismatch.py          [  161L     3,983C   334T]
+│   └── assert_no_torch.py                           [    8L       167C    12T]
 ├── zanj                                             
 │   ├── __init__.py                                  [   19L       299C    30T]
 │   ├── externals.py                                 [   52L     1,530C   166T]
-│   ├── loading.py                                   [  450L    16,760C 1,587T]
+│   ├── loading.py                                   [  450L    16,794C 1,590T]
 │   ├── py.typed                                     [    0L         0C     0T]
 │   ├── serializing.py                               [  251L     8,535C   769T]
-│   ├── torchutil.py                                 [  294L    10,142C   912T]
+│   ├── torchutil.py                                 [  294L    10,176C   915T]
 │   └── zanj.py                                      [  250L     8,705C   798T]
 ├── README.md                                        [  233L    10,853C 1,364T]
 ├── demo.ipynb                                       [  306L     8,941C   920T]
-├── makefile                                         [1,643L    50,396C 6,012T]
+├── makefile                                         [1,655L    50,694C 6,058T]
 ├── pyproject.toml                                   [  156L     4,225C   450T]
 ```
 
@@ -136,26 +136,22 @@ jobs:
         run: uv pip uninstall torch
 
       - name: make info
-        run: make info
+        run: make info-long UV_NOSYNC=1
 
       - name: torch dep info
-        run: make dep-check-torch
-        continue-on-error: true
-
-      - name: uv pip show torch
-        run: uv pip show torch
+        run: make dep-check-torch UV_NOSYNC=1
         continue-on-error: true
       
       - name: format check
-        run: make format-check
+        run: make format-check UV_NOSYNC=1
 
       - name: tests
         if: ${{ matrix.pkg.torch != 'None' }}
-        run: make test
+        run: make test UV_NOSYNC=1
 
       - name: tests without torch
         if: ${{ matrix.pkg.torch == 'None' }}
-        run: make test-notorch
+        run: make test-notorch UV_NOSYNC=1
 
       # - name: tests in strict mode
       #   # TODO: until zanj ported to 3.8 and 3.9
@@ -1196,7 +1192,7 @@ def test_sdc_container_explicit():
 ``````{ path="tests/unit/with_torch/test_bool_array_torch.py"  }
 from pathlib import Path
 
-import torch
+import torch  # type: ignore[import-not-found]
 from muutils.json_serialize import SerializableDataclass, serializable_dataclass
 
 from zanj import ZANJ
@@ -1236,7 +1232,7 @@ def test_torch_bool_array():
 from __future__ import annotations
 
 import pytest
-import torch
+import torch  # type: ignore[import-not-found]
 
 from zanj.torchutil import get_module_device
 
@@ -1306,7 +1302,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd  # type: ignore[import]
-import torch
+import torch  # type: ignore[import-not-found]
 from muutils.json_serialize import (
     SerializableDataclass,
     serializable_dataclass,
@@ -1412,7 +1408,7 @@ from __future__ import annotations
 from pathlib import Path
 
 import pytest
-import torch
+import torch  # type: ignore[import-not-found]
 from muutils.json_serialize import (
     SerializableDataclass,
     serializable_dataclass,
@@ -1648,7 +1644,7 @@ import typing
 from pathlib import Path
 
 import numpy as np
-import torch
+import torch  # type: ignore[import-not-found]
 from muutils.json_serialize import (
     SerializableDataclass,
     serializable_dataclass,
@@ -1818,7 +1814,7 @@ from __future__ import annotations
 from pathlib import Path
 
 import numpy as np
-import torch
+import torch  # type: ignore[import-not-found]
 from muutils.json_serialize import (
     SerializableDataclass,
     serializable_dataclass,
@@ -1888,7 +1884,7 @@ def test_torch_configmodel_minimal():
 
 
 def test_torch_configmodel():
-    import torch
+    import torch  # type: ignore[import-not-found]
 
     from zanj.torchutil import ConfiguredModel, set_config_class
 
@@ -1990,7 +1986,7 @@ from __future__ import annotations
 
 from typing import Any
 
-import torch
+import torch  # type: ignore[import-not-found]
 from muutils.json_serialize import (
     SerializableDataclass,
     serializable_dataclass,
@@ -2156,7 +2152,7 @@ import pytest
 
 def test_assert_no_torch():
     with pytest.raises(ImportError):
-        import torch
+        import torch  # type: ignore[import-not-found]
 
         print(torch.rand(10))
 
@@ -2393,7 +2389,7 @@ def _torch_loaderhandler_load(
 ):
     """load a torch tensor from a json item"""
     try:
-        import torch
+        import torch  # type: ignore[import-not-found]
         from muutils.tensor_utils import TORCH_DTYPE_MAP
     except ImportError as e:
         err_msg: str = f"could not import torch, which we need to load the object at {path = }: {json_item = }"
@@ -2968,7 +2964,7 @@ import warnings
 from typing import Any, Type, TypeVar
 
 try:
-    import torch
+    import torch  # type: ignore[import-not-found]
 except ImportError as e:
     raise ImportError(
         "torch is required for zanj.torchutil, please install it with `pip install torch` or `pip install zanj[torch]`"
