@@ -8,6 +8,7 @@
 ![code size,
 bytes](https://img.shields.io/github/languages/code-size/mivanit/zanj)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/zanj)
+[![DOI](https://zenodo.org/badge/618623453.svg)](https://doi.org/10.5281/zenodo.15540392)
 
 <!-- ![GitHub commit activity](https://img.shields.io/github/commit-activity/t/mivanit/zanj)
 ![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/mivanit/zanj) -->
@@ -300,6 +301,7 @@ GitHub](https://github.com/mivanit/zanj/blob/0.5.1__init__.py)
 ![code size,
 bytes](https://img.shields.io/github/languages/code-size/mivanit/zanj)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/zanj)
+[![DOI](https://zenodo.org/badge/618623453.svg)](https://doi.org/10.5281/zenodo.15540392)
 
 <!-- ![GitHub commit activity](https://img.shields.io/github/commit-activity/t/mivanit/zanj)
 ![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/mivanit/zanj) -->

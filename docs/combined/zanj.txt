@@ -2,7 +2,7 @@
 
 Contents
 
-[PyPI] [Checks] [Coverage] [code size, bytes] [PyPI - Downloads]
+[PyPI] [Checks] [Coverage] [code size, bytes] [PyPI - Downloads] [DOI]
 
 ZANJ
 
@@ -280,7 +280,7 @@ View Source on GitHub
 
 zanj
 
-[PyPI] [Checks] [Coverage] [code size, bytes] [PyPI - Downloads]
+[PyPI] [Checks] [Coverage] [code size, bytes] [PyPI - Downloads] [DOI]
 
 ZANJ
 

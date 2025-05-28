@@ -1,8 +1,8 @@
 # Stats
 - 29 files
-- 4286 (4.3K) lines
-- 136812 (137K) chars
-- 13182 (13K) `whitespace-split` tokens
+- 4296 (4.3K) lines
+- 137281 (137K) chars
+- 13210 (13K) `whitespace-split` tokens
 
 # File Tree
 
@@ -41,10 +41,10 @@ ZANJ
 │   ├── serializing.py                               [  253L     8,728C   791T]
 │   ├── torchutil.py                                 [  294L    10,176C   915T]
 │   └── zanj.py                                      [  250L     8,705C   798T]
-├── README.md                                        [  233L    10,853C 1,364T]
+├── README.md                                        [  235L    10,944C 1,365T]
 ├── demo.ipynb                                       [  306L     8,941C   920T]
 ├── makefile                                         [1,661L    50,910C 6,079T]
-├── pyproject.toml                                   [  159L     4,291C   456T]
+├── pyproject.toml                                   [  167L     4,669C   483T]
 ```
 
 # File Contents
@@ -3510,6 +3510,8 @@ zanj.externals._ZANJ_pre = ZANJ  # type: ignore
 [![Coverage](docs/coverage/coverage.svg)](docs/coverage/coverage.txt)
 ![code size, bytes](https://img.shields.io/github/languages/code-size/mivanit/zanj)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/zanj)
+[![DOI](https://zenodo.org/badge/618623453.svg)](https://doi.org/10.5281/zenodo.15540392)
+
 
 <!-- ![GitHub commit activity](https://img.shields.io/github/commit-activity/t/mivanit/zanj)
 ![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/mivanit/zanj) -->
@@ -4159,7 +4161,10 @@ help: help-targets info
 
 [project.optional-dependencies]
 pandas = ["pandas>=1.5.3"]
-torch = ["torch>=1.13.1"]
+torch = [
+    "torch>=1.13.1",
+    "h11>=0.16.0", # see https://github.com/mivanit/ZANJ/security/dependabot/13
+]
 
 [project.urls]
     Homepage = "https://miv.name/zanj"
@@ -4180,9 +4185,14 @@ torch = ["torch>=1.13.1"]
         "coverage-badge>=1.1.1",
         # for testing plotting and notebooks
         "ipykernel>=6.23.2",
+        # tornado depended on by notebook stuff, see
+        # https://github.com/mivanit/ZANJ/security/dependabot/22
+        "tornado>=6.5; python_version >= '3.9'",
         "jupyter",
         "matplotlib>=3.0.0",
         "plotly>=5.0.0",
+        # see https://github.com/mivanit/ZANJ/security/dependabot/18
+        "setuptools>=78.1.1; python_version >= '3.9'",
         # generating docs
         "pdoc>=14.6.0",
         # https://github.com/mivanit/ZANJ/security/dependabot/4
