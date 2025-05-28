@@ -17,7 +17,7 @@ tests/unit/with_torch/test_zanj_torch_cfgmismatch.py         59      3    95%   
 zanj/__init__.py                                              4      0   100%
 zanj/externals.py                                            21      1    95%   48
 zanj/loading.py                                             132     28    79%   17-21, 56, 63-66, 71, 73-77, 125-132, 154-156, 271, 359-362, 395-396
-zanj/serializing.py                                          58      4    93%   123, 125, 143, 157
+zanj/serializing.py                                          58      4    93%   125, 127, 145, 159
 zanj/torchutil.py                                           116     12    90%   15-16, 101, 103, 133-135, 153, 219, 226, 288-289
 zanj/zanj.py                                                 83      1    99%   134
 ---------------------------------------------------------------------------------------

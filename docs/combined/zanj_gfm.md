@@ -962,7 +962,7 @@ GitHub](https://github.com/mivanit/zanj/blob/0.5.1serializing.py)
 # `zanj.serializing`
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.5.1serializing.py#L0-L250)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.1serializing.py#L0-L252)
 
 - `KW_ONLY_KWARGS: dict = {'kw_only': True}`
 
@@ -986,7 +986,7 @@ metadata about a jsonl object
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.5.1serializing.py#L52-L58)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.1serializing.py#L52-L60)
 
 store numpy array to given file as .npy
 
@@ -1001,7 +1001,7 @@ store numpy array to given file as .npy
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.5.1serializing.py#L61-L66)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.1serializing.py#L63-L68)
 
 store sequence to given file as .jsonl
 
@@ -1010,7 +1010,7 @@ store sequence to given file as .jsonl
 ### `class ZANJSerializerHandler(muutils.json_serialize.json_serialize.SerializerHandler):`
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.5.1serializing.py#L77-L90)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.1serializing.py#L79-L92)
 
 a handler for ZANJ serialization
 
@@ -1052,7 +1052,7 @@ a handler for ZANJ serialization
 ```
 
 [View Source on
-GitHub](https://github.com/mivanit/zanj/blob/0.5.1serializing.py#L93-L171)
+GitHub](https://github.com/mivanit/zanj/blob/0.5.1serializing.py#L95-L173)
 
 stores a numpy array or jsonl externally in a ZANJ object
 

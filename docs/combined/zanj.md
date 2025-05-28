@@ -986,7 +986,7 @@ put all external items into the main json data
 # `zanj.serializing` { #zanj.serializing }
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1serializing.py#L0-L250)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1serializing.py#L0-L252)
 
 
 
@@ -1015,7 +1015,7 @@ metadata about a jsonl object
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1serializing.py#L52-L58)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1serializing.py#L52-L60)
 
 
 store numpy array to given file as .npy
@@ -1031,7 +1031,7 @@ store numpy array to given file as .npy
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1serializing.py#L61-L66)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1serializing.py#L63-L68)
 
 
 store sequence to given file as .jsonl
@@ -1044,7 +1044,7 @@ store sequence to given file as .jsonl
 
 ### `class ZANJSerializerHandler(muutils.json_serialize.json_serialize.SerializerHandler):` { #ZANJSerializerHandler }
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1serializing.py#L77-L90)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1serializing.py#L79-L92)
 
 
 a handler for ZANJ serialization
@@ -1099,7 +1099,7 @@ a handler for ZANJ serialization
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1serializing.py#L93-L171)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1serializing.py#L95-L173)
 
 
 stores a numpy array or jsonl externally in a ZANJ object

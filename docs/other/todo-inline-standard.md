@@ -85,6 +85,24 @@
 
 
 
+## [`zanj/serializing.py`](/zanj/serializing.py)
+
+- Type `<module 'numpy.lib'>` has no attribute `format` --> zanj/serializing.py:54:5  
+  local link: [`/zanj/serializing.py:54`](/zanj/serializing.py#L54) 
+  | view on GitHub: [zanj/serializing.py#L54](https://github.com/mivanit/zanj/blob/main/zanj/serializing.py#L54)
+  | [Make Issue](https://github.com/mivanit/zanj/issues/new?title=Type%20%60%3Cmodule%20%27numpy.lib%27%3E%60%20has%20no%20attribute%20%60format%60%20--%3E%20zanj%2Fserializing.py%3A54%3A5&body=%23%20source%0A%0A%5B%60zanj%2Fserializing.py%23L54%60%5D%28https%3A%2F%2Fgithub.com%2Fmivanit%2Fzanj%2Fblob%2Fmain%2Fzanj%2Fserializing.py%23L54%29%0A%0A%23%20context%0A%60%60%60python%0Adef%20store_npy%28self%3A%20_ZANJ_pre%2C%20fp%3A%20IO%5Bbytes%5D%2C%20data%3A%20np.ndarray%29%20-%3E%20None%3A%0A%20%20%20%20%22%22%22store%20numpy%20array%20to%20given%20file%20as%20.npy%22%22%22%0A%20%20%20%20%23%20TODO%3A%20Type%20%60%3Cmodule%20%27numpy.lib%27%3E%60%20has%20no%20attribute%20%60format%60%20--%3E%20zanj%2Fserializing.py%3A54%3A5%0A%20%20%20%20%23%20info%3A%20rule%20%60unresolved-attribute%60%20is%20enabled%20by%20default%0A%20%20%20%20np.lib.format.write_array%28%20%20%23%20ty%3A%20ignore%5Bunresolved-attribute%5D%0A%60%60%60&labels=enhancement)
+
+  ```python
+  def store_npy(self: _ZANJ_pre, fp: IO[bytes], data: np.ndarray) -> None:
+      """store numpy array to given file as .npy"""
+      # TODO: Type `<module 'numpy.lib'>` has no attribute `format` --> zanj/serializing.py:54:5
+      # info: rule `unresolved-attribute` is enabled by default
+      np.lib.format.write_array(  # ty: ignore[unresolved-attribute]
+  ```
+
+
+
+
 ## [`zanj/zanj.py`](/zanj/zanj.py)
 
 - calling self.json_serialize again here might be slow  
