@@ -53,7 +53,7 @@ def store_npy(self: _ZANJ_pre, fp: IO[bytes], data: np.ndarray) -> None:
     """store numpy array to given file as .npy"""
     # TODO: Type `<module 'numpy.lib'>` has no attribute `format` --> zanj/serializing.py:54:5
     # info: rule `unresolved-attribute` is enabled by default
-    np.lib.format.write_array( # ty: ignore[unresolved-attribute]
+    np.lib.format.write_array(  # ty: ignore[unresolved-attribute]
         fp=fp,
         array=np.asanyarray(data),
         allow_pickle=False,
