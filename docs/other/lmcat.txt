@@ -1,8 +1,8 @@
 # Stats
 - 29 files
-- 4281 (4.3K) lines
-- 136553 (137K) chars
-- 13154 (13K) `whitespace-split` tokens
+- 4283 (4.3K) lines
+- 136605 (137K) chars
+- 13159 (13K) `whitespace-split` tokens
 
 # File Tree
 
@@ -44,7 +44,7 @@ ZANJ
 ├── README.md                                        [  233L    10,853C 1,364T]
 ├── demo.ipynb                                       [  306L     8,941C   920T]
 ├── makefile                                         [1,655L    50,694C 6,058T]
-├── pyproject.toml                                   [  156L     4,225C   450T]
+├── pyproject.toml                                   [  158L     4,277C   455T]
 ```
 
 # File Contents
@@ -4129,11 +4129,11 @@ help: help-targets info
 ``````{ path="pyproject.toml"  }
 [project]
     name = "zanj"
-    version = "0.5.0"
+    version = "0.5.1"
     description = "save and load complex objects to disk without pickling"
     license = "GPL-3.0-only"
     authors = [
-        { name = "mivanit", email = "mivanits@umich.edu" }
+        { name = "Michael Ivanitskiy", email = "mivanits@umich.edu" }
     ]
     readme = "README.md"
     requires-python = ">=3.8"
@@ -4188,6 +4188,8 @@ torch = ["torch>=1.13.1"]
         "lmcat>=0.2.0; python_version >= '3.11'",
         # tomli since no tomlib in python < 3.11
         "tomli>=2.1.0; python_version < '3.11'",
+        # for uploading
+        "twine",
     ]
     lint = [
         # lint

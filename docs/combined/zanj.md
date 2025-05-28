@@ -1,4 +1,4 @@
-> docs for [`zanj`](https://github.com/mivanit/zanj) v0.5.0
+> docs for [`zanj`](https://github.com/mivanit/zanj) v0.5.1
 
 
 ## Contents
@@ -254,7 +254,7 @@ The on-disk format is a file `<filename>.zanj` is a zip file containing:
 
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0__init__.py)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1__init__.py)
 
 # `zanj` { #zanj }
 
@@ -494,7 +494,7 @@ The on-disk format is a file `<filename><a href="zanj/zanj.html">zanj.zanj</a>` 
 
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0__init__.py#L0-L18)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1__init__.py#L0-L18)
 
 
 
@@ -504,7 +504,7 @@ The on-disk format is a file `<filename><a href="zanj/zanj.html">zanj.zanj</a>` 
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0__init__.py#L251-L255)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1__init__.py#L251-L255)
 
 
 register a custom loader handler
@@ -512,7 +512,7 @@ register a custom loader handler
 
 ### `class ZANJ(muutils.json_serialize.json_serialize.JsonSerializer):` { #ZANJ }
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0__init__.py#L66-L247)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1__init__.py#L66-L247)
 
 
 Zip up: Arrays in Numpy, JSON for everything else
@@ -542,7 +542,7 @@ create a ZANJ-class via `z_cls = ZANJ().create(obj)`, and save/read instances of
 )
 ```
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0__init__.py#L81-L116)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1__init__.py#L81-L116)
 
 
 
@@ -573,7 +573,7 @@ create a ZANJ-class via `z_cls = ZANJ().create(obj)`, and save/read instances of
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0__init__.py#L118-L141)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1__init__.py#L118-L141)
 
 
 return information about the current externals
@@ -587,7 +587,7 @@ return information about the current externals
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0__init__.py#L143-L164)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1__init__.py#L143-L164)
 
 
 return the metadata of the ZANJ archive
@@ -599,7 +599,7 @@ return the metadata of the ZANJ archive
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0__init__.py#L166-L219)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1__init__.py#L166-L219)
 
 
 save the object to a ZANJ archive. returns the path to the archive
@@ -611,7 +611,7 @@ save the object to a ZANJ archive. returns the path to the archive
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0__init__.py#L221-L247)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1__init__.py#L221-L247)
 
 
 load the object from a ZANJ archive
@@ -630,7 +630,7 @@ load the object from a ZANJ archive
 
 
 
-> docs for [`zanj`](https://github.com/mivanit/zanj) v0.5.0
+> docs for [`zanj`](https://github.com/mivanit/zanj) v0.5.1
 
 
 ## Contents
@@ -652,13 +652,13 @@ for storing/retrieving an item externally in a ZANJ archive
 
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0externals.py)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1externals.py)
 
 # `zanj.externals` { #zanj.externals }
 
 for storing/retrieving an item externally in a ZANJ archive
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0externals.py#L0-L51)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1externals.py#L0-L51)
 
 
 
@@ -734,7 +734,7 @@ Alias for field number 2
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0externals.py#L32-L33)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1externals.py#L32-L33)
 
 
 
@@ -745,7 +745,7 @@ Alias for field number 2
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0externals.py#L36-L37)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1externals.py#L36-L37)
 
 
 
@@ -761,14 +761,14 @@ Alias for field number 2
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0externals.py#L46-L52)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1externals.py#L46-L52)
 
 
 
 
 
 
-> docs for [`zanj`](https://github.com/mivanit/zanj) v0.5.0
+> docs for [`zanj`](https://github.com/mivanit/zanj) v0.5.1
 
 
 
@@ -786,18 +786,18 @@ Alias for field number 2
 
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0loading.py)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1loading.py)
 
 # `zanj.loading` { #zanj.loading }
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0loading.py#L0-L449)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1loading.py#L0-L449)
 
 
 
 ### `class LoaderHandler:` { #LoaderHandler }
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0loading.py#L82-L141)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1loading.py#L82-L141)
 
 
 handler for loading an object from a json file or a ZANJ archive
@@ -856,7 +856,7 @@ handler for loading an object from a json file or a ZANJ archive
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0loading.py#L102-L120)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1loading.py#L102-L120)
 
 
 serialize the handler info
@@ -868,7 +868,7 @@ serialize the handler info
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0loading.py#L122-L141)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1loading.py#L122-L141)
 
 
 create a loader from a class with `serialize`, `load` methods and `__muutils_format__` attribute
@@ -890,7 +890,7 @@ create a loader from a class with `serialize`, `load` methods and `__muutils_for
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0loading.py#L251-L255)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1loading.py#L251-L255)
 
 
 register a custom loader handler
@@ -907,7 +907,7 @@ register a custom loader handler
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0loading.py#L258-L283)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1loading.py#L258-L283)
 
 
 get the loader for a json item
@@ -925,14 +925,14 @@ get the loader for a json item
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0loading.py#L286-L364)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1loading.py#L286-L364)
 
 
 
 
 ### `class LoadedZANJ:` { #LoadedZANJ }
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0loading.py#L406-L450)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1loading.py#L406-L450)
 
 
 for loading a zanj file
@@ -943,7 +943,7 @@ for loading a zanj file
 (path: str | pathlib._local.Path, zanj: Any)
 ```
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0loading.py#L409-L438)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1loading.py#L409-L438)
 
 
 
@@ -954,7 +954,7 @@ for loading a zanj file
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0loading.py#L440-L450)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1loading.py#L440-L450)
 
 
 put all external items into the main json data
@@ -962,7 +962,7 @@ put all external items into the main json data
 
 
 
-> docs for [`zanj`](https://github.com/mivanit/zanj) v0.5.0
+> docs for [`zanj`](https://github.com/mivanit/zanj) v0.5.1
 
 
 
@@ -981,12 +981,12 @@ put all external items into the main json data
 
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0serializing.py)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1serializing.py)
 
 # `zanj.serializing` { #zanj.serializing }
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0serializing.py#L0-L250)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1serializing.py#L0-L250)
 
 
 
@@ -1003,7 +1003,7 @@ put all external items into the main json data
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0serializing.py#L33-L49)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1serializing.py#L33-L49)
 
 
 metadata about a jsonl object
@@ -1015,7 +1015,7 @@ metadata about a jsonl object
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0serializing.py#L52-L58)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1serializing.py#L52-L58)
 
 
 store numpy array to given file as .npy
@@ -1031,7 +1031,7 @@ store numpy array to given file as .npy
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0serializing.py#L61-L66)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1serializing.py#L61-L66)
 
 
 store sequence to given file as .jsonl
@@ -1044,7 +1044,7 @@ store sequence to given file as .jsonl
 
 ### `class ZANJSerializerHandler(muutils.json_serialize.json_serialize.SerializerHandler):` { #ZANJSerializerHandler }
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0serializing.py#L77-L90)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1serializing.py#L77-L90)
 
 
 a handler for ZANJ serialization
@@ -1099,7 +1099,7 @@ a handler for ZANJ serialization
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0serializing.py#L93-L171)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1serializing.py#L93-L171)
 
 
 stores a numpy array or jsonl externally in a ZANJ object
@@ -1125,7 +1125,7 @@ stores a numpy array or jsonl externally in a ZANJ object
 
 
 
-> docs for [`zanj`](https://github.com/mivanit/zanj) v0.5.0
+> docs for [`zanj`](https://github.com/mivanit/zanj) v0.5.1
 
 
 ## Contents
@@ -1148,7 +1148,7 @@ note that this requires torch
 
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1torchutil.py)
 
 # `zanj.torchutil` { #zanj.torchutil }
 
@@ -1156,7 +1156,7 @@ torch utilities for zanj -- in particular the `ConfiguredModel` base class
 
 note that this requires torch
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L0-L293)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1torchutil.py#L0-L293)
 
 
 
@@ -1171,7 +1171,7 @@ note that this requires torch
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L32-L48)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1torchutil.py#L32-L48)
 
 
 return total number of parameters in a model
@@ -1190,7 +1190,7 @@ https://stackoverflow.com/questions/49201236/check-the-total-number-of-parameter
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L51-L67)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1torchutil.py#L51-L67)
 
 
 get the current devices
@@ -1198,7 +1198,7 @@ get the current devices
 
 ### `class ConfiguredModel(torch.nn.modules.module.Module, typing.Generic[~T_config]):` { #ConfiguredModel }
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L73-L219)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1torchutil.py#L73-L219)
 
 
 a model that has a configuration, for saving with ZANJ
@@ -1219,7 +1219,7 @@ ConfiguredModel must be the first class in the inheritance list
 
 - `zanj_config_class `
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L96-L96)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1torchutil.py#L96-L96)
 
 
 
@@ -1244,7 +1244,7 @@ ConfiguredModel must be the first class in the inheritance list
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L110-L130)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1torchutil.py#L110-L130)
 
 
 
@@ -1255,7 +1255,7 @@ ConfiguredModel must be the first class in the inheritance list
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L132-L135)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1torchutil.py#L132-L135)
 
 
 
@@ -1271,7 +1271,7 @@ ConfiguredModel must be the first class in the inheritance list
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L146-L183)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1torchutil.py#L146-L183)
 
 
 load a model from a serialized object
@@ -1287,7 +1287,7 @@ load a model from a serialized object
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L185-L193)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1torchutil.py#L185-L193)
 
 
 read a model from a file
@@ -1303,7 +1303,7 @@ read a model from a file
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L195-L201)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1torchutil.py#L195-L201)
 
 
 read a model from a file
@@ -1315,7 +1315,7 @@ read a model from a file
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L203-L216)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1torchutil.py#L203-L216)
 
 
 
@@ -1326,7 +1326,7 @@ read a model from a file
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L218-L219)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1torchutil.py#L218-L219)
 
 
 
@@ -1397,14 +1397,14 @@ read a model from a file
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L222-L238)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1torchutil.py#L222-L238)
 
 
 
 
 ### `class ConfigMismatchException(builtins.ValueError):` { #ConfigMismatchException }
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L241-L247)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1torchutil.py#L241-L247)
 
 
 Inappropriate argument value (of correct type).
@@ -1415,7 +1415,7 @@ Inappropriate argument value (of correct type).
 (msg: str, diff)
 ```
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L242-L244)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1torchutil.py#L242-L244)
 
 
 
@@ -1441,7 +1441,7 @@ Inappropriate argument value (of correct type).
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L250-L271)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1torchutil.py#L250-L271)
 
 
 check both models are correct instances and have the same config
@@ -1459,7 +1459,7 @@ Raises:
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0torchutil.py#L274-L294)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1torchutil.py#L274-L294)
 
 
 check the models are exactly equal, including state dict contents
@@ -1467,7 +1467,7 @@ check the models are exactly equal, including state dict contents
 
 
 
-> docs for [`zanj`](https://github.com/mivanit/zanj) v0.5.0
+> docs for [`zanj`](https://github.com/mivanit/zanj) v0.5.1
 
 
 ## Contents
@@ -1491,7 +1491,7 @@ for large arrays, the output is a .tar.gz file with most data in a json file, bu
 
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0zanj.py)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1zanj.py)
 
 # `zanj.zanj` { #zanj.zanj }
 
@@ -1505,7 +1505,7 @@ for large arrays, the output is a .tar.gz file with most data in a json file, bu
 - https://en.wikipedia.org/wiki/Zanj
 - https://www.plutojournals.com/zanj/
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0zanj.py#L0-L249)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1zanj.py#L0-L249)
 
 
 
@@ -1521,7 +1521,7 @@ for large arrays, the output is a .tar.gz file with most data in a json file, bu
 
 ### `class ZANJ(muutils.json_serialize.json_serialize.JsonSerializer):` { #ZANJ }
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0zanj.py#L66-L247)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1zanj.py#L66-L247)
 
 
 Zip up: Arrays in Numpy, JSON for everything else
@@ -1551,7 +1551,7 @@ create a ZANJ-class via `z_cls = ZANJ().create(obj)`, and save/read instances of
 )
 ```
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0zanj.py#L81-L116)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1zanj.py#L81-L116)
 
 
 
@@ -1582,7 +1582,7 @@ create a ZANJ-class via `z_cls = ZANJ().create(obj)`, and save/read instances of
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0zanj.py#L118-L141)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1zanj.py#L118-L141)
 
 
 return information about the current externals
@@ -1596,7 +1596,7 @@ return information about the current externals
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0zanj.py#L143-L164)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1zanj.py#L143-L164)
 
 
 return the metadata of the ZANJ archive
@@ -1608,7 +1608,7 @@ return the metadata of the ZANJ archive
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0zanj.py#L166-L219)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1zanj.py#L166-L219)
 
 
 save the object to a ZANJ archive. returns the path to the archive
@@ -1620,7 +1620,7 @@ save the object to a ZANJ archive. returns the path to the archive
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.0zanj.py#L221-L247)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.5.1zanj.py#L221-L247)
 
 
 load the object from a ZANJ archive

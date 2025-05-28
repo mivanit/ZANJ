@@ -1,10 +1,10 @@
 [project]
     name = "zanj"
-    version = "0.5.0"
+    version = "0.5.1"
     description = "save and load complex objects to disk without pickling"
     license = "GPL-3.0-only"
     authors = [
-        { name = "mivanit", email = "mivanits@umich.edu" }
+        { name = "Michael Ivanitskiy", email = "mivanits@umich.edu" }
     ]
     readme = "README.md"
     requires-python = ">=3.8"
