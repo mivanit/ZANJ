@@ -590,6 +590,7 @@ traitlets==5.14.3
     #   nbconvert
     #   nbformat
 twine==6.1.0
+ty==0.0.1a7
 typeguard==4.4.0 ; python_full_version < '3.9'
     # via jaxtyping
 typer==0.15.1

@@ -1370,11 +1370,16 @@ format-check:
 	$(PYTHON) -m ruff check --config $(PYPROJECT) .
 	$(PYTHON) -m pycln --check --config $(PYPROJECT) .
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# added some checks with "ty"
+
 # runs type checks with mypy
 .PHONY: typing
 typing: clean
 	@echo "running type checks"
+	$(PYTHON) -m ty check zanj
 	$(PYTHON) -m mypy --config-file $(PYPROJECT) $(TYPECHECK_ARGS) .
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # generates a report of the mypy output
 .PHONY: typing-report
@@ -1383,6 +1388,7 @@ typing-report:
 	$(PYTHON) -m mypy --config-file $(PYPROJECT) $(TYPECHECK_ARGS) . | $(PYTHON) -c "$$SCRIPT_MYPY_REPORT" --mode toml
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# tests with and without torch
 
 .PHONY: test
 test: clean

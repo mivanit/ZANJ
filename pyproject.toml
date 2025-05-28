@@ -42,6 +42,7 @@ torch = ["torch>=1.13.1"]
     dev = [
         # typing
         "mypy>=1.0.1",
+        "ty",
         # tests & coverage
         "pytest>=8.2.2",
         "pytest-cov>=4.1.0",
