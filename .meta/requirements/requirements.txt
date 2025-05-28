@@ -122,9 +122,11 @@ fqdn==1.5.1
     # via jsonschema
 fsspec==2025.2.0
     # via torch
-h11==0.14.0
-    # via httpcore
-httpcore==1.0.7
+h11==0.16.0
+    # via
+    #   httpcore
+    #   zanj
+httpcore==1.0.9
     # via httpx
 httpx==0.28.1
     # via jupyterlab
@@ -618,7 +620,7 @@ setuptools==75.3.0 ; python_full_version < '3.9'
     # via
     #   coverage-badge
     #   jupyterlab
-setuptools==75.8.0 ; python_full_version >= '3.9'
+setuptools==80.9.0 ; python_full_version >= '3.9'
     # via
     #   coverage-badge
     #   jupyterlab
@@ -659,7 +661,15 @@ torch==2.4.1 ; python_full_version < '3.9'
     # via zanj
 torch==2.6.0 ; python_full_version >= '3.9'
     # via zanj
-tornado==6.4.2
+tornado==6.4.2 ; python_full_version < '3.9'
+    # via
+    #   ipykernel
+    #   jupyter-client
+    #   jupyter-server
+    #   jupyterlab
+    #   notebook
+    #   terminado
+tornado==6.5.1 ; python_full_version >= '3.9'
     # via
     #   ipykernel
     #   jupyter-client

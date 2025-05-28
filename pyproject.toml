@@ -28,7 +28,10 @@
 
 [project.optional-dependencies]
 pandas = ["pandas>=1.5.3"]
-torch = ["torch>=1.13.1"]
+torch = [
+    "torch>=1.13.1",
+    "h11>=0.16.0", # see https://github.com/mivanit/ZANJ/security/dependabot/13
+]
 
 [project.urls]
     Homepage = "https://miv.name/zanj"
@@ -49,9 +52,14 @@ torch = ["torch>=1.13.1"]
         "coverage-badge>=1.1.1",
         # for testing plotting and notebooks
         "ipykernel>=6.23.2",
+        # tornado depended on by notebook stuff, see
+        # https://github.com/mivanit/ZANJ/security/dependabot/22
+        "tornado>=6.5; python_version >= '3.9'",
         "jupyter",
         "matplotlib>=3.0.0",
         "plotly>=5.0.0",
+        # see https://github.com/mivanit/ZANJ/security/dependabot/18
+        "setuptools>=78.1.1; python_version >= '3.9'",
         # generating docs
         "pdoc>=14.6.0",
         # https://github.com/mivanit/ZANJ/security/dependabot/4
