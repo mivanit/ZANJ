@@ -1,8 +1,8 @@
 # Stats
-- 29 files
-- 4296 (4.3K) lines
-- 137281 (137K) chars
-- 13210 (13K) `whitespace-split` tokens
+- 30 files
+- 4359 (4.4K) lines
+- 139619 (140K) chars
+- 13458 (13K) `whitespace-split` tokens
 
 # File Tree
 
@@ -20,6 +20,7 @@ ZANJ
 │   │   │   ├── test_bool_array.py                   [   60L     1,169C   113T]
 │   │   │   ├── test_isolate_zanj_handler_store.py   [   78L     1,784C   158T]
 │   │   │   ├── test_load_item_recursive.py          [  232L     7,469C   714T]
+│   │   │   ├── test_shared_prefix_keys.py           [   40L     1,139C   112T]
 │   │   │   ├── test_zanj_basic.py                   [   86L     2,607C   197T]
 │   │   │   ├── test_zanj_edge_cases.py              [  299L     8,973C   940T]
 │   │   │   ├── test_zanj_populate_nested.py         [   57L     1,386C   103T]
@@ -38,7 +39,7 @@ ZANJ
 │   ├── externals.py                                 [   52L     1,530C   166T]
 │   ├── loading.py                                   [  450L    16,794C 1,590T]
 │   ├── py.typed                                     [    0L         0C     0T]
-│   ├── serializing.py                               [  253L     8,728C   791T]
+│   ├── serializing.py                               [  271L     9,709C   912T]
 │   ├── torchutil.py                                 [  294L    10,176C   915T]
 │   └── zanj.py                                      [  250L     8,705C   798T]
 ├── README.md                                        [  235L    10,944C 1,365T]
@@ -562,6 +563,50 @@ def test_load_item_recursive_error_modes():
         zanj.loading.get_item_loader = original_get_item_loader
 
 ``````{ end_of_file="tests/unit/no_torch/test_load_item_recursive.py" }
+
+``````{ path="tests/unit/no_torch/test_shared_prefix_keys.py"  }
+from pathlib import Path
+import typing
+import numpy as np
+
+import pytest
+
+from zanj import ZANJ
+
+_TEMP_PATH: Path = Path("tests/.temp/")
+
+
+# NOTE: as of 2025-11-06 15:32 (v0.5.1), the first test (longer key first) fails, while the second test passes. wtf?
+
+
+@pytest.mark.parametrize(
+    ("keys", "name"),
+    [
+        (["layer.1.weight", "layer.1"], "longer_key_first"),
+        (["layer.1", "layer.1.weight"], "shorter_key_first"),
+    ],
+)
+def test_shared_prefix_keys(keys: typing.List[str], name: str):
+    fname: Path = _TEMP_PATH / f"shared_prefix_keys-{name}.zanj"
+
+    #
+    data = {key: np.random.rand(10, 10) for key in keys}
+
+    ZANJ(external_array_threshold=0).save(data, fname)
+
+    print("saved successfully")
+    loaded = ZANJ().read(fname)
+    assert set(data.keys()) == set(loaded.keys())
+    for key in data.keys():
+        print(f"{key = }")
+        print(f"{type(data[key]) = }")
+        print(f"{data[key] = }")
+        print(f"{type(loaded[key]) = }")
+        print(f"{loaded[key] = }")
+        assert type(loaded[key]) == type(data[key])  # noqa: E721
+        np.testing.assert_array_equal(data[key], loaded[key])
+
+``````{ end_of_file="tests/unit/no_torch/test_shared_prefix_keys.py" }
 
 ``````{ path="tests/unit/no_torch/test_zanj_basic.py"  }
 from __future__ import annotations
@@ -2702,6 +2747,7 @@ import json
 import sys
 from dataclasses import dataclass
 from typing import IO, Any, Callable, Iterable, Sequence
+import warnings
 
 import numpy as np
 from muutils.json_serialize.array import arr_metadata
@@ -2819,10 +2865,27 @@ def zanj_external_serialize(
     joined_path: str = "/".join([str(p) for p in path])
     archive_path: str = f"{joined_path}.{item_type}"
 
+    # TODO: somehow need to control whether a failure here causes a fallback to other handlers, or whether the except should propagate
+    # this will probably require changes to the upstream muutils.json_serialize code
     if archive_path in jser._externals:
-        raise ValueError(f"external path {archive_path} already exists!")
-    if any([p.startswith(joined_path) for p in jser._externals.keys()]):
-        raise ValueError(f"external path {joined_path} is a prefix of another path!")
+        err_msg = f"external path {archive_path} already exists!"
+        warnings.warn(err_msg)
+        raise ValueError(err_msg)
+    # Check for true path prefix conflicts (not just string prefix)
+    # Only flag when one path is a directory ancestor of another (contains "/" separator)
+    for p in jser._externals.keys():
+        # Remove the file extension to get the joined_path
+        existing_joined_path = p.rsplit(".", 1)[0]
+        # Check if one is a true path prefix with "/" separator
+        if existing_joined_path.startswith(joined_path + "/") or joined_path.startswith(
+            existing_joined_path + "/"
+        ):
+            err_msg = (
+                f"external path {joined_path} is a prefix of another path {p}!\n"
+                + f"{jser._externals.keys() = }\n{joined_path = }\n{path = }\n{p = }\n{existing_joined_path = }\n{archive_path = }\n{_format = }"
+            )
+            warnings.warn(err_msg)
+            raise ValueError(err_msg)
 
     # process the data if needed, assemble metadata
     data_new: Any = data
@@ -4133,7 +4196,7 @@ help: help-targets info
 ``````{ path="pyproject.toml"  }
 [project]
     name = "zanj"
-    version = "0.5.1"
+    version = "0.5.2"
     description = "save and load complex objects to disk without pickling"
     license = "GPL-3.0-only"
     authors = [
