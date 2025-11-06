@@ -10,6 +10,7 @@ _TEMP_PATH: Path = Path("tests/.temp/")
 
 # NOTE: as of 2025-11-06 15:32 (v0.5.1), the first test (longer key first) fails, while the second test passes. wtf?
 
+
 @pytest.mark.parametrize(
     ("keys", "name"),
     [
@@ -21,10 +22,7 @@ def test_shared_prefix_keys(keys: list[str], name: str):
     fname: Path = _TEMP_PATH / f"shared_prefix_keys-{name}.zanj"
 
     #
-    data = {
-        key: np.random.rand(10, 10)
-        for key in keys
-    }
+    data = {key: np.random.rand(10, 10) for key in keys}
 
     ZANJ(external_array_threshold=0).save(data, fname)
 
