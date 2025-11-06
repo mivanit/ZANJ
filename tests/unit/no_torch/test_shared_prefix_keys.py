@@ -35,4 +35,5 @@ def test_shared_prefix_keys(keys: list[str], name: str):
         print(f"{data[key] = }")
         print(f"{type(loaded[key]) = }")
         print(f"{loaded[key] = }")
+        assert type(loaded[key]) == type(data[key])  # noqa: E721
         np.testing.assert_array_equal(data[key], loaded[key])

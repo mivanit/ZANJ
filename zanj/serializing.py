@@ -4,6 +4,7 @@ import json
 import sys
 from dataclasses import dataclass
 from typing import IO, Any, Callable, Iterable, Sequence
+import warnings
 
 import numpy as np
 from muutils.json_serialize.array import arr_metadata
@@ -121,10 +122,27 @@ def zanj_external_serialize(
     joined_path: str = "/".join([str(p) for p in path])
     archive_path: str = f"{joined_path}.{item_type}"
 
+    # TODO: somehow need to control whether a failure here causes a fallback to other handlers, or whether the except should propagate
+    # this will probably require changes to the upstream muutils.json_serialize code
     if archive_path in jser._externals:
-        raise ValueError(f"external path {archive_path} already exists!")
-    if any([p.startswith(joined_path) for p in jser._externals.keys()]):
-        raise ValueError(f"external path {joined_path} is a prefix of another path!")
+        err_msg = f"external path {archive_path} already exists!"
+        warnings.warn(err_msg)
+        raise ValueError(err_msg)
+    # Check for true path prefix conflicts (not just string prefix)
+    # Only flag when one path is a directory ancestor of another (contains "/" separator)
+    for p in jser._externals.keys():
+        # Remove the file extension to get the joined_path
+        existing_joined_path = p.rsplit(".", 1)[0]
+        # Check if one is a true path prefix with "/" separator
+        if existing_joined_path.startswith(joined_path + "/") or joined_path.startswith(
+            existing_joined_path + "/"
+        ):
+            err_msg = (
+                f"external path {joined_path} is a prefix of another path {p}!\n"
+                + f"{jser._externals.keys() = }\n{joined_path = }\n{path = }\n{p = }\n{existing_joined_path = }\n{archive_path = }\n{_format = }"
+            )
+            warnings.warn(err_msg)
+            raise ValueError(err_msg)
 
     # process the data if needed, assemble metadata
     data_new: Any = data
