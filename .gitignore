@@ -1,5 +1,7 @@
 .meta/local/
 docs/temp
+.vscode/
+tests/.temp/
 
 junk_data
 .pypi-token
