@@ -1,4 +1,5 @@
 from pathlib import Path
+import typing
 import numpy as np
 
 import pytest
@@ -18,7 +19,7 @@ _TEMP_PATH: Path = Path("tests/.temp/")
         (["layer.1", "layer.1.weight"], "shorter_key_first"),
     ],
 )
-def test_shared_prefix_keys(keys: list[str], name: str):
+def test_shared_prefix_keys(keys: typing.List[str], name: str):
     fname: Path = _TEMP_PATH / f"shared_prefix_keys-{name}.zanj"
 
     #
