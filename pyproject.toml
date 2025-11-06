@@ -1,6 +1,6 @@
 [project]
     name = "zanj"
-    version = "0.5.1"
+    version = "0.5.2"
     description = "save and load complex objects to disk without pickling"
     license = "GPL-3.0-only"
     authors = [

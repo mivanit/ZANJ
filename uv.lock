@@ -1,5 +1,5 @@
 version = 1
-revision = 2
+revision = 3
 requires-python = ">=3.8"
 resolution-markers = [
     "python_full_version >= '3.13'",
@@ -5412,7 +5412,7 @@ wheels = [
 
 [[package]]
 name = "zanj"
-version = "0.5.1"
+version = "0.5.2"
 source = { editable = "." }
 dependencies = [
     { name = "jaxtyping", version = "0.2.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
