@@ -169,6 +169,12 @@ def zanj_external_serialize(
         ):
             dataframe_columns = data.columns.tolist()
             data_new = data.to_dict(orient="records")
+        elif (
+            "polars" in data.__class__.__module__
+            and data.__class__.__name__ == "DataFrame"
+        ):
+            dataframe_columns = data.columns
+            data_new = data.to_dicts()
         elif isinstance(data, (list, tuple, Iterable, Sequence)):
             data_new = [
                 jser.json_serialize(item, tuple(path) + (i,))
@@ -255,6 +261,18 @@ DEFAULT_SERIALIZER_HANDLERS_ZANJ: MonoTuple[ZANJSerializerHandler] = tuple(
             uid="pandas.DataFrame:external",
             source_pckg="zanj",
             desc="external pandas DataFrame",
+        ),
+        ZANJSerializerHandler(
+            check=lambda self, obj, path: (
+                "polars" in obj.__class__.__module__
+                and obj.__class__.__name__ == "DataFrame"
+            ),
+            serialize_func=lambda self, obj, path: zanj_external_serialize(
+                self, obj, path, item_type="jsonl", _format="polars.DataFrame:external"
+            ),
+            uid="polars.DataFrame:external",
+            source_pckg="zanj",
+            desc="external polars DataFrame",
         ),
         # ZANJSerializerHandler(
         #     check=lambda self, obj, path: "<class 'torch.nn.modules.module.Module'>"

@@ -21,6 +21,17 @@ except ImportError:
             raise ImportError("cannot load pandas DataFrame, pandas is not installed")
 
 
+try:
+    import polars as pl  # type: ignore[import]
+
+    polars_DataFrame = pl.DataFrame  # type: ignore[no-redef]
+except ImportError:
+
+    class polars_DataFrame:  # type: ignore[no-redef]
+        def __init__(self, *args, **kwargs):
+            raise ImportError("cannot load polars DataFrame, polars is not installed")
+
+
 from muutils.errormode import ErrorMode
 from muutils.json_serialize.array import load_array
 from muutils.json_serialize.json_serialize import ObjectPath
@@ -216,6 +227,26 @@ LOADER_MAP: dict[str, LoaderHandler] = {
             uid="pandas.DataFrame",
             source_pckg="zanj",
             desc="pandas.DataFrame loader",
+        ),
+        # polars
+        LoaderHandler(
+            check=lambda json_item, path=None, z=None: (  # type: ignore[misc]
+                isinstance(json_item, typing.Mapping)
+                and _FORMAT_KEY in json_item
+                and json_item[_FORMAT_KEY].startswith("polars.DataFrame")
+                and "data" in json_item
+                and isinstance(json_item["data"], typing.Sequence)
+            ),
+            load=lambda json_item, path=None, z=None: (  # type: ignore[misc]
+                polars_DataFrame(json_item["data"])
+                if json_item["data"]
+                else polars_DataFrame(
+                    schema={col: str for col in json_item.get("columns", [])}
+                )
+            ),
+            uid="polars.DataFrame",
+            source_pckg="zanj",
+            desc="polars.DataFrame loader",
         ),
         # list/tuple external
         LoaderHandler(
