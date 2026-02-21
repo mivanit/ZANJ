@@ -13,13 +13,8 @@ from muutils.json_serialize.json_serialize import (  # JsonSerializer,
     ObjectPath,
     SerializerHandler,
 )
-from muutils.json_serialize.util import (
-    JSONdict,
-    JSONitem,
-    MonoTuple,
-    _FORMAT_KEY,
-    _REF_KEY,
-)
+
+from zanj.consts import JSONdict, JSONitem, MonoTuple, _FORMAT_KEY, _REF_KEY
 
 from zanj.externals import ExternalItem, ExternalItemType, _ZANJ_pre
 

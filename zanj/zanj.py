@@ -29,8 +29,9 @@ from muutils.json_serialize.json_serialize import (
     SerializerHandler,
     json_serialize,
 )
-from muutils.json_serialize.util import JSONitem, MonoTuple
 from muutils.sysinfo import SysInfo
+
+from zanj.consts import JSONitem, MonoTuple
 
 from zanj.externals import ZANJ_MAIN, ZANJ_META, ExternalItem
 import zanj.externals

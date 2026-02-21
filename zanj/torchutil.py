@@ -19,7 +19,8 @@ except ImportError as e:
 
 from muutils.json_serialize import SerializableDataclass
 from muutils.json_serialize.json_serialize import ObjectPath
-from muutils.json_serialize.util import safe_getsource, string_as_lines, _FORMAT_KEY
+
+from zanj.consts import _FORMAT_KEY, safe_getsource, string_as_lines
 
 from zanj import ZANJ, register_loader_handler
 from zanj.loading import LoaderHandler, load_item_recursive

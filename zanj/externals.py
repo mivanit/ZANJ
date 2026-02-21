@@ -7,7 +7,8 @@ from typing import IO, Any, Callable, Literal, NamedTuple, get_args
 
 import numpy as np
 from muutils.json_serialize.json_serialize import ObjectPath
-from muutils.json_serialize.util import JSONitem
+
+from zanj.consts import JSONitem
 
 # this is to make type checking work -- it will later be overridden
 _ZANJ_pre = Any

@@ -24,19 +24,15 @@ except ImportError:
 from muutils.errormode import ErrorMode
 from muutils.json_serialize.array import load_array
 from muutils.json_serialize.json_serialize import ObjectPath
-from muutils.json_serialize.util import (
+
+from zanj.consts import (
     JSONdict,
     JSONitem,
+    _FORMAT_KEY,
+    _REF_KEY,
     safe_getsource,
     string_as_lines,
 )
-
-try:
-    # New location (muutils >= 0.9)
-    from muutils.json_serialize.types import _FORMAT_KEY, _REF_KEY  # type: ignore[import-not-found]
-except ImportError:
-    # Old location (muutils < 0.9)
-    from muutils.json_serialize.util import _FORMAT_KEY, _REF_KEY  # type: ignore[import-not-found]
 
 from zanj.externals import (
     GET_EXTERNAL_LOAD_FUNC,
@@ -231,7 +227,8 @@ LOADER_MAP: dict[str, LoaderHandler] = {
                 and isinstance(json_item["data"], typing.Sequence)
             ),
             load=lambda json_item, path=None, z=None: [  # type: ignore[misc, arg-type]
-                load_item_recursive(x, path, z) for x in json_item["data"]  # type: ignore[arg-type]
+                load_item_recursive(x, path, z)
+                for x in json_item["data"]  # type: ignore[arg-type]
             ],
             uid="list",
             source_pckg="zanj",
