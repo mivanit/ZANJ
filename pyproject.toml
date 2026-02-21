@@ -28,6 +28,7 @@
 
 [project.optional-dependencies]
 pandas = ["pandas>=1.5.3"]
+polars = ["polars>=0.20.0"]
 torch = [
     # we still need torch for < 3.8 but users will have to figure out a working version themselves
     "torch>=1.13.1; python_version >= '3.9'",
@@ -72,6 +73,9 @@ torch = [
         "tomli>=2.1.0; python_version < '3.11'",
         # for uploading
         "twine",
+        # for testing dataframe support
+        "pandas>=1.5.3",
+        "polars>=0.20.0",
     ]
     lint = [
         # lint

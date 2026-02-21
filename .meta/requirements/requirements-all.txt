@@ -611,6 +611,16 @@ pluggy==1.6.0 ; python_full_version >= '3.9'
     # via
     #   pytest
     #   pytest-cov
+polars==1.8.2 ; python_full_version < '3.9'
+    # via zanj
+polars==1.36.1 ; python_full_version == '3.9.*'
+    # via zanj
+polars==1.38.1 ; python_full_version >= '3.10'
+    # via zanj
+polars-runtime-32==1.36.1 ; python_full_version == '3.9.*'
+    # via polars
+polars-runtime-32==1.38.1 ; python_full_version >= '3.10'
+    # via polars
 prometheus-client==0.21.1 ; python_full_version < '3.9'
     # via jupyter-server
 prometheus-client==0.24.1 ; python_full_version >= '3.9'
