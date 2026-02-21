@@ -33,10 +33,10 @@ from muutils.json_serialize.util import (
 
 try:
     # New location (muutils >= 0.9)
-    from muutils.json_serialize.types import _FORMAT_KEY, _REF_KEY
+    from muutils.json_serialize.types import _FORMAT_KEY, _REF_KEY  # type: ignore[import-not-found]
 except ImportError:
     # Old location (muutils < 0.9)
-    from muutils.json_serialize.util import _FORMAT_KEY, _REF_KEY
+    from muutils.json_serialize.util import _FORMAT_KEY, _REF_KEY  # type: ignore[import-not-found]
 
 from zanj.externals import (
     GET_EXTERNAL_LOAD_FUNC,
