@@ -31,11 +31,10 @@ if sys.version_info >= (3, 10):
 # for some reason pylint complains about kwargs to ZANJSerializerHandler
 
 
-def jsonl_metadata(data: list[JSONdict]) -> dict:
+def jsonl_metadata(data: list[JSONdict]) -> dict[str, Any]:
     """metadata about a jsonl object"""
     all_cols: set[str] = set([col for item in data for col in item.keys()])
-    return {
-        "data[0]": data[0],
+    output: dict[str, Any] = {
         "len(data)": len(data),
         "columns": {
             col: {
@@ -48,6 +47,9 @@ def jsonl_metadata(data: list[JSONdict]) -> dict:
             if col != _FORMAT_KEY
         },
     }
+    if len(data) > 0:
+        output["data[0]"] = data[0]
+    return output
 
 
 def store_npy(self: _ZANJ_pre, fp: IO[bytes], data: np.ndarray) -> None:
