@@ -7971,7 +7971,7 @@ dev = [
     { name = "tomli", marker = "python_full_version < '3.11'", specifier = ">=2.1.0" },
     { name = "tornado", marker = "python_full_version >= '3.9'", specifier = ">=6.5" },
     { name = "twine" },
-    { name = "ty" },
+    { name = "ty", specifier = ">=0.0.18" },
 ]
 lint = [{ name = "ruff", specifier = ">=0.4.8" }]
 

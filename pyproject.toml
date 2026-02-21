@@ -47,7 +47,7 @@ torch = [
     dev = [
         # typing
         "mypy>=1.0.1",
-        "ty",
+        "ty>=0.0.18",
         "basedpyright",
         # tests & coverage
         "pytest>=8.2.2",
