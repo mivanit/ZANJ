@@ -506,6 +506,10 @@ numpy==2.4.2 ; python_full_version >= '3.11'
     #   matplotlib
     #   pandas
     #   zanj
+nvidia-cublas-cu11==11.10.3.66 ; python_full_version < '3.9' and sys_platform == 'linux'
+    # via
+    #   nvidia-cudnn-cu11
+    #   torch
 nvidia-cublas-cu12==12.8.4.1 ; python_full_version >= '3.9' and platform_machine == 'x86_64' and sys_platform == 'linux'
     # via
     #   nvidia-cudnn-cu12
@@ -513,9 +517,15 @@ nvidia-cublas-cu12==12.8.4.1 ; python_full_version >= '3.9' and platform_machine
     #   torch
 nvidia-cuda-cupti-cu12==12.8.90 ; python_full_version >= '3.9' and platform_machine == 'x86_64' and sys_platform == 'linux'
     # via torch
+nvidia-cuda-nvrtc-cu11==11.7.99 ; python_full_version < '3.9' and sys_platform == 'linux'
+    # via torch
 nvidia-cuda-nvrtc-cu12==12.8.93 ; python_full_version >= '3.9' and platform_machine == 'x86_64' and sys_platform == 'linux'
     # via torch
+nvidia-cuda-runtime-cu11==11.7.99 ; python_full_version < '3.9' and sys_platform == 'linux'
+    # via torch
 nvidia-cuda-runtime-cu12==12.8.90 ; python_full_version >= '3.9' and platform_machine == 'x86_64' and sys_platform == 'linux'
+    # via torch
+nvidia-cudnn-cu11==8.5.0.96 ; python_full_version < '3.9' and sys_platform == 'linux'
     # via torch
 nvidia-cudnn-cu12==9.10.2.21 ; python_full_version >= '3.9' and platform_machine == 'x86_64' and sys_platform == 'linux'
     # via torch
@@ -747,7 +757,10 @@ secretstorage==3.5.0 ; python_full_version >= '3.10' and platform_machine != 'pp
 send2trash==2.1.0
     # via jupyter-server
 setuptools==75.3.4 ; python_full_version < '3.9'
-    # via jupyterlab
+    # via
+    #   jupyterlab
+    #   nvidia-cublas-cu11
+    #   nvidia-cuda-runtime-cu11
 setuptools==82.0.0 ; python_full_version >= '3.9'
     # via
     #   jupyterlab
@@ -783,6 +796,8 @@ tomli==2.4.0 ; python_full_version <= '3.11'
     #   jupyterlab
     #   mypy
     #   pytest
+torch==1.13.1 ; python_full_version < '3.9'
+    # via zanj
 torch==2.8.0 ; python_full_version == '3.9.*'
     # via zanj
 torch==2.10.0 ; python_full_version >= '3.10'
@@ -839,6 +854,7 @@ typing-extensions==4.13.2 ; python_full_version < '3.9'
     #   mistune
     #   mypy
     #   python-json-logger
+    #   torch
     #   typeguard
 typing-extensions==4.15.0 ; python_full_version >= '3.9'
     # via
@@ -890,7 +906,10 @@ websocket-client==1.8.0 ; python_full_version < '3.9'
 websocket-client==1.9.0 ; python_full_version >= '3.9'
     # via jupyter-server
 wheel==0.45.1 ; python_full_version < '3.9'
-    # via astunparse
+    # via
+    #   astunparse
+    #   nvidia-cublas-cu11
+    #   nvidia-cuda-runtime-cu11
 widgetsnbextension==4.0.15
     # via ipywidgets
 zipp==3.20.2 ; python_full_version < '3.9'
