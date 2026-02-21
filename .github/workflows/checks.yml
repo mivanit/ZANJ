@@ -107,4 +107,5 @@ jobs:
       #   run: make test WARN_STRICT=1 RUN_GLOBAL=1
 
       - name: check typing
+        if: ${{ matrix.python != '3.8' }}
         run: make typing
