@@ -227,8 +227,8 @@ LOADER_MAP: dict[str, LoaderHandler] = {
                 and isinstance(json_item["data"], typing.Sequence)
             ),
             load=lambda json_item, path=None, z=None: [  # type: ignore[misc, arg-type]
-                load_item_recursive(x, path, z)
-                for x in json_item["data"]  # type: ignore[arg-type]
+                load_item_recursive(x, path, z)  # type: ignore[arg-type]
+                for x in json_item["data"]
             ],
             uid="list",
             source_pckg="zanj",
