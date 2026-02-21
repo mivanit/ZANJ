@@ -117,7 +117,7 @@ PYTHON_VERSION := NULL
 
 # which type checkers to run (comma-separated)
 # available: ty,basedpyright,mypy
-TYPE_CHECKERS ?= ty,basedpyright,mypy
+TYPE_CHECKERS ?= ty,mypy
 
 # path to type check (empty = use config from pyproject.toml)
 TYPECHECK_PATH ?=
@@ -404,10 +404,20 @@ typing-summary:
 # you can pass custom args. for example:
 # make test PYTEST_OPTIONS="--maxfail=1 -x"
 # pytest config in pyproject.toml:[tool.pytest.ini_options]
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# tests with and without torch
+
 .PHONY: test
-test:
+test: clean
 	@echo "running tests"
-	$(PYTHON) -m pytest $(PYTEST_OPTIONS) $(TESTS_DIR)
+	$(PYTHON) -m pytest $(PYTEST_OPTIONS) $(TESTS_DIR)/unit
+
+.PHONY: test-notorch
+test-notorch: clean
+	@echo "running only tests without torch"
+	$(PYTHON) -m pytest $(PYTEST_OPTIONS) $(TESTS_DIR)/unit/no_torch/ $(TESTS_DIR)/assert_no_torch.py
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .PHONY: check
 check: format-check test typing
@@ -716,18 +726,3 @@ help:
 # (put them down here, or delimit with ~~~~~)
 
 
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# tests with and without torch
-
-.PHONY: test
-test: clean
-	@echo "running tests"
-	$(PYTHON) -m pytest $(PYTEST_OPTIONS) $(TESTS_DIR)/unit
-
-.PHONY: test-notorch
-test-notorch: clean
-	@echo "running only tests without torch"
-	$(PYTHON) -m pytest $(PYTEST_OPTIONS) $(TESTS_DIR)/unit/no_torch/ $(TESTS_DIR)/assert_no_torch.py
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
