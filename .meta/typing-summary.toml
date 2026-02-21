@@ -1,41 +1,16 @@
-# ty: Found 181 diagnostics
-# mypy: Found 1 error in 1 file (checked 6 source files)
+# ty: All checks passed!
+# mypy: Success: no issues found in 6 source files
 
 [type_errors.ty]
-total_errors = 181
+total_errors = 0
 
 [type_errors.ty.by_type]
-"unknown-argument" = 84
-"invalid-argument-type" = 51
-"not-subscriptable" = 24
-"unsupported-operator" = 13
-"invalid-assignment" = 3
-"unresolved-attribute" = 3
-"invalid-method-override" = 2
-"unresolved-import" = 1
 
 [type_errors.ty.by_file]
-"tests/unit/no_torch/test_zanj_edge_cases.py" = 48
-"tests/unit/with_torch/test_zanj_torch_cfgmismatch.py" = 35
-"zanj/loading.py" = 31
-"tests/unit/with_torch/test_zanj_sdc_modelcfg.py" = 12
-"tests/unit/with_torch/test_zanj_torch.py" = 11
-"tests/unit/with_torch/test_sdc_torch.py" = 8
-"tests/unit/no_torch/test_bool_array.py" = 6
-"tests/unit/no_torch/test_zanj_serializable_dataclass.py" = 6
-"tests/unit/with_torch/test_torch_edge_cases.py" = 6
-"demo.ipynb:cell 16" = 5
-"tests/unit/no_torch/test_zanj_populate_nested.py" = 4
-"tests/unit/with_torch/test_bool_array_torch.py" = 3
-"tests/unit/no_torch/test_load_item_recursive.py" = 2
-"tests/unit/no_torch/test_zanj_basic.py" = 2
-"tests/unit/with_torch/test_get_module_device.py" = 2
 
 [type_errors.mypy]
-total_errors = 1
+total_errors = 0
 
 [type_errors.mypy.by_type]
-"import-not-found" = 1
 
 [type_errors.mypy.by_file]
-"zanj/loading.py" = 1
