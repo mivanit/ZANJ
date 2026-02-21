@@ -25,13 +25,18 @@ from muutils.errormode import ErrorMode
 from muutils.json_serialize.array import load_array
 from muutils.json_serialize.json_serialize import ObjectPath
 from muutils.json_serialize.util import (
-    _FORMAT_KEY,
-    _REF_KEY,
     JSONdict,
     JSONitem,
     safe_getsource,
     string_as_lines,
 )
+
+try:
+    # New location (muutils >= 0.9)
+    from muutils.json_serialize.types import _FORMAT_KEY, _REF_KEY
+except ImportError:
+    # Old location (muutils < 0.9)
+    from muutils.json_serialize.util import _FORMAT_KEY, _REF_KEY
 
 from zanj.externals import (
     GET_EXTERNAL_LOAD_FUNC,
