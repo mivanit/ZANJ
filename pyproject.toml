@@ -91,6 +91,9 @@ torch = [
     exclude = ["tests/input_data", "tests/junk_data"]
     show_error_codes = true
 
+[tool.ty.src]
+    exclude = ["tests/", "demo.ipynb"]
+
 [tool.ty.rules]
     unused-type-ignore-comment = "ignore"
     too-many-positional-arguments = "ignore"

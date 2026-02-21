@@ -230,8 +230,8 @@ LOADER_MAP: dict[str, LoaderHandler] = {
                 and "data" in json_item
                 and isinstance(json_item["data"], typing.Sequence)
             ),
-            load=lambda json_item, path=None, z=None: [  # type: ignore[misc]
-                load_item_recursive(x, path, z) for x in json_item["data"]
+            load=lambda json_item, path=None, z=None: [  # type: ignore[misc, arg-type]
+                load_item_recursive(x, path, z) for x in json_item["data"]  # type: ignore[arg-type]
             ],
             uid="list",
             source_pckg="zanj",
@@ -245,8 +245,8 @@ LOADER_MAP: dict[str, LoaderHandler] = {
                 and "data" in json_item
                 and isinstance(json_item["data"], typing.Sequence)
             ),
-            load=lambda json_item, path=None, z=None: tuple(  # type: ignore[misc]
-                [load_item_recursive(x, path, z) for x in json_item["data"]]
+            load=lambda json_item, path=None, z=None: tuple(  # type: ignore[misc, arg-type]
+                [load_item_recursive(x, path, z) for x in json_item["data"]]  # type: ignore[arg-type]
             ),
             uid="tuple",
             source_pckg="zanj",
@@ -275,11 +275,11 @@ def get_item_loader(
 
     # check if we recognize the format
     if isinstance(json_item, typing.Mapping) and _FORMAT_KEY in json_item:
-        if not isinstance(json_item[_FORMAT_KEY], str):
+        if not isinstance(json_item[_FORMAT_KEY], str):  # type: ignore[index]
             raise TypeError(
-                f"invalid __muutils_format__ type '{type(json_item[_FORMAT_KEY])}' in '{path=}': '{json_item[_FORMAT_KEY] = }'"
+                f"invalid __muutils_format__ type '{type(json_item[_FORMAT_KEY])}' in '{path=}': '{json_item[_FORMAT_KEY] = }'"  # type: ignore[index]
             )
-        if json_item[_FORMAT_KEY] in LOADER_MAP:
+        if json_item[_FORMAT_KEY] in LOADER_MAP:  # type: ignore[index]
             return LOADER_MAP[json_item[_FORMAT_KEY]]  # type: ignore[index]
 
     # if we dont recognize the format, try to find a loader that can handle it
@@ -322,11 +322,11 @@ def load_item_recursive(
                     if (
                         isinstance(val, typing.Mapping)
                         and (_FORMAT_KEY in val)
-                        and ("SerializableDataclass" in val[_FORMAT_KEY])
+                        and ("SerializableDataclass" in val[_FORMAT_KEY])  # type: ignore[operator, index]
                     )
                     else load_item_recursive(
-                        json_item=val,
-                        path=tuple(path) + (key,),
+                        json_item=val,  # type: ignore[arg-type]
+                        path=tuple(path) + (key,),  # type: ignore[arg-type]
                         zanj=zanj,
                         error_mode=error_mode,
                     )
