@@ -7950,7 +7950,7 @@ requires-dist = [
     { name = "numpy", specifier = ">=1.24.4" },
     { name = "pandas", marker = "extra == 'pandas'", specifier = ">=1.5.3" },
     { name = "torch", marker = "python_full_version >= '3.9' and extra == 'torch'", specifier = ">=1.13.1" },
-    { name = "torch", marker = "python_full_version < '3.9' and extra == 'torch'", specifier = ">=1.13.1,<2.0.0" },
+    { name = "torch", marker = "python_full_version < '3.9' and extra == 'torch'", specifier = "==1.13.1" },
 ]
 provides-extras = ["pandas", "torch"]
 

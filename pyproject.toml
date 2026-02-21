@@ -31,7 +31,7 @@ pandas = ["pandas>=1.5.3"]
 torch = [
     # we still need torch for < 3.8 but users will have to figure out a working version themselves
     "torch>=1.13.1; python_version >= '3.9'",
-    "torch>=1.13.1,<2.0.0; python_version < '3.9'",
+    "torch==1.13.1; python_version < '3.9'",
     "h11>=0.16.0", # see https://github.com/mivanit/ZANJ/security/dependabot/13
 ]
 
@@ -84,7 +84,7 @@ torch = [
 
 
 [tool.ruff]
-    exclude = ["tests/input_data", "tests/junk_data"]
+    exclude = ["tests/input_data", "tests/junk_data", ".meta/scripts/"]
 
 [tool.mypy]
     exclude = ["tests/input_data", "tests/junk_data"]
