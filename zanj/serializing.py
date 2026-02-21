@@ -164,8 +164,11 @@ def zanj_external_serialize(
         # get metadata
         output.update(arr_metadata(data))
     elif item_type.startswith("jsonl"):
-        # check via mro to avoid importing pandas
-        if any("pandas.core.frame.DataFrame" in str(t) for t in data.__class__.__mro__):
+        # check via module and class name to avoid importing pandas (works with pandas 3.0+)
+        if (
+            "pandas" in data.__class__.__module__
+            and data.__class__.__name__ == "DataFrame"
+        ):
             output["columns"] = data.columns.tolist()
             data_new = data.to_dict(orient="records")
         elif isinstance(data, (list, tuple, Iterable, Sequence)):
@@ -218,8 +221,9 @@ DEFAULT_SERIALIZER_HANDLERS_ZANJ: MonoTuple[ZANJSerializerHandler] = tuple(
             desc="external torch tensor",
         ),
         ZANJSerializerHandler(
-            check=lambda self, obj, path: isinstance(obj, list)
-            and len(obj) >= self.external_list_threshold,
+            check=lambda self, obj, path: (
+                isinstance(obj, list) and len(obj) >= self.external_list_threshold
+            ),
             serialize_func=lambda self, obj, path: zanj_external_serialize(
                 self, obj, path, item_type="jsonl", _format="list:external"
             ),
@@ -228,8 +232,9 @@ DEFAULT_SERIALIZER_HANDLERS_ZANJ: MonoTuple[ZANJSerializerHandler] = tuple(
             desc="external list",
         ),
         ZANJSerializerHandler(
-            check=lambda self, obj, path: isinstance(obj, tuple)
-            and len(obj) >= self.external_list_threshold,
+            check=lambda self, obj, path: (
+                isinstance(obj, tuple) and len(obj) >= self.external_list_threshold
+            ),
             serialize_func=lambda self, obj, path: zanj_external_serialize(
                 self, obj, path, item_type="jsonl", _format="tuple:external"
             ),
@@ -239,11 +244,8 @@ DEFAULT_SERIALIZER_HANDLERS_ZANJ: MonoTuple[ZANJSerializerHandler] = tuple(
         ),
         ZANJSerializerHandler(
             check=lambda self, obj, path: (
-                any(
-                    "pandas.core.frame.DataFrame" in str(t)
-                    for t in obj.__class__.__mro__
-                )
-                and len(obj) >= self.external_list_threshold
+                "pandas" in obj.__class__.__module__
+                and obj.__class__.__name__ == "DataFrame"
             ),
             serialize_func=lambda self, obj, path: zanj_external_serialize(
                 self, obj, path, item_type="jsonl", _format="pandas.DataFrame:external"
