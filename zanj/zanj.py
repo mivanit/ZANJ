@@ -132,7 +132,7 @@ class ZANJ(JsonSerializer):
 
             if item.item_type == "ndarray":
                 output[key].update(arr_metadata(data))
-            elif item.item_type.startswith("jsonl"):
+            elif item.item_type.startswith("jsonl") and len(data) > 0:
                 output[key]["data[0]"] = data[0]
 
         return {

@@ -211,8 +211,11 @@ LOADER_MAP: dict[str, LoaderHandler] = {
                 and "data" in json_item
                 and isinstance(json_item["data"], typing.Sequence)
             ),
-            load=lambda json_item, path=None, z=None: pandas_DataFrame(  # type: ignore[misc]
-                json_item["data"]
+            load=lambda json_item, path=None, z=None: (  # type: ignore[misc]
+                pandas_DataFrame(json_item["data"])
+                # if there is no data, load just the columns (this is for empty dataframes)
+                if json_item["data"]
+                else pandas_DataFrame(columns=json_item.get("columns"))
             ),
             uid="pandas.DataFrame",
             source_pckg="zanj",

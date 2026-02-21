@@ -167,11 +167,12 @@ def zanj_external_serialize(
         output.update(arr_metadata(data))
     elif item_type.startswith("jsonl"):
         # check via module and class name to avoid importing pandas (works with pandas 3.0+)
+        dataframe_columns = None
         if (
             "pandas" in data.__class__.__module__
             and data.__class__.__name__ == "DataFrame"
         ):
-            output["columns"] = data.columns.tolist()
+            dataframe_columns = data.columns.tolist()
             data_new = data.to_dict(orient="records")
         elif isinstance(data, (list, tuple, Iterable, Sequence)):
             data_new = [
@@ -185,6 +186,10 @@ def zanj_external_serialize(
 
         if all([isinstance(item, dict) for item in data_new]):
             output.update(jsonl_metadata(data_new))
+
+        # set DataFrame columns after jsonl_metadata to avoid being overwritten
+        if dataframe_columns is not None:
+            output["columns"] = dataframe_columns
 
     # store the item for external serialization
     jser._externals[archive_path] = ExternalItem(
