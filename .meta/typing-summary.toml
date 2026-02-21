@@ -1,5 +1,5 @@
 # ty: All checks passed!
-# mypy: Success: no issues found in 6 source files
+# mypy: Success: no issues found in 7 source files
 
 [type_errors.ty]
 total_errors = 0
