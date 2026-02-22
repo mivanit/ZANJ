@@ -3,21 +3,21 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Coverage for tests/unit/with_torch/test_sdc_torch.py: 98%</title>
-    <link rel="icon" sizes="32x32" href="favicon_32_cb_58284776.png">
-    <link rel="stylesheet" href="style_cb_8e611ae1.css" type="text/css">
-    <script src="coverage_html_cb_6fb7b396.js" defer></script>
+    <link rel="icon" sizes="32x32" href="favicon_32_cb_c827f16f.png">
+    <link rel="stylesheet" href="style_cb_9ff733b0.css" type="text/css">
+    <script src="coverage_html_cb_dd2e7eb5.js" defer></script>
 </head>
 <body class="pyfile">
 <header>
     <div class="content">
         <h1>
-            <span class="text">Coverage for </span><b>tests/unit/with_torch/test_sdc_torch.py</b>:
+            <span class="text">Coverage for </span><b>tests&#8201;/&#8201;unit&#8201;/&#8201;with_torch&#8201;/&#8201;test_sdc_torch.py</b>:
             <span class="pc_cov">98%</span>
         </h1>
         <aside id="help_panel_wrapper">
             <input id="help_panel_state" type="checkbox">
             <label for="help_panel_state">
-                <img id="keyboard_icon" src="keybd_closed_cb_ce680311.png" alt="Show/hide keyboard shortcuts">
+                <img id="keyboard_icon" src="keybd_closed_cb_900cfef5.png" alt="Show/hide keyboard shortcuts">
             </label>
             <div id="help_panel">
                 <p class="legend">Shortcuts on this page</p>
@@ -64,8 +64,8 @@
             <a id="indexLink" class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a id="nextFileLink" class="nav" href="z_73710086b98948d9_test_torch_edge_cases_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.6.12">coverage.py v7.6.12</a>,
-            created at 2025-03-20 11:17 -0600
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.13.4">coverage.py v7.13.4</a>,
+            created at 2026-02-21 22:18 -0700
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -90,10 +90,10 @@
     <p class="run"><span class="n"><a id="t8" href="#t8">8</a></span><span class="t"><span class="key">import</span> <span class="nam">pandas</span> <span class="key">as</span> <span class="nam">pd</span>  <span class="com"># type: ignore[import]</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t9" href="#t9">9</a></span><span class="t"><span class="key">import</span> <span class="nam">torch</span>  <span class="com"># type: ignore[import-not-found]</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t10" href="#t10">10</a></span><span class="t"><span class="key">from</span> <span class="nam">muutils</span><span class="op">.</span><span class="nam">json_serialize</span> <span class="key">import</span> <span class="op">(</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t11" href="#t11">11</a></span><span class="t">    <span class="nam">SerializableDataclass</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t12" href="#t12">12</a></span><span class="t">    <span class="nam">serializable_dataclass</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t13" href="#t13">13</a></span><span class="t">    <span class="nam">serializable_field</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t14" href="#t14">14</a></span><span class="t"><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t11" href="#t11">11</a></span><span class="t">    <span class="nam">SerializableDataclass</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t12" href="#t12">12</a></span><span class="t">    <span class="nam">serializable_dataclass</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t13" href="#t13">13</a></span><span class="t">    <span class="nam">serializable_field</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t14" href="#t14">14</a></span><span class="t"><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t15" href="#t15">15</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t16" href="#t16">16</a></span><span class="t"><span class="key">from</span> <span class="nam">zanj</span> <span class="key">import</span> <span class="nam">ZANJ</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t17" href="#t17">17</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
@@ -137,8 +137,8 @@
     <p class="pln"><span class="n"><a id="t55" href="#t55">55</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t56" href="#t56">56</a></span><span class="t"><span class="key">def</span> <span class="nam">test_sdc_tensor</span><span class="op">(</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t57" href="#t57">57</a></span><span class="t">    <span class="nam">instance</span> <span class="op">=</span> <span class="nam">sdc_with_torch_tensor</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t58" href="#t58">58</a></span><span class="t">        <span class="str">"bigger tensors"</span><span class="op">,</span> <span class="nam">torch</span><span class="op">.</span><span class="nam">rand</span><span class="op">(</span><span class="num">128</span><span class="op">,</span> <span class="num">128</span><span class="op">)</span><span class="op">,</span> <span class="nam">torch</span><span class="op">.</span><span class="nam">rand</span><span class="op">(</span><span class="num">256</span><span class="op">,</span> <span class="num">256</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t59" href="#t59">59</a></span><span class="t">    <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t58" href="#t58">58</a></span><span class="t">        <span class="str">"bigger tensors"</span><span class="op">,</span> <span class="nam">torch</span><span class="op">.</span><span class="nam">rand</span><span class="op">(</span><span class="num">128</span><span class="op">,</span> <span class="num">128</span><span class="op">)</span><span class="op">,</span> <span class="nam">torch</span><span class="op">.</span><span class="nam">rand</span><span class="op">(</span><span class="num">256</span><span class="op">,</span> <span class="num">256</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t59" href="#t59">59</a></span><span class="t">    <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t60" href="#t60">60</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t61" href="#t61">61</a></span><span class="t">    <span class="nam">z</span> <span class="op">=</span> <span class="nam">ZANJ</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t62" href="#t62">62</a></span><span class="t">    <span class="nam">path</span> <span class="op">=</span> <span class="nam">TEST_DATA_PATH</span> <span class="op">/</span> <span class="str">"test_sdc_tensor.zanj"</span>&nbsp;</span><span class="r"></span></p>
@@ -164,21 +164,21 @@
     <p class="pln"><span class="n"><a id="t82" href="#t82">82</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t83" href="#t83">83</a></span><span class="t"><span class="key">def</span> <span class="nam">test_sdc_complicated</span><span class="op">(</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t84" href="#t84">84</a></span><span class="t">    <span class="nam">instance</span> <span class="op">=</span> <span class="nam">sdc_complicated</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t85" href="#t85">85</a></span><span class="t">        <span class="nam">name</span><span class="op">=</span><span class="str">"complicated data"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t86" href="#t86">86</a></span><span class="t">        <span class="nam">arr1</span><span class="op">=</span><span class="nam">np</span><span class="op">.</span><span class="nam">random</span><span class="op">.</span><span class="nam">rand</span><span class="op">(</span><span class="num">128</span><span class="op">,</span> <span class="num">128</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t87" href="#t87">87</a></span><span class="t">        <span class="nam">arr2</span><span class="op">=</span><span class="nam">np</span><span class="op">.</span><span class="nam">random</span><span class="op">.</span><span class="nam">rand</span><span class="op">(</span><span class="num">256</span><span class="op">,</span> <span class="num">256</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t88" href="#t88">88</a></span><span class="t">        <span class="nam">iris_data</span><span class="op">=</span><span class="nam">pd</span><span class="op">.</span><span class="nam">read_csv</span><span class="op">(</span><span class="str">"tests/input_data/iris.csv"</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t89" href="#t89">89</a></span><span class="t">        <span class="nam">brain_data</span><span class="op">=</span><span class="nam">pd</span><span class="op">.</span><span class="nam">read_csv</span><span class="op">(</span><span class="str">"tests/input_data/brain_networks.csv"</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t90" href="#t90">90</a></span><span class="t">        <span class="nam">container</span><span class="op">=</span><span class="op">[</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t91" href="#t91">91</a></span><span class="t">            <span class="nam">NestedTorch</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t92" href="#t92">92</a></span><span class="t">                <span class="fst">f"</span><span class="fst">n-</span><span class="op">{</span><span class="nam">n</span><span class="op">}</span><span class="fst">"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t93" href="#t93">93</a></span><span class="t">                <span class="nam">BasicZanjTorch</span><span class="op">(</span><span class="fst">f"</span><span class="fst">n-</span><span class="op">{</span><span class="nam">n</span><span class="op">}</span><span class="fst">_b</span><span class="fst">"</span><span class="op">,</span> <span class="nam">n</span> <span class="op">*</span> <span class="num">10</span> <span class="op">+</span> <span class="num">1</span><span class="op">,</span> <span class="op">[</span><span class="nam">n</span> <span class="op">+</span> <span class="num">1</span><span class="op">,</span> <span class="nam">n</span> <span class="op">+</span> <span class="num">2</span><span class="op">,</span> <span class="nam">n</span> <span class="op">+</span> <span class="num">10</span><span class="op">]</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t94" href="#t94">94</a></span><span class="t">                <span class="nam">n</span> <span class="op">*</span> <span class="nam">np</span><span class="op">.</span><span class="nam">pi</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t95" href="#t95">95</a></span><span class="t">            <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t96" href="#t96">96</a></span><span class="t">            <span class="key">for</span> <span class="nam">n</span> <span class="key">in</span> <span class="nam">range</span><span class="op">(</span><span class="num">10</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t97" href="#t97">97</a></span><span class="t">        <span class="op">]</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t98" href="#t98">98</a></span><span class="t">        <span class="nam">tensor</span><span class="op">=</span><span class="nam">torch</span><span class="op">.</span><span class="nam">rand</span><span class="op">(</span><span class="num">512</span><span class="op">,</span> <span class="num">512</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t99" href="#t99">99</a></span><span class="t">    <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t85" href="#t85">85</a></span><span class="t">        <span class="nam">name</span><span class="op">=</span><span class="str">"complicated data"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t86" href="#t86">86</a></span><span class="t">        <span class="nam">arr1</span><span class="op">=</span><span class="nam">np</span><span class="op">.</span><span class="nam">random</span><span class="op">.</span><span class="nam">rand</span><span class="op">(</span><span class="num">128</span><span class="op">,</span> <span class="num">128</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t87" href="#t87">87</a></span><span class="t">        <span class="nam">arr2</span><span class="op">=</span><span class="nam">np</span><span class="op">.</span><span class="nam">random</span><span class="op">.</span><span class="nam">rand</span><span class="op">(</span><span class="num">256</span><span class="op">,</span> <span class="num">256</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t88" href="#t88">88</a></span><span class="t">        <span class="nam">iris_data</span><span class="op">=</span><span class="nam">pd</span><span class="op">.</span><span class="nam">read_csv</span><span class="op">(</span><span class="str">"tests/input_data/iris.csv"</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t89" href="#t89">89</a></span><span class="t">        <span class="nam">brain_data</span><span class="op">=</span><span class="nam">pd</span><span class="op">.</span><span class="nam">read_csv</span><span class="op">(</span><span class="str">"tests/input_data/brain_networks.csv"</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t90" href="#t90">90</a></span><span class="t">        <span class="nam">container</span><span class="op">=</span><span class="op">[</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t91" href="#t91">91</a></span><span class="t">            <span class="nam">NestedTorch</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t92" href="#t92">92</a></span><span class="t">                <span class="fst">f"</span><span class="fst">n-</span><span class="op">{</span><span class="nam">n</span><span class="op">}</span><span class="fst">"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t93" href="#t93">93</a></span><span class="t">                <span class="nam">BasicZanjTorch</span><span class="op">(</span><span class="fst">f"</span><span class="fst">n-</span><span class="op">{</span><span class="nam">n</span><span class="op">}</span><span class="fst">_b</span><span class="fst">"</span><span class="op">,</span> <span class="nam">n</span> <span class="op">*</span> <span class="num">10</span> <span class="op">+</span> <span class="num">1</span><span class="op">,</span> <span class="op">[</span><span class="nam">n</span> <span class="op">+</span> <span class="num">1</span><span class="op">,</span> <span class="nam">n</span> <span class="op">+</span> <span class="num">2</span><span class="op">,</span> <span class="nam">n</span> <span class="op">+</span> <span class="num">10</span><span class="op">]</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t94" href="#t94">94</a></span><span class="t">                <span class="nam">n</span> <span class="op">*</span> <span class="nam">np</span><span class="op">.</span><span class="nam">pi</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t95" href="#t95">95</a></span><span class="t">            <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t96" href="#t96">96</a></span><span class="t">            <span class="key">for</span> <span class="nam">n</span> <span class="key">in</span> <span class="nam">range</span><span class="op">(</span><span class="num">10</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t97" href="#t97">97</a></span><span class="t">        <span class="op">]</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t98" href="#t98">98</a></span><span class="t">        <span class="nam">tensor</span><span class="op">=</span><span class="nam">torch</span><span class="op">.</span><span class="nam">rand</span><span class="op">(</span><span class="num">512</span><span class="op">,</span> <span class="num">512</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t99" href="#t99">99</a></span><span class="t">    <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t100" href="#t100">100</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t101" href="#t101">101</a></span><span class="t">    <span class="nam">z</span> <span class="op">=</span> <span class="nam">ZANJ</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t102" href="#t102">102</a></span><span class="t">    <span class="nam">path</span> <span class="op">=</span> <span class="nam">TEST_DATA_PATH</span> <span class="op">/</span> <span class="str">"test_sdc_complicated.zanj"</span>&nbsp;</span><span class="r"></span></p>
@@ -193,8 +193,8 @@
             <a class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a class="nav" href="z_73710086b98948d9_test_torch_edge_cases_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.6.12">coverage.py v7.6.12</a>,
-            created at 2025-03-20 11:17 -0600
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.13.4">coverage.py v7.13.4</a>,
+            created at 2026-02-21 22:18 -0700
         </p>
     </div>
 </footer>

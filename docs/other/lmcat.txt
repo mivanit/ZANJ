@@ -1,8 +1,8 @@
 # Stats
-- 30 files
-- 4359 (4.4K) lines
-- 139619 (140K) chars
-- 13458 (13K) `whitespace-split` tokens
+- 32 files
+- 4808 (4.8K) lines
+- 155622 (156K) chars
+- 15155 (15K) `whitespace-split` tokens
 
 # File Tree
 
@@ -10,42 +10,44 @@
 ZANJ                                                 
 ├── .github                                          
 │   └── workflows                                    
-│    └── checks.yml                                  [  110L     2,758C   303T]
+│    └── checks.yml                                  [118L     3,026C   334T]
 ├── tests                                            
 │   ├── input_data                                   
-│   │   ├── brain_networks.csv                       [  924L 1,075,910C   924T]
-│   │   └── iris.csv                                 [  151L     3,857C   151T]
+│   │   ├── brain_networks.csv                       [924L 1,075,910C   924T]
+│   │   └── iris.csv                                 [151L     3,857C   151T]
 │   ├── unit                                         
 │   │   ├── no_torch                                 
-│   │   │   ├── test_bool_array.py                   [   60L     1,169C   113T]
-│   │   │   ├── test_isolate_zanj_handler_store.py   [   78L     1,784C   158T]
-│   │   │   ├── test_load_item_recursive.py          [  232L     7,469C   714T]
-│   │   │   ├── test_shared_prefix_keys.py           [   40L     1,139C   112T]
-│   │   │   ├── test_zanj_basic.py                   [   86L     2,607C   197T]
-│   │   │   ├── test_zanj_edge_cases.py              [  299L     8,973C   940T]
-│   │   │   ├── test_zanj_populate_nested.py         [   57L     1,386C   103T]
-│   │   │   └── test_zanj_serializable_dataclass.py  [  168L     4,351C   404T]
+│   │   │   ├── test_bool_array.py                   [ 60L     1,169C   113T]
+│   │   │   ├── test_dataframe_serialization.py      [156L     4,949C   499T]
+│   │   │   ├── test_isolate_zanj_handler_store.py   [ 78L     1,784C   158T]
+│   │   │   ├── test_load_item_recursive.py          [232L     7,469C   714T]
+│   │   │   ├── test_shared_prefix_keys.py           [ 40L     1,139C   112T]
+│   │   │   ├── test_zanj_basic.py                   [184L     5,402C   458T]
+│   │   │   ├── test_zanj_edge_cases.py              [299L     8,973C   940T]
+│   │   │   ├── test_zanj_populate_nested.py         [ 57L     1,386C   103T]
+│   │   │   └── test_zanj_serializable_dataclass.py  [168L     4,351C   404T]
 │   │   └── with_torch                               
-│   │    ├── test_bool_array_torch.py                [   35L       793C    72T]
-│   │    ├── test_get_module_device.py               [   61L     1,870C   203T]
-│   │    ├── test_sdc_torch.py                       [  105L     2,555C   219T]
-│   │    ├── test_torch_edge_cases.py                [  229L     7,182C   642T]
-│   │    ├── test_zanj_sdc_modelcfg.py               [  169L     4,750C   375T]
-│   │    ├── test_zanj_torch.py                      [  169L     5,042C   350T]
-│   │    └── test_zanj_torch_cfgmismatch.py          [  161L     3,983C   334T]
-│   └── assert_no_torch.py                           [    8L       167C    12T]
+│   │    ├── test_bool_array_torch.py                [ 35L       793C    72T]
+│   │    ├── test_get_module_device.py               [ 61L     1,870C   203T]
+│   │    ├── test_sdc_torch.py                       [105L     2,555C   219T]
+│   │    ├── test_torch_edge_cases.py                [229L     7,182C   642T]
+│   │    ├── test_zanj_sdc_modelcfg.py               [169L     4,750C   375T]
+│   │    ├── test_zanj_torch.py                      [169L     5,042C   350T]
+│   │    └── test_zanj_torch_cfgmismatch.py          [161L     3,983C   334T]
+│   └── assert_no_torch.py                           [  8L       167C    12T]
 ├── zanj                                             
-│   ├── __init__.py                                  [   19L       299C    30T]
-│   ├── externals.py                                 [   52L     1,530C   166T]
-│   ├── loading.py                                   [  450L    16,794C 1,590T]
-│   ├── py.typed                                     [    0L         0C     0T]
-│   ├── serializing.py                               [  271L     9,709C   912T]
-│   ├── torchutil.py                                 [  294L    10,176C   915T]
-│   └── zanj.py                                      [  250L     8,705C   798T]
-├── README.md                                        [  235L    10,944C 1,365T]
-├── demo.ipynb                                       [  306L     8,941C   920T]
-├── makefile                                         [1,661L    50,910C 6,079T]
-├── pyproject.toml                                   [  167L     4,669C   483T]
+│   ├── __init__.py                                  [ 19L       299C    30T]
+│   ├── consts.py                                    [ 28L       750C    74T]
+│   ├── externals.py                                 [ 53L     1,515C   166T]
+│   ├── loading.py                                   [486L    18,403C 1,724T]
+│   ├── py.typed                                     [  0L         0C     0T]
+│   ├── serializing.py                               [293L    10,703C   996T]
+│   ├── torchutil.py                                 [295L    10,161C   915T]
+│   └── zanj.py                                      [251L     8,708C   802T]
+├── README.md                                        [235L    10,944C 1,365T]
+├── demo.ipynb                                       [317L     9,678C   976T]
+├── makefile                                         [728L    28,521C 3,688T]
+├── pyproject.toml                                   [176L     5,085C   529T]
 ```
 
 # File Contents
@@ -88,12 +90,15 @@ jobs:
         pkg:
           - torch: "1.13.1"
             numpy: "1.24.4"
+            pandas: "2.0.3"
             group: "legacy"
           - torch: ""
             numpy: ""
+            pandas: ""
             group: "latest"
           - torch: "None"
             numpy: ""
+            pandas: ""
             group: "notorch"
         exclude:
           - python: "3.12"
@@ -126,6 +131,10 @@ jobs:
       - name: Install different numpy version
         if: ${{ matrix.pkg.numpy != '' }}
         run: uv pip install numpy==${{ matrix.pkg.numpy }}
+
+      - name: Install different pandas version
+        if: ${{ matrix.pkg.pandas != '' }}
+        run: uv pip install pandas==${{ matrix.pkg.pandas }}
 
       - name: Install different pytorch version
         if: ${{ matrix.pkg.torch != '' && matrix.pkg.torch != 'None' }}
@@ -160,6 +169,7 @@ jobs:
       #   run: make test WARN_STRICT=1 RUN_GLOBAL=1
 
       - name: check typing
+        if: ${{ matrix.python != '3.8' }}
         run: make typing
 
 ``````{ end_of_file=".github/workflows/checks.yml" }
@@ -245,6 +255,166 @@ def test_np_bool_array():
     assert c == c2
 
 ``````{ end_of_file="tests/unit/no_torch/test_bool_array.py" }
+
+``````{ path="tests/unit/no_torch/test_dataframe_serialization.py"  }
+"""Tests for pandas DataFrame serialization edge cases and regression prevention."""
+
+from __future__ import annotations
+
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+
+from zanj import ZANJ
+
+TEST_DATA_PATH: Path = Path("tests/junk_data")
+
+
+def test_dataframe_detection_logic():
+    """Verify the module + class name detection works for pandas DataFrames.
+
+    This test would have caught the pandas 3.0 regression where the MRO string
+    changed from 'pandas.core.frame.DataFrame' to 'pandas.DataFrame'.
+    """
+    df = pd.DataFrame({"a": [1, 2, 3], "b": [4, 5, 6]})
+
+    # These are the exact checks used in serializing.py
+    assert "pandas" in df.__class__.__module__, (
+        f"Expected 'pandas' in module, got {df.__class__.__module__}"
+    )
+    assert df.__class__.__name__ == "DataFrame", (
+        f"Expected class name 'DataFrame', got {df.__class__.__name__}"
+    )
+
+
+def test_small_dataframe_roundtrip():
+    """Test DataFrame with fewer rows than external_list_threshold (256)."""
+    df = pd.DataFrame(
+        {
+            "int_col": list(range(10)),
+            "float_col": [x * 0.1 for x in range(10)],
+            "str_col": [f"row_{x}" for x in range(10)],
+        }
+    )
+
+    z = ZANJ()
+    path = TEST_DATA_PATH / "test_small_dataframe.zanj"
+    z.save({"df": df}, path)
+    recovered = z.read(path)
+
+    assert isinstance(recovered["df"], pd.DataFrame), (
+        f"Expected DataFrame, got {type(recovered['df'])}"
+    )
+    assert df.equals(recovered["df"]), "DataFrames should be equal"
+
+
+def test_single_row_dataframe():
+    """Test DataFrame with a single row (minimal case)."""
+    df = pd.DataFrame({"a": [1], "b": [2]})
+
+    z = ZANJ()
+    path = TEST_DATA_PATH / "test_single_row_dataframe.zanj"
+    z.save({"df": df}, path)
+    recovered = z.read(path)
+
+    assert isinstance(recovered["df"], pd.DataFrame), (
+        f"Expected DataFrame, got {type(recovered['df'])}"
+    )
+    assert len(recovered["df"]) == 1, "DataFrame should have 1 row"
+    assert list(recovered["df"].columns) == ["a", "b"], "Columns should be preserved"
+
+
+def test_empty_dataframe():
+    """Test DataFrame with zero rows."""
+    df = pd.DataFrame({"a": [], "b": []})
+
+    z = ZANJ()
+    path = TEST_DATA_PATH / "test_empty_dataframe.zanj"
+    z.save({"df": df}, path)
+    recovered = z.read(path)
+
+    assert isinstance(recovered["df"], pd.DataFrame), (
+        f"Expected DataFrame, got {type(recovered['df'])}"
+    )
+    assert len(recovered["df"]) == 0, "DataFrame should be empty"
+    assert list(recovered["df"].columns) == ["a", "b"], "Columns should be preserved"
+
+
+def test_dataframe_dtype_preservation():
+    """Verify that dtypes survive the round-trip."""
+    df = pd.DataFrame(
+        {
+            "int_col": pd.array([1, 2, 3], dtype="int64"),
+            "float_col": pd.array([1.1, 2.2, 3.3], dtype="float64"),
+            "str_col": pd.array(["a", "b", "c"], dtype="object"),
+            "bool_col": pd.array([True, False, True], dtype="bool"),
+        }
+    )
+
+    z = ZANJ()
+    path = TEST_DATA_PATH / "test_dataframe_dtypes.zanj"
+    z.save({"df": df}, path)
+    recovered = z.read(path)
+
+    assert isinstance(recovered["df"], pd.DataFrame)
+
+    # Check values are preserved (dtypes may change due to JSON serialization)
+    for col in df.columns:
+        original_vals = df[col].tolist()
+        recovered_vals = recovered["df"][col].tolist()
+        assert original_vals == recovered_vals, (
+            f"Column {col} values don't match: {original_vals} != {recovered_vals}"
+        )
+
+
+def test_dataframe_with_nan_values():
+    """Test DataFrame containing NaN and None values."""
+    df = pd.DataFrame(
+        {
+            "with_nan": [1.0, np.nan, 3.0],
+            "with_none": [1, None, 3],
+            "normal": [1, 2, 3],
+        }
+    )
+
+    z = ZANJ()
+    path = TEST_DATA_PATH / "test_dataframe_nan.zanj"
+    z.save({"df": df}, path)
+    recovered = z.read(path)
+
+    assert isinstance(recovered["df"], pd.DataFrame)
+
+    # Check NaN is preserved (use isna() for comparison)
+    assert pd.isna(recovered["df"]["with_nan"].iloc[1]), "NaN should be preserved"
+    assert recovered["df"]["with_nan"].iloc[0] == 1.0
+    assert recovered["df"]["with_nan"].iloc[2] == 3.0
+
+
+def test_dataframe_special_column_names():
+    """Test DataFrame with unusual column names."""
+    df = pd.DataFrame(
+        {
+            "normal_name": [1, 2],
+            "with spaces": [3, 4],
+            "with-dashes": [5, 6],
+            "123_numeric_start": [7, 8],
+            "special!@#chars": [9, 10],
+        }
+    )
+
+    z = ZANJ()
+    path = TEST_DATA_PATH / "test_dataframe_special_cols.zanj"
+    z.save({"df": df}, path)
+    recovered = z.read(path)
+
+    assert isinstance(recovered["df"], pd.DataFrame)
+    assert list(recovered["df"].columns) == list(df.columns), (
+        "Special column names should be preserved"
+    )
+    assert df.equals(recovered["df"]), "DataFrames should be equal"
+
+``````{ end_of_file="tests/unit/no_torch/test_dataframe_serialization.py" }
 
 ``````{ path="tests/unit/no_torch/test_isolate_zanj_handler_store.py"  }
 from __future__ import annotations
@@ -695,6 +865,104 @@ def test_jsonl():
             data["brain_data"].equals(recovered_data["brain_data"]),
         ]
     )
+
+
+def test_polars_dataframe():
+    import polars as pl
+
+    # basic dataframe with various types
+    data = dict(
+        name="testing zanj polars",
+        df=pl.DataFrame(
+            {
+                "a": [1, 2, 3],
+                "b": ["x", "y", "z"],
+                "c": [1.1, 2.2, 3.3],
+            }
+        ),
+        some_array=np.random.rand(128, 128),
+    )
+    fname: Path = TEST_DATA_PATH / "test_polars.zanj"
+    z: ZANJ = ZANJ()
+    z.save(data, fname)
+    recovered_data = z.read(fname)
+
+    assert sorted(list(data.keys())) == sorted(list(recovered_data.keys()))
+
+    assert all(
+        [
+            data["name"] == recovered_data["name"],
+            np.allclose(data["some_array"], recovered_data["some_array"]),
+            data["df"].equals(recovered_data["df"]),
+        ]
+    )
+
+
+def test_polars_dataframe_empty():
+    """Test empty polars DataFrame serialization"""
+    import polars as pl
+
+    data = dict(
+        name="testing empty polars df",
+        empty_df=pl.DataFrame({"a": [], "b": [], "c": []}),
+    )
+    fname: Path = TEST_DATA_PATH / "test_polars_empty.zanj"
+    z: ZANJ = ZANJ()
+    z.save(data, fname)
+    recovered_data = z.read(fname)
+
+    assert data["name"] == recovered_data["name"]
+    assert recovered_data["empty_df"].shape == (0, 3)
+    assert recovered_data["empty_df"].columns == ["a", "b", "c"]
+
+
+def test_polars_dataframe_large():
+    """Test larger polars DataFrame to ensure external storage works"""
+    import polars as pl
+
+    # create a larger dataframe
+    n_rows = 1000
+    data = dict(
+        name="testing large polars df",
+        large_df=pl.DataFrame(
+            {
+                "int_col": list(range(n_rows)),
+                "float_col": [float(i) * 0.1 for i in range(n_rows)],
+                "str_col": [f"row_{i}" for i in range(n_rows)],
+                "bool_col": [i % 2 == 0 for i in range(n_rows)],
+            }
+        ),
+    )
+    fname: Path = TEST_DATA_PATH / "test_polars_large.zanj"
+    z: ZANJ = ZANJ()
+    z.save(data, fname)
+    recovered_data = z.read(fname)
+
+    assert data["name"] == recovered_data["name"]
+    assert data["large_df"].equals(recovered_data["large_df"])
+
+
+def test_polars_with_nulls():
+    """Test polars DataFrame with null values"""
+    import polars as pl
+
+    data = dict(
+        name="testing polars with nulls",
+        df_with_nulls=pl.DataFrame(
+            {
+                "a": [1, None, 3],
+                "b": ["x", "y", None],
+                "c": [1.1, None, 3.3],
+            }
+        ),
+    )
+    fname: Path = TEST_DATA_PATH / "test_polars_nulls.zanj"
+    z: ZANJ = ZANJ()
+    z.save(data, fname)
+    recovered_data = z.read(fname)
+
+    assert data["name"] == recovered_data["name"]
+    assert data["df_with_nulls"].equals(recovered_data["df_with_nulls"])
 
 ``````{ end_of_file="tests/unit/no_torch/test_zanj_basic.py" }
 
@@ -2226,6 +2494,38 @@ __all__ = [
 
 ``````{ end_of_file="zanj/__init__.py" }
 
+``````{ path="zanj/consts.py"  }
+"""Constants and re-exports from muutils with version compatibility."""
+
+from __future__ import annotations
+
+# Items that exist in muutils.json_serialize.util across all versions
+from muutils.json_serialize.util import (
+    JSONdict,
+    JSONitem,
+    MonoTuple,
+    safe_getsource,
+    string_as_lines,
+)
+
+# _FORMAT_KEY and _REF_KEY moved from .util to .types in muutils >= 0.9
+try:
+    from muutils.json_serialize.types import _FORMAT_KEY, _REF_KEY  # type: ignore[import-not-found]
+except ImportError:
+    from muutils.json_serialize.util import _FORMAT_KEY, _REF_KEY  # type: ignore[import-not-found]
+
+__all__ = [
+    "JSONdict",
+    "JSONitem",
+    "MonoTuple",
+    "_FORMAT_KEY",
+    "_REF_KEY",
+    "safe_getsource",
+    "string_as_lines",
+]
+
+``````{ end_of_file="zanj/consts.py" }
+
 ``````{ path="zanj/externals.py"  }
 """for storing/retrieving an item externally in a ZANJ archive"""
 
@@ -2236,7 +2536,8 @@ from typing import IO, Any, Callable, Literal, NamedTuple, get_args
 
 import numpy as np
 from muutils.json_serialize.json_serialize import ObjectPath
-from muutils.json_serialize.util import JSONitem
+
+from zanj.consts import JSONitem
 
 # this is to make type checking work -- it will later be overridden
 _ZANJ_pre = Any
@@ -2306,14 +2607,26 @@ except ImportError:
             raise ImportError("cannot load pandas DataFrame, pandas is not installed")
 
 
+try:
+    import polars as pl  # type: ignore[import]
+
+    polars_DataFrame = pl.DataFrame  # type: ignore[no-redef]
+except ImportError:
+
+    class polars_DataFrame:  # type: ignore[no-redef]
+        def __init__(self, *args, **kwargs):
+            raise ImportError("cannot load polars DataFrame, polars is not installed")
+
+
 from muutils.errormode import ErrorMode
 from muutils.json_serialize.array import load_array
 from muutils.json_serialize.json_serialize import ObjectPath
-from muutils.json_serialize.util import (
-    _FORMAT_KEY,
-    _REF_KEY,
+
+from zanj.consts import (
     JSONdict,
     JSONitem,
+    _FORMAT_KEY,
+    _REF_KEY,
     safe_getsource,
     string_as_lines,
 )
@@ -2491,12 +2804,35 @@ LOADER_MAP: dict[str, LoaderHandler] = {
                 and "data" in json_item
                 and isinstance(json_item["data"], typing.Sequence)
             ),
-            load=lambda json_item, path=None, z=None: pandas_DataFrame(  # type: ignore[misc]
-                json_item["data"]
+            load=lambda json_item, path=None, z=None: (  # type: ignore[misc]
+                pandas_DataFrame(json_item["data"])
+                # if there is no data, load just the columns (this is for empty dataframes)
+                if json_item["data"]
+                else pandas_DataFrame(columns=json_item.get("columns"))
             ),
             uid="pandas.DataFrame",
             source_pckg="zanj",
             desc="pandas.DataFrame loader",
+        ),
+        # polars
+        LoaderHandler(
+            check=lambda json_item, path=None, z=None: (  # type: ignore[misc]
+                isinstance(json_item, typing.Mapping)
+                and _FORMAT_KEY in json_item
+                and json_item[_FORMAT_KEY].startswith("polars.DataFrame")
+                and "data" in json_item
+                and isinstance(json_item["data"], typing.Sequence)
+            ),
+            load=lambda json_item, path=None, z=None: (  # type: ignore[misc]
+                polars_DataFrame(json_item["data"])
+                if json_item["data"]
+                else polars_DataFrame(
+                    schema={col: str for col in json_item.get("columns", [])}
+                )
+            ),
+            uid="polars.DataFrame",
+            source_pckg="zanj",
+            desc="polars.DataFrame loader",
         ),
         # list/tuple external
         LoaderHandler(
@@ -2507,8 +2843,9 @@ LOADER_MAP: dict[str, LoaderHandler] = {
                 and "data" in json_item
                 and isinstance(json_item["data"], typing.Sequence)
             ),
-            load=lambda json_item, path=None, z=None: [  # type: ignore[misc]
-                load_item_recursive(x, path, z) for x in json_item["data"]
+            load=lambda json_item, path=None, z=None: [  # type: ignore[misc, arg-type]
+                load_item_recursive(x, path, z)  # type: ignore[arg-type]
+                for x in json_item["data"]
             ],
             uid="list",
             source_pckg="zanj",
@@ -2522,8 +2859,8 @@ LOADER_MAP: dict[str, LoaderHandler] = {
                 and "data" in json_item
                 and isinstance(json_item["data"], typing.Sequence)
             ),
-            load=lambda json_item, path=None, z=None: tuple(  # type: ignore[misc]
-                [load_item_recursive(x, path, z) for x in json_item["data"]]
+            load=lambda json_item, path=None, z=None: tuple(  # type: ignore[misc, arg-type]
+                [load_item_recursive(x, path, z) for x in json_item["data"]]  # type: ignore[arg-type]
             ),
             uid="tuple",
             source_pckg="zanj",
@@ -2552,11 +2889,11 @@ def get_item_loader(
 
     # check if we recognize the format
     if isinstance(json_item, typing.Mapping) and _FORMAT_KEY in json_item:
-        if not isinstance(json_item[_FORMAT_KEY], str):
+        if not isinstance(json_item[_FORMAT_KEY], str):  # type: ignore[index]
             raise TypeError(
-                f"invalid __muutils_format__ type '{type(json_item[_FORMAT_KEY])}' in '{path=}': '{json_item[_FORMAT_KEY] = }'"
+                f"invalid __muutils_format__ type '{type(json_item[_FORMAT_KEY])}' in '{path=}': '{json_item[_FORMAT_KEY] = }'"  # type: ignore[index]
             )
-        if json_item[_FORMAT_KEY] in LOADER_MAP:
+        if json_item[_FORMAT_KEY] in LOADER_MAP:  # type: ignore[index]
             return LOADER_MAP[json_item[_FORMAT_KEY]]  # type: ignore[index]
 
     # if we dont recognize the format, try to find a loader that can handle it
@@ -2599,11 +2936,11 @@ def load_item_recursive(
                     if (
                         isinstance(val, typing.Mapping)
                         and (_FORMAT_KEY in val)
-                        and ("SerializableDataclass" in val[_FORMAT_KEY])
+                        and ("SerializableDataclass" in val[_FORMAT_KEY])  # type: ignore[operator, index]
                     )
                     else load_item_recursive(
-                        json_item=val,
-                        path=tuple(path) + (key,),
+                        json_item=val,  # type: ignore[arg-type]
+                        path=tuple(path) + (key,),  # type: ignore[arg-type]
                         zanj=zanj,
                         error_mode=error_mode,
                     )
@@ -2756,13 +3093,8 @@ from muutils.json_serialize.json_serialize import (  # JsonSerializer,
     ObjectPath,
     SerializerHandler,
 )
-from muutils.json_serialize.util import (
-    JSONdict,
-    JSONitem,
-    MonoTuple,
-    _FORMAT_KEY,
-    _REF_KEY,
-)
+
+from zanj.consts import JSONdict, JSONitem, MonoTuple, _FORMAT_KEY, _REF_KEY
 
 from zanj.externals import ExternalItem, ExternalItemType, _ZANJ_pre
 
@@ -2774,11 +3106,10 @@ if sys.version_info >= (3, 10):
 # for some reason pylint complains about kwargs to ZANJSerializerHandler
 
 
-def jsonl_metadata(data: list[JSONdict]) -> dict:
+def jsonl_metadata(data: list[JSONdict]) -> dict[str, Any]:
     """metadata about a jsonl object"""
     all_cols: set[str] = set([col for item in data for col in item.keys()])
-    return {
-        "data[0]": data[0],
+    output: dict[str, Any] = {
         "len(data)": len(data),
         "columns": {
             col: {
@@ -2791,6 +3122,9 @@ def jsonl_metadata(data: list[JSONdict]) -> dict:
             if col != _FORMAT_KEY
         },
     }
+    if len(data) > 0:
+        output["data[0]"] = data[0]
+    return output
 
 
 def store_npy(self: _ZANJ_pre, fp: IO[bytes], data: np.ndarray) -> None:
@@ -2907,10 +3241,20 @@ def zanj_external_serialize(
         # get metadata
         output.update(arr_metadata(data))
     elif item_type.startswith("jsonl"):
-        # check via mro to avoid importing pandas
-        if any("pandas.core.frame.DataFrame" in str(t) for t in data.__class__.__mro__):
-            output["columns"] = data.columns.tolist()
+        # check via module and class name to avoid importing pandas (works with pandas 3.0+)
+        dataframe_columns = None
+        if (
+            "pandas" in data.__class__.__module__
+            and data.__class__.__name__ == "DataFrame"
+        ):
+            dataframe_columns = data.columns.tolist()
             data_new = data.to_dict(orient="records")
+        elif (
+            "polars" in data.__class__.__module__
+            and data.__class__.__name__ == "DataFrame"
+        ):
+            dataframe_columns = data.columns
+            data_new = data.to_dicts()
         elif isinstance(data, (list, tuple, Iterable, Sequence)):
             data_new = [
                 jser.json_serialize(item, tuple(path) + (i,))
@@ -2923,6 +3267,10 @@ def zanj_external_serialize(
 
         if all([isinstance(item, dict) for item in data_new]):
             output.update(jsonl_metadata(data_new))
+
+        # set DataFrame columns after jsonl_metadata to avoid being overwritten
+        if dataframe_columns is not None:
+            output["columns"] = dataframe_columns
 
     # store the item for external serialization
     jser._externals[archive_path] = ExternalItem(
@@ -2961,8 +3309,9 @@ DEFAULT_SERIALIZER_HANDLERS_ZANJ: MonoTuple[ZANJSerializerHandler] = tuple(
             desc="external torch tensor",
         ),
         ZANJSerializerHandler(
-            check=lambda self, obj, path: isinstance(obj, list)
-            and len(obj) >= self.external_list_threshold,
+            check=lambda self, obj, path: (
+                isinstance(obj, list) and len(obj) >= self.external_list_threshold
+            ),
             serialize_func=lambda self, obj, path: zanj_external_serialize(
                 self, obj, path, item_type="jsonl", _format="list:external"
             ),
@@ -2971,8 +3320,9 @@ DEFAULT_SERIALIZER_HANDLERS_ZANJ: MonoTuple[ZANJSerializerHandler] = tuple(
             desc="external list",
         ),
         ZANJSerializerHandler(
-            check=lambda self, obj, path: isinstance(obj, tuple)
-            and len(obj) >= self.external_list_threshold,
+            check=lambda self, obj, path: (
+                isinstance(obj, tuple) and len(obj) >= self.external_list_threshold
+            ),
             serialize_func=lambda self, obj, path: zanj_external_serialize(
                 self, obj, path, item_type="jsonl", _format="tuple:external"
             ),
@@ -2982,11 +3332,8 @@ DEFAULT_SERIALIZER_HANDLERS_ZANJ: MonoTuple[ZANJSerializerHandler] = tuple(
         ),
         ZANJSerializerHandler(
             check=lambda self, obj, path: (
-                any(
-                    "pandas.core.frame.DataFrame" in str(t)
-                    for t in obj.__class__.__mro__
-                )
-                and len(obj) >= self.external_list_threshold
+                "pandas" in obj.__class__.__module__
+                and obj.__class__.__name__ == "DataFrame"
             ),
             serialize_func=lambda self, obj, path: zanj_external_serialize(
                 self, obj, path, item_type="jsonl", _format="pandas.DataFrame:external"
@@ -2994,6 +3341,18 @@ DEFAULT_SERIALIZER_HANDLERS_ZANJ: MonoTuple[ZANJSerializerHandler] = tuple(
             uid="pandas.DataFrame:external",
             source_pckg="zanj",
             desc="external pandas DataFrame",
+        ),
+        ZANJSerializerHandler(
+            check=lambda self, obj, path: (
+                "polars" in obj.__class__.__module__
+                and obj.__class__.__name__ == "DataFrame"
+            ),
+            serialize_func=lambda self, obj, path: zanj_external_serialize(
+                self, obj, path, item_type="jsonl", _format="polars.DataFrame:external"
+            ),
+            uid="polars.DataFrame:external",
+            source_pckg="zanj",
+            desc="external polars DataFrame",
         ),
         # ZANJSerializerHandler(
         #     check=lambda self, obj, path: "<class 'torch.nn.modules.module.Module'>"
@@ -3037,7 +3396,8 @@ except ImportError as e:
 
 from muutils.json_serialize import SerializableDataclass
 from muutils.json_serialize.json_serialize import ObjectPath
-from muutils.json_serialize.util import safe_getsource, string_as_lines, _FORMAT_KEY
+
+from zanj.consts import _FORMAT_KEY, safe_getsource, string_as_lines
 
 from zanj import ZANJ, register_loader_handler
 from zanj.loading import LoaderHandler, load_item_recursive
@@ -3345,8 +3705,9 @@ from muutils.json_serialize.json_serialize import (
     SerializerHandler,
     json_serialize,
 )
-from muutils.json_serialize.util import JSONitem, MonoTuple
 from muutils.sysinfo import SysInfo
+
+from zanj.consts import JSONitem, MonoTuple
 
 from zanj.externals import ZANJ_MAIN, ZANJ_META, ExternalItem
 import zanj.externals
@@ -3448,7 +3809,7 @@ class ZANJ(JsonSerializer):
 
             if item.item_type == "ndarray":
                 output[key].update(arr_metadata(data))
-            elif item.item_type.startswith("jsonl"):
+            elif item.item_type.startswith("jsonl") and len(data) > 0:
                 output[key]["data[0]"] = data[0]
 
         return {
@@ -3984,11 +4345,19 @@ assert torch.allclose(out_1, out_3)
 default: help
 	...
 
+# download makefile helper scripts from GitHub
+# uses curl to fetch scripts from the template repository
+# override version: make self-setup-scripts SCRIPTS_VERSION=v0.5.0
+.PHONY: self-setup-scripts
+self-setup-scripts:
+	@echo "downloading makefile scripts (version: $(SCRIPTS_VERSION))"
+	...
+
 # this recipe is weird. we need it because:
 # - a one liner for getting the version with toml is unwieldy, and using regex is fragile
 # - using $$SCRIPT_GET_VERSION within $(shell ...) doesn't work because of escaping issues
 # - trying to write to the file inside the `gen-version-info` recipe doesn't work, 
-# 	shell eval happens before our `python -c ...` gets run and `cat` doesn't see the new file
+#   shell eval happens before our `python ...` gets run and `cat` doesn't see the new file
 .PHONY: write-proj-version
 write-proj-version:
 	...
@@ -4015,8 +4384,8 @@ version: gen-commit-log
 	...
 
 .PHONY: setup
-setup: dep-check
-	@echo "install and update via uv"
+setup: self-setup-scripts dep-check
+	@echo "download scripts and sync dependencies"
 	...
 
 .PHONY: dep-check-torch
@@ -4024,11 +4393,32 @@ dep-check-torch:
 	@echo "see if torch is installed, and which CUDA version and devices it sees"
 	...
 
+# sync dependencies and export to requirements.txt files
+# - syncs all extras and groups with uv (including dev dependencies)
+# - compiles bytecode for faster imports
+# - exports to requirements.txt files per tool.uv-exports.exports config
+# configure via pyproject.toml:[tool.uv-exports]:
+#   [tool.uv-exports]
+#   exports = [
+#     { name = "base", extras = [], groups = [] },  # base package deps only
+#     { name = "dev", extras = [], groups = ["dev"] },  # dev dependencies
+#     { name = "all", extras = ["all"], groups = ["dev"] }  # everything
+#   ]
 .PHONY: dep
 dep:
-	@echo "Exporting dependencies as per $(PYPROJECT) section 'tool.uv-exports.exports'"
+	@echo "syncing and exporting dependencies as per $(PYPROJECT) section 'tool.uv-exports.exports'"
 	...
 
+.PHONY: dep-compile
+dep-compile:
+	@echo "syncing dependencies with bytecode compilation"
+	...
+
+# verify that requirements.txt files match current dependencies
+# - exports deps to temp directory
+# - diffs temp against existing requirements files
+# - FAILS if any differences found (means you need to run `make dep`)
+# useful in CI to catch when pyproject.toml changed but requirements weren't regenerated
 .PHONY: dep-check
 dep-check:
 	@echo "Checking that exported requirements are up to date"
@@ -4039,28 +4429,35 @@ dep-clean:
 	@echo "clean up lock files, .venv, and requirements files"
 	...
 
-# runs ruff and pycln to format the code
+# format code AND auto-fix linting issues
+# performs TWO operations: reformats code, then auto-fixes safe linting issues
+# configure in pyproject.toml:[tool.ruff]
 .PHONY: format
 format:
 	@echo "format the source code"
 	...
 
-# runs ruff and pycln to check if the code is formatted correctly
+# runs ruff to check if the code is formatted correctly
 .PHONY: format-check
 format-check:
 	@echo "check if the source code is formatted correctly"
 	...
 
-# runs type checks with mypy
+# runs type checks with configured checkers
+# set TYPE_CHECKERS to customize which checkers run (e.g., TYPE_CHECKERS=mypy,basedpyright)
+# set TYPING_OUTPUT_DIR to save outputs to files (used by typing-summary)
+# returns exit code 1 if any checker fails
 .PHONY: typing
-typing: clean
+typing:
 	@echo "running type checks"
 	...
 
-# generates a report of the mypy output
-.PHONY: typing-report
-typing-report:
-	@echo "generate a report of the type check output -- errors per file"
+# save type check outputs and generate detailed breakdown
+# outputs are saved to $(TYPE_ERRORS_DIR)/*.txt
+# summary is generated to $(TYPING_SUMMARY_FILE)
+.PHONY: typing-summary
+typing-summary:
+	@echo "running type checks and saving to $(TYPE_ERRORS_DIR)/"
 	...
 
 .PHONY: test
@@ -4074,7 +4471,7 @@ test-notorch: clean
 	...
 
 .PHONY: check
-check: clean format-check test typing
+check: format-check test typing
 	@echo "run format checks, tests, and typing checks"
 	...
 
@@ -4087,24 +4484,17 @@ docs-html:
 
 # instead of a whole website, generates a single markdown file with all docs using the templates in `$(DOCS_RESOURCES_DIR)/templates/markdown/`.
 # this is useful if you want to have a copy that you can grep/search, but those docs are much messier.
-# docs-combined will use pandoc to convert them to other formats.
 .PHONY: docs-md
 docs-md:
 	@echo "generate combined (single-file) docs in markdown"
 	...
 
-# after running docs-md, this will convert the combined markdown file to other formats:
-# gfm (github-flavored markdown), plain text, and html
-# requires pandoc in path, pointed to by $(PANDOC)
-# pdf output would be nice but requires other deps
-.PHONY: docs-combined
-docs-combined: docs-md
-	@echo "generate combined (single-file) docs in markdown and convert to other formats"
-	...
-
-# generates coverage reports as html and text with `pytest-cov`, and a badge with `coverage-badge`
-# if `.coverage` is not found, will run tests first
-# also removes the `.gitignore` file that `coverage html` creates, since we count that as part of the docs
+# generate coverage reports from test results
+# WARNING: if .coverage file not found, will automatically run `make test` first
+# - generates text report: $(COVERAGE_REPORTS_DIR)/coverage.txt
+# - generates SVG badge: $(COVERAGE_REPORTS_DIR)/coverage.svg
+# - generates HTML report: $(COVERAGE_REPORTS_DIR)/html/
+# - removes .gitignore from html dir (we publish coverage with docs)
 .PHONY: cov
 cov:
 	@echo "generate coverage reports"
@@ -4112,19 +4502,42 @@ cov:
 
 # runs the coverage report, then the docs, then the combined docs
 .PHONY: docs
-docs: cov docs-html docs-combined todo lmcat
+docs: cov docs-html docs-md todo lmcat
 	@echo "generate all documentation and coverage reports"
 	...
 
-# removed all generated documentation files, but leaves everything in `$DOCS_RESOURCES_DIR`
-# and leaves things defined in `pyproject.toml:tool.makefile.docs.no_clean`
-# (templates, svg, css, make_docs.py script)
-# distinct from `make clean`
+# remove generated documentation files, but preserve resources
+# - removes all docs except those in DOCS_RESOURCES_DIR
+# - preserves files/patterns specified in pyproject.toml config
+# - distinct from `make clean` (which removes temp build files, not docs)
+# configure via pyproject.toml:[tool.makefile.docs]:
+#   [tool.makefile.docs]
+#   output_dir = "docs"  # must match DOCS_DIR in makefile
+#   no_clean = [  # files/patterns to preserve when cleaning
+#     "resources/**",
+#     "*.svg",
+#     "*.css"
+#   ]
 .PHONY: docs-clean
 docs-clean:
 	@echo "remove generated docs except resources"
 	...
 
+# get all TODO's from the code
+# configure via pyproject.toml:[tool.makefile.inline-todo]:
+#   [tool.makefile.inline-todo]
+#   search_dir = "."  # directory to search for TODOs
+#   out_file_base = "docs/other/todo-inline"  # output file path (without extension)
+#   context_lines = 2  # lines of context around each TODO
+#   extensions = ["py", "md"]  # file extensions to search
+#   tags = ["CRIT", "TODO", "FIXME", "HACK", "BUG", "DOC"]  # tags to look for
+#   exclude = ["docs/**", ".venv/**", "scripts/get_todos.py"]  # patterns to exclude
+#   branch = "main"  # git branch for URLs
+#   # repo_url = "..."  # repository URL (defaults to [project.urls.{repository,github}])
+#   # template_md = "..."  # custom jinja2 template for markdown output
+#   # template_issue = "..."  # custom format string for issues
+#   # template_html_source = "..."  # custom html template path
+#   tag_label_map = { "BUG" = "bug", "TODO" = "enhancement", "DOC" = "documentation" } # mapping of tags to GitHub issue labels
 .PHONY: todo
 todo:
 	@echo "get all TODO's from the code"
@@ -4140,36 +4553,56 @@ lmcat:
 	@echo "write the lmcat full output to pyproject.toml:[tool.lmcat.output]"
 	...
 
-# verifies that the current branch is $(PUBLISH_BRANCH) and that git is clean
-# used before publishing
+# verify git is ready for publishing
+# REQUIRES:
+# - current branch must be $(PUBLISH_BRANCH)
+# - no uncommitted changes (git status --porcelain must be empty)
+# EXITS with error if either condition fails
 .PHONY: verify-git
-verify-git: 
+verify-git:
 	@echo "checking git status"
 	...
 
+# build package distribution files
+# creates wheel (.whl) and source distribution (.tar.gz) in dist/
 .PHONY: build
-build: 
+build:
 	@echo "build the package"
 	...
 
-# gets the commit log, checks everything, builds, and then publishes with twine
-# will ask the user to confirm the new version number (and this allows for editing the tag info)
-# will also print the contents of $(PYPI_TOKEN_FILE) to the console for the user to copy and paste in when prompted by twine
+# publish package to PyPI and create git tag
+# PREREQUISITES:
+# - must be on $(PUBLISH_BRANCH) branch with clean git status (verified by verify-git)
+# - must have $(PYPI_TOKEN_FILE) with your PyPI token
+# - version in pyproject.toml must be different from $(LAST_VERSION_FILE)
+# PROCESS:
+# 1. runs checks, validates version, builds package, verifies git clean
+# 2. prompts for version confirmation (you can edit $(COMMIT_LOG_FILE) at this point)
+# 3. creates git commit updating $(LAST_VERSION_FILE)
+# 4. creates annotated git tag with commit log as description
+# 5. pushes tag to origin
+# 6. uploads to PyPI via twine
 .PHONY: publish
-publish: gen-commit-log check build verify-git version gen-version-info
-	@echo "run all checks, build, and then publish"
+publish: check version build verify-git
+	@echo "Ready to publish $(PROJ_VERSION) to PyPI"
 	...
 
-# cleans up temp files from formatter, type checking, tests, coverage
-# removes all built files
-# removes $(TESTS_TEMP_DIR) to remove temporary test files
-# recursively removes all `__pycache__` directories and `*.pyc` or `*.pyo` files
-# distinct from `make docs-clean`, which only removes generated documentation files
+# cleans up temporary files:
+# - caches: .mypy_cache, .ruff_cache, .pytest_cache, .coverage
+# - build artifacts: dist/, build/, *.egg-info
+# - test temp files: $(TESTS_TEMP_DIR)
+# - __pycache__ directories and *.pyc/*.pyo files in $(PACKAGE_NAME), $(TESTS_DIR), $(DOCS_DIR)
+# uses `-` prefix on find commands to continue even if directories don't exist
+# distinct from `make docs-clean`, which removes generated documentation
 .PHONY: clean
 clean:
 	@echo "clean up temporary files"
 	...
 
+# remove all generated/build files including .venv
+# runs: clean + docs-clean + dep-clean
+# removes .venv, uv.lock, requirements.txt files, generated docs, build artifacts
+# run `make dep` after this to reinstall dependencies
 .PHONY: clean-all
 clean-all: clean docs-clean dep-clean
 	@echo "clean up all temporary files, dep files, venv, and generated docs"
@@ -4185,10 +4618,17 @@ info-long: info
 	@echo "# other variables"
 	...
 
-# immediately print out the help targets, and then local variables (but those take a bit longer)
+# Smart help command: shows general help, or detailed info about specific targets
+# Usage:
+#   make help              - shows general help (list of targets + makefile variables)
+#   make help="test"       - shows detailed info about the 'test' recipe
+#   make HELP="test clean" - shows detailed info about multiple recipes
+#   make h=*               - shows detailed info about all recipes (wildcard expansion)
+#   make H="test"          - same as HELP (case variations supported)
+#
+# All variations work: help/HELP/h/H with values like "foo", "foo bar", "*", "--all"
 .PHONY: help
-help: help-targets info
-	@echo -n ""
+help:
 	...
 
 ``````{ end_of_file="makefile" }
@@ -4196,7 +4636,7 @@ help: help-targets info
 ``````{ path="pyproject.toml"  }
 [project]
     name = "zanj"
-    version = "0.5.2"
+    version = "0.6.0"
     description = "save and load complex objects to disk without pickling"
     license = "GPL-3.0-only"
     authors = [
@@ -4224,8 +4664,11 @@ help: help-targets info
 
 [project.optional-dependencies]
 pandas = ["pandas>=1.5.3"]
+polars = ["polars>=0.20.0"]
 torch = [
-    "torch>=1.13.1",
+    # we still need torch for < 3.8 but users will have to figure out a working version themselves
+    "torch>=1.13.1; python_version >= '3.9'",
+    "torch==1.13.1; python_version < '3.9'",
     "h11>=0.16.0", # see https://github.com/mivanit/ZANJ/security/dependabot/13
 ]
 
@@ -4241,11 +4684,11 @@ torch = [
     dev = [
         # typing
         "mypy>=1.0.1",
-        "ty",
+        "ty>=0.0.18",
+        "basedpyright",
         # tests & coverage
         "pytest>=8.2.2",
         "pytest-cov>=4.1.0",
-        "coverage-badge>=1.1.1",
         # for testing plotting and notebooks
         "ipykernel>=6.23.2",
         # tornado depended on by notebook stuff, see
@@ -4266,10 +4709,12 @@ torch = [
         "tomli>=2.1.0; python_version < '3.11'",
         # for uploading
         "twine",
+        # for testing dataframe support
+        "pandas>=1.5.3",
+        "polars>=0.20.0",
     ]
     lint = [
         # lint
-        "pycln>=2.1.3",
         "ruff>=0.4.8",
     ]
 
@@ -4279,16 +4724,20 @@ torch = [
 
 
 [tool.ruff]
-    exclude = ["tests/input_data", "tests/junk_data"]
-
-[tool.pycln]
-    all = true
-    exclude = ["tests/input_data", "tests/junk_data"]
+    exclude = ["tests/input_data", "tests/junk_data", ".meta/scripts/"]
 
 [tool.mypy]
+    packages = ["zanj"]
     exclude = ["tests/input_data", "tests/junk_data"]
     show_error_codes = true
 
+[tool.ty.src]
+    exclude = ["tests/", "demo.ipynb"]
+
+[tool.ty.rules]
+    unused-type-ignore-comment = "ignore"
+    too-many-positional-arguments = "ignore"
+    unused-ignore-comment = "ignore"
 
 [tool.lmcat]
     output = "docs/other/lmcat.txt" # changing this might mean it wont be accessible from the docs
