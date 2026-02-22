@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Coverage for zanj/serializing.py: 89%</title>
+    <title>Coverage for zanj/serializing.py: 100%</title>
     <link rel="icon" sizes="32x32" href="favicon_32_cb_c827f16f.png">
     <link rel="stylesheet" href="style_cb_9ff733b0.css" type="text/css">
     <script src="coverage_html_cb_dd2e7eb5.js" defer></script>
@@ -12,7 +12,7 @@
     <div class="content">
         <h1>
             <span class="text">Coverage for </span><b>zanj&#8201;/&#8201;serializing.py</b>:
-            <span class="pc_cov">89%</span>
+            <span class="pc_cov">100%</span>
         </h1>
         <aside id="help_panel_wrapper">
             <input id="help_panel_state" type="checkbox">
@@ -55,8 +55,8 @@
         </aside>
         <h2>
             <span class="text">74 statements &nbsp;</span>
-            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">66<span class="text"> run</span></button>
-            <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">8<span class="text"> missing</span></button>
+            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">74<span class="text"> run</span></button>
+            <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">0<span class="text"> missing</span></button>
             <button type="button" class="exc show_exc button_toggle_exc" value="exc" data-shortcut="x" title="Toggle lines excluded">0<span class="text"> excluded</span></button>
         </h2>
         <p class="text">
@@ -65,7 +65,7 @@
             <a id="nextFileLink" class="nav" href="z_497556d4505823ac_torchutil_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.13.4">coverage.py v7.13.4</a>,
-            created at 2026-02-21 22:18 -0700
+            created at 2026-02-22 01:52 -0700
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -204,9 +204,9 @@
     <p class="pln"><span class="n"><a id="t122" href="#t122">122</a></span><span class="t">    <span class="com"># TODO: somehow need to control whether a failure here causes a fallback to other handlers, or whether the except should propagate</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t123" href="#t123">123</a></span><span class="t">    <span class="com"># this will probably require changes to the upstream muutils.json_serialize code</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t124" href="#t124">124</a></span><span class="t">    <span class="key">if</span> <span class="nam">archive_path</span> <span class="key">in</span> <span class="nam">jser</span><span class="op">.</span><span class="nam">_externals</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t125" href="#t125">125</a></span><span class="t">        <span class="nam">err_msg</span> <span class="op">=</span> <span class="fst">f"</span><span class="fst">external path </span><span class="op">{</span><span class="nam">archive_path</span><span class="op">}</span><span class="fst"> already exists!</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t126" href="#t126">126</a></span><span class="t">        <span class="nam">warnings</span><span class="op">.</span><span class="nam">warn</span><span class="op">(</span><span class="nam">err_msg</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t127" href="#t127">127</a></span><span class="t">        <span class="key">raise</span> <span class="nam">ValueError</span><span class="op">(</span><span class="nam">err_msg</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t125" href="#t125">125</a></span><span class="t">        <span class="nam">err_msg</span> <span class="op">=</span> <span class="fst">f"</span><span class="fst">external path </span><span class="op">{</span><span class="nam">archive_path</span><span class="op">}</span><span class="fst"> already exists!</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t126" href="#t126">126</a></span><span class="t">        <span class="nam">warnings</span><span class="op">.</span><span class="nam">warn</span><span class="op">(</span><span class="nam">err_msg</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t127" href="#t127">127</a></span><span class="t">        <span class="key">raise</span> <span class="nam">ValueError</span><span class="op">(</span><span class="nam">err_msg</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t128" href="#t128">128</a></span><span class="t">    <span class="com"># Check for true path prefix conflicts (not just string prefix)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t129" href="#t129">129</a></span><span class="t">    <span class="com"># Only flag when one path is a directory ancestor of another (contains "/" separator)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t130" href="#t130">130</a></span><span class="t">    <span class="key">for</span> <span class="nam">p</span> <span class="key">in</span> <span class="nam">jser</span><span class="op">.</span><span class="nam">_externals</span><span class="op">.</span><span class="nam">keys</span><span class="op">(</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
@@ -216,12 +216,12 @@
     <p class="run"><span class="n"><a id="t134" href="#t134">134</a></span><span class="t">        <span class="key">if</span> <span class="nam">existing_joined_path</span><span class="op">.</span><span class="nam">startswith</span><span class="op">(</span><span class="nam">joined_path</span> <span class="op">+</span> <span class="str">"/"</span><span class="op">)</span> <span class="key">or</span> <span class="nam">joined_path</span><span class="op">.</span><span class="nam">startswith</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t135" href="#t135">135</a></span><span class="t">            <span class="nam">existing_joined_path</span> <span class="op">+</span> <span class="str">"/"</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t136" href="#t136">136</a></span><span class="t">        <span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t137" href="#t137">137</a></span><span class="t">            <span class="nam">err_msg</span> <span class="op">=</span> <span class="op">(</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis mis2 show_mis"><span class="n"><a id="t138" href="#t138">138</a></span><span class="t">                <span class="fst">f"</span><span class="fst">external path </span><span class="op">{</span><span class="nam">joined_path</span><span class="op">}</span><span class="fst"> is a prefix of another path </span><span class="op">{</span><span class="nam">p</span><span class="op">}</span><span class="fst">!\n</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis mis2 show_mis"><span class="n"><a id="t139" href="#t139">139</a></span><span class="t">                <span class="op">+</span> <span class="fst">f"</span><span class="op">{</span><span class="nam">jser</span><span class="op">.</span><span class="nam">_externals</span><span class="op">.</span><span class="nam">keys</span><span class="op">(</span><span class="op">)</span> <span class="op">=</span> <span class="op">}</span><span class="fst">\n</span><span class="op">{</span><span class="nam">joined_path</span> <span class="op">=</span> <span class="op">}</span><span class="fst">\n</span><span class="op">{</span><span class="nam">path</span> <span class="op">=</span> <span class="op">}</span><span class="fst">\n</span><span class="op">{</span><span class="nam">p</span> <span class="op">=</span> <span class="op">}</span><span class="fst">\n</span><span class="op">{</span><span class="nam">existing_joined_path</span> <span class="op">=</span> <span class="op">}</span><span class="fst">\n</span><span class="op">{</span><span class="nam">archive_path</span> <span class="op">=</span> <span class="op">}</span><span class="fst">\n</span><span class="op">{</span><span class="nam">_format</span> <span class="op">=</span> <span class="op">}</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis mis2 show_mis"><span class="n"><a id="t140" href="#t140">140</a></span><span class="t">            <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t141" href="#t141">141</a></span><span class="t">            <span class="nam">warnings</span><span class="op">.</span><span class="nam">warn</span><span class="op">(</span><span class="nam">err_msg</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t142" href="#t142">142</a></span><span class="t">            <span class="key">raise</span> <span class="nam">ValueError</span><span class="op">(</span><span class="nam">err_msg</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t137" href="#t137">137</a></span><span class="t">            <span class="nam">err_msg</span> <span class="op">=</span> <span class="op">(</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t138" href="#t138">138</a></span><span class="t">                <span class="fst">f"</span><span class="fst">external path </span><span class="op">{</span><span class="nam">joined_path</span><span class="op">}</span><span class="fst"> is a prefix of another path </span><span class="op">{</span><span class="nam">p</span><span class="op">}</span><span class="fst">!\n</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t139" href="#t139">139</a></span><span class="t">                <span class="op">+</span> <span class="fst">f"</span><span class="op">{</span><span class="nam">jser</span><span class="op">.</span><span class="nam">_externals</span><span class="op">.</span><span class="nam">keys</span><span class="op">(</span><span class="op">)</span> <span class="op">=</span> <span class="op">}</span><span class="fst">\n</span><span class="op">{</span><span class="nam">joined_path</span> <span class="op">=</span> <span class="op">}</span><span class="fst">\n</span><span class="op">{</span><span class="nam">path</span> <span class="op">=</span> <span class="op">}</span><span class="fst">\n</span><span class="op">{</span><span class="nam">p</span> <span class="op">=</span> <span class="op">}</span><span class="fst">\n</span><span class="op">{</span><span class="nam">existing_joined_path</span> <span class="op">=</span> <span class="op">}</span><span class="fst">\n</span><span class="op">{</span><span class="nam">archive_path</span> <span class="op">=</span> <span class="op">}</span><span class="fst">\n</span><span class="op">{</span><span class="nam">_format</span> <span class="op">=</span> <span class="op">}</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t140" href="#t140">140</a></span><span class="t">            <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t141" href="#t141">141</a></span><span class="t">            <span class="nam">warnings</span><span class="op">.</span><span class="nam">warn</span><span class="op">(</span><span class="nam">err_msg</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t142" href="#t142">142</a></span><span class="t">            <span class="key">raise</span> <span class="nam">ValueError</span><span class="op">(</span><span class="nam">err_msg</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t143" href="#t143">143</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t144" href="#t144">144</a></span><span class="t">    <span class="com"># process the data if needed, assemble metadata</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t145" href="#t145">145</a></span><span class="t">    <span class="nam">data_new</span><span class="op">:</span> <span class="nam">Any</span> <span class="op">=</span> <span class="nam">data</span>&nbsp;</span><span class="r"></span></p>
@@ -239,7 +239,7 @@
     <p class="run"><span class="n"><a id="t157" href="#t157">157</a></span><span class="t">            <span class="key">pass</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t158" href="#t158">158</a></span><span class="t">        <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t159" href="#t159">159</a></span><span class="t">            <span class="com"># if not a numpy array, except</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t160" href="#t160">160</a></span><span class="t">            <span class="key">raise</span> <span class="nam">TypeError</span><span class="op">(</span><span class="fst">f"</span><span class="fst">expected numpy.ndarray, got </span><span class="op">{</span><span class="nam">data_type_str</span><span class="op">}</span><span class="fst">"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t160" href="#t160">160</a></span><span class="t">            <span class="key">raise</span> <span class="nam">TypeError</span><span class="op">(</span><span class="fst">f"</span><span class="fst">expected numpy.ndarray, got </span><span class="op">{</span><span class="nam">data_type_str</span><span class="op">}</span><span class="fst">"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t161" href="#t161">161</a></span><span class="t">        <span class="com"># get metadata</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t162" href="#t162">162</a></span><span class="t">        <span class="nam">output</span><span class="op">.</span><span class="nam">update</span><span class="op">(</span><span class="nam">arr_metadata</span><span class="op">(</span><span class="nam">data</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t163" href="#t163">163</a></span><span class="t">    <span class="key">elif</span> <span class="nam">item_type</span><span class="op">.</span><span class="nam">startswith</span><span class="op">(</span><span class="str">"jsonl"</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
@@ -263,9 +263,9 @@
     <p class="run run2"><span class="n"><a id="t181" href="#t181">181</a></span><span class="t">                <span class="key">for</span> <span class="nam">i</span><span class="op">,</span> <span class="nam">item</span> <span class="key">in</span> <span class="nam">enumerate</span><span class="op">(</span><span class="nam">data</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t182" href="#t182">182</a></span><span class="t">            <span class="op">]</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t183" href="#t183">183</a></span><span class="t">        <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t184" href="#t184">184</a></span><span class="t">            <span class="key">raise</span> <span class="nam">TypeError</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis mis2 show_mis"><span class="n"><a id="t185" href="#t185">185</a></span><span class="t">                <span class="fst">f"</span><span class="fst">expected list or pandas.DataFrame for jsonl, got </span><span class="op">{</span><span class="nam">type</span><span class="op">(</span><span class="nam">data</span><span class="op">)</span><span class="op">}</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis mis2 show_mis"><span class="n"><a id="t186" href="#t186">186</a></span><span class="t">            <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t184" href="#t184">184</a></span><span class="t">            <span class="key">raise</span> <span class="nam">TypeError</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t185" href="#t185">185</a></span><span class="t">                <span class="fst">f"</span><span class="fst">expected list or pandas.DataFrame for jsonl, got </span><span class="op">{</span><span class="nam">type</span><span class="op">(</span><span class="nam">data</span><span class="op">)</span><span class="op">}</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t186" href="#t186">186</a></span><span class="t">            <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t187" href="#t187">187</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t188" href="#t188">188</a></span><span class="t">        <span class="key">if</span> <span class="nam">all</span><span class="op">(</span><span class="op">[</span><span class="nam">isinstance</span><span class="op">(</span><span class="nam">item</span><span class="op">,</span> <span class="nam">dict</span><span class="op">)</span> <span class="key">for</span> <span class="nam">item</span> <span class="key">in</span> <span class="nam">data_new</span><span class="op">]</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t189" href="#t189">189</a></span><span class="t">            <span class="nam">output</span><span class="op">.</span><span class="nam">update</span><span class="op">(</span><span class="nam">jsonl_metadata</span><span class="op">(</span><span class="nam">data_new</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
@@ -382,7 +382,7 @@
             <a class="nav" href="z_497556d4505823ac_torchutil_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.13.4">coverage.py v7.13.4</a>,
-            created at 2026-02-21 22:18 -0700
+            created at 2026-02-22 01:52 -0700
         </p>
     </div>
 </footer>
