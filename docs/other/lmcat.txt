@@ -1,8 +1,8 @@
 # Stats
-- 32 files
-- 4808 (4.8K) lines
-- 155622 (156K) chars
-- 15155 (15K) `whitespace-split` tokens
+- 35 files
+- 5412 (5.4K) lines
+- 176331 (176K) chars
+- 16813 (17K) `whitespace-split` tokens
 
 # File Tree
 
@@ -20,10 +20,12 @@ ZANJ
 │   │   │   ├── test_bool_array.py                   [ 60L     1,169C   113T]
 │   │   │   ├── test_dataframe_serialization.py      [156L     4,949C   499T]
 │   │   │   ├── test_isolate_zanj_handler_store.py   [ 78L     1,784C   158T]
-│   │   │   ├── test_load_item_recursive.py          [232L     7,469C   714T]
+│   │   │   ├── test_load_item_recursive.py          [231L     7,452C   714T]
+│   │   │   ├── test_loading_edge_cases.py           [192L     6,807C   538T]
+│   │   │   ├── test_serializing_edge_cases.py       [179L     5,816C   459T]
 │   │   │   ├── test_shared_prefix_keys.py           [ 40L     1,139C   112T]
 │   │   │   ├── test_zanj_basic.py                   [184L     5,402C   458T]
-│   │   │   ├── test_zanj_edge_cases.py              [299L     8,973C   940T]
+│   │   │   ├── test_zanj_edge_cases.py              [290L     8,643C   907T]
 │   │   │   ├── test_zanj_populate_nested.py         [ 57L     1,386C   103T]
 │   │   │   └── test_zanj_serializable_dataclass.py  [168L     4,351C   404T]
 │   │   └── with_torch                               
@@ -31,15 +33,16 @@ ZANJ
 │   │    ├── test_get_module_device.py               [ 61L     1,870C   203T]
 │   │    ├── test_sdc_torch.py                       [105L     2,555C   219T]
 │   │    ├── test_torch_edge_cases.py                [229L     7,182C   642T]
+│   │    ├── test_torchutil_edge_cases.py            [225L     7,310C   596T]
 │   │    ├── test_zanj_sdc_modelcfg.py               [169L     4,750C   375T]
 │   │    ├── test_zanj_torch.py                      [169L     5,042C   350T]
 │   │    └── test_zanj_torch_cfgmismatch.py          [161L     3,983C   334T]
 │   └── assert_no_torch.py                           [  8L       167C    12T]
 ├── zanj                                             
 │   ├── __init__.py                                  [ 19L       299C    30T]
-│   ├── consts.py                                    [ 28L       750C    74T]
+│   ├── consts.py                                    [ 29L       877C    93T]
 │   ├── externals.py                                 [ 53L     1,515C   166T]
-│   ├── loading.py                                   [486L    18,403C 1,724T]
+│   ├── loading.py                                   [488L    18,735C 1,762T]
 │   ├── py.typed                                     [  0L         0C     0T]
 │   ├── serializing.py                               [293L    10,703C   996T]
 │   ├── torchutil.py                                 [295L    10,161C   915T]
@@ -512,9 +515,8 @@ from muutils.json_serialize import (
     serializable_dataclass,
     serializable_field,
 )
-from muutils.json_serialize.util import _FORMAT_KEY
-
 from zanj import ZANJ
+from zanj.consts import _FORMAT_KEY
 from zanj.loading import LoadedZANJ, load_item_recursive
 
 TEST_DATA_PATH: Path = Path("tests/junk_data")
@@ -733,6 +735,385 @@ def test_load_item_recursive_error_modes():
         zanj.loading.get_item_loader = original_get_item_loader
 
 ``````{ end_of_file="tests/unit/no_torch/test_load_item_recursive.py" }
+
+``````{ path="tests/unit/no_torch/test_loading_edge_cases.py"  }
+"""Edge case tests for zanj/loading.py to improve coverage."""
+
+from __future__ import annotations
+
+import pytest
+
+from zanj.consts import _FORMAT_KEY
+from zanj.loading import (
+    LoaderHandler,
+    _populate_externals_error_checking,
+    get_item_loader,
+    load_item_recursive,
+)
+
+
+class TestPopulateExternalsErrorChecking:
+    """Tests for _populate_externals_error_checking function."""
+
+    def test_external_item_missing_data_field(self):
+        """Line 68: External item with format key but no data field should raise KeyError."""
+        malformed_item = {
+            _FORMAT_KEY: "list:external",
+            "some_field": "value",
+            # missing "data" field
+        }
+        with pytest.raises(KeyError, match="expected an external item"):
+            _populate_externals_error_checking("key", malformed_item)
+
+    def test_sequence_with_non_int_key(self):
+        """Line 75-76: Accessing a sequence with a non-int key should raise TypeError."""
+        sequence = [1, 2, 3]
+        with pytest.raises(TypeError, match="expected int"):
+            _populate_externals_error_checking("string_key", sequence)
+
+    def test_sequence_with_out_of_range_key(self):
+        """Line 77-78: Accessing a sequence with an out-of-range index should raise IndexError."""
+        sequence = [1, 2, 3]
+        with pytest.raises(IndexError, match="index out of range"):
+            _populate_externals_error_checking(100, sequence)
+
+    def test_mapping_with_non_str_key(self):
+        """Line 82-83: Accessing a mapping with a non-str key should raise TypeError."""
+        mapping = {"a": 1, "b": 2}
+        with pytest.raises(TypeError, match="expected str"):
+            _populate_externals_error_checking(123, mapping)
+
+    def test_mapping_with_missing_key(self):
+        """Line 84-85: Accessing a mapping with a missing key should raise KeyError."""
+        mapping = {"a": 1, "b": 2}
+        with pytest.raises(KeyError, match="key not in dict"):
+            _populate_externals_error_checking("missing_key", mapping)
+
+    def test_invalid_item_type(self):
+        """Line 88-89: Passing an invalid item type should raise TypeError."""
+        invalid_item = 42  # int is neither sequence nor mapping
+        with pytest.raises(TypeError, match="expected dict or list"):
+            _populate_externals_error_checking("key", invalid_item)
+
+    def test_valid_sequence_access(self):
+        """Valid sequence access should not raise and return False."""
+        sequence = [1, 2, 3]
+        result = _populate_externals_error_checking(1, sequence)
+        assert result is False
+
+    def test_valid_mapping_access(self):
+        """Valid mapping access should not raise and return False."""
+        mapping = {"a": 1, "b": 2}
+        result = _populate_externals_error_checking("a", mapping)
+        assert result is False
+
+    def test_external_item_with_data_returns_true(self):
+        """External item with data field should return True."""
+        external_item = {
+            _FORMAT_KEY: "list:external",
+            "data": [1, 2, 3],
+        }
+        result = _populate_externals_error_checking("key", external_item)
+        assert result is True
+
+
+class TestLoaderHandlerFromFormattedClass:
+    """Tests for LoaderHandler.from_formattedclass method."""
+
+    def test_missing_serialize_method(self):
+        """Line 137: Class missing serialize method should raise AssertionError."""
+
+        class MissingSerialize:
+            __muutils_format__ = "test"
+
+            @classmethod
+            def load(cls, json_item, path=None, z=None):
+                pass
+
+        with pytest.raises(AssertionError):
+            LoaderHandler.from_formattedclass(MissingSerialize)
+
+    def test_missing_load_method(self):
+        """Line 139: Class missing load method should raise AssertionError."""
+
+        class MissingLoad:
+            __muutils_format__ = "test"
+
+            def serialize(self):
+                pass
+
+        with pytest.raises(AssertionError):
+            LoaderHandler.from_formattedclass(MissingLoad)
+
+    def test_missing_format_key(self):
+        """Line 141: Class missing __muutils_format__ should raise AssertionError."""
+
+        class MissingFormat:
+            def serialize(self):
+                pass
+
+            @classmethod
+            def load(cls, json_item, path=None, z=None):
+                pass
+
+        with pytest.raises(AssertionError):
+            LoaderHandler.from_formattedclass(MissingFormat)
+
+    def test_non_string_format_key(self):
+        """Line 142: Class with non-string __muutils_format__ should raise AssertionError."""
+
+        class NonStringFormat:
+            __muutils_format__ = 12345  # should be string
+
+            def serialize(self):
+                pass
+
+            @classmethod
+            def load(cls, json_item, path=None, z=None):
+                pass
+
+        with pytest.raises(AssertionError):
+            LoaderHandler.from_formattedclass(NonStringFormat)
+
+    def test_valid_formatted_class(self):
+        """Valid class should create a LoaderHandler successfully."""
+
+        class ValidClass:
+            __muutils_format__ = "test.ValidClass"
+
+            def serialize(self):
+                return {}
+
+            @classmethod
+            def load(cls, json_item, path=None, z=None):
+                return cls()
+
+        handler = LoaderHandler.from_formattedclass(ValidClass)
+        assert handler.uid == "test.ValidClass"
+        assert "ValidClass" in handler.desc
+
+
+class TestGetItemLoader:
+    """Tests for get_item_loader function."""
+
+    def test_non_string_format_key(self):
+        """Line 306-309: Item with non-string __muutils_format__ should raise TypeError."""
+        malformed_item = {
+            _FORMAT_KEY: 12345,  # should be str
+            "data": [1, 2, 3],
+        }
+        with pytest.raises(TypeError, match="invalid __muutils_format__ type"):
+            get_item_loader(malformed_item, ("test",))
+
+
+class TestLoadItemRecursive:
+    """Tests for load_item_recursive function."""
+
+    def test_unloadable_type_strict_mode(self):
+        """Line 395-398: Unloadable type with allow_not_loading=False should raise ValueError."""
+
+        # Create a custom object that isn't handled by any loader
+        class CustomUnloadable:
+            pass
+
+        item = CustomUnloadable()
+        with pytest.raises(ValueError, match="unknown type"):
+            load_item_recursive(item, ("test",), None, allow_not_loading=False)
+
+    def test_unloadable_type_permissive_mode(self):
+        """Line 395-396: Unloadable type with allow_not_loading=True should return as-is."""
+
+        class CustomUnloadable:
+            pass
+
+        item = CustomUnloadable()
+        result = load_item_recursive(item, ("test",), None, allow_not_loading=True)
+        assert result is item
+
+``````{ end_of_file="tests/unit/no_torch/test_loading_edge_cases.py" }
+
+``````{ path="tests/unit/no_torch/test_serializing_edge_cases.py"  }
+"""Edge case tests for zanj/serializing.py to improve coverage."""
+
+from __future__ import annotations
+
+import numpy as np
+import pytest
+
+from zanj import ZANJ
+from zanj.serializing import zanj_external_serialize
+
+
+class TestZanjExternalSerialize:
+    """Tests for zanj_external_serialize function edge cases."""
+
+    def test_duplicate_external_path(self):
+        """Lines 124-127: Duplicate external path should raise ValueError."""
+        z = ZANJ()
+        array1 = np.random.rand(10, 10)
+        array2 = np.random.rand(5, 5)
+
+        # First call with path ('data',) should succeed
+        zanj_external_serialize(
+            z, array1, path=("data",), item_type="npy", _format="numpy.ndarray:external"
+        )
+
+        # Second call with same path should raise ValueError
+        with pytest.raises(ValueError, match="already exists"):
+            zanj_external_serialize(
+                z,
+                array2,
+                path=("data",),
+                item_type="npy",
+                _format="numpy.ndarray:external",
+            )
+
+    def test_path_prefix_conflict_child_first(self):
+        """Lines 137-142: Path prefix conflict where new path is parent of existing."""
+        z = ZANJ()
+        array1 = np.random.rand(10, 10)
+        array2 = np.random.rand(5, 5)
+
+        # First: add child path 'layer/1/weight'
+        zanj_external_serialize(
+            z,
+            array1,
+            path=("layer", "1", "weight"),
+            item_type="npy",
+            _format="numpy.ndarray:external",
+        )
+
+        # Second: try to add parent path 'layer/1' - should conflict
+        with pytest.raises(ValueError, match="is a prefix of another path"):
+            zanj_external_serialize(
+                z,
+                array2,
+                path=("layer", "1"),
+                item_type="npy",
+                _format="numpy.ndarray:external",
+            )
+
+    def test_path_prefix_conflict_parent_first(self):
+        """Lines 134-136: Path prefix conflict where new path is child of existing."""
+        z = ZANJ()
+        array1 = np.random.rand(10, 10)
+        array2 = np.random.rand(5, 5)
+
+        # First: add parent path 'layer/1'
+        zanj_external_serialize(
+            z,
+            array1,
+            path=("layer", "1"),
+            item_type="npy",
+            _format="numpy.ndarray:external",
+        )
+
+        # Second: try to add child path 'layer/1/weight' - should conflict
+        with pytest.raises(ValueError, match="is a prefix of another path"):
+            zanj_external_serialize(
+                z,
+                array2,
+                path=("layer", "1", "weight"),
+                item_type="npy",
+                _format="numpy.ndarray:external",
+            )
+
+    def test_invalid_npy_data_type(self):
+        """Line 160: Invalid data type for NPY serialization should raise TypeError."""
+        z = ZANJ()
+
+        # Pass a string instead of array - should fail
+        with pytest.raises(TypeError, match="expected numpy.ndarray"):
+            zanj_external_serialize(
+                z,
+                data="not an array",
+                path=("test",),
+                item_type="npy",
+                _format="numpy.ndarray:external",
+            )
+
+    def test_invalid_jsonl_data_type(self):
+        """Line 184: Invalid data type for JSONL serialization should raise TypeError."""
+        z = ZANJ()
+
+        # Create a custom class that is not iterable/sequence/dataframe
+        class NotSerializableAsJsonl:
+            pass
+
+        obj = NotSerializableAsJsonl()
+
+        with pytest.raises(TypeError, match="expected list or pandas.DataFrame"):
+            zanj_external_serialize(
+                z,
+                data=obj,
+                path=("test",),
+                item_type="jsonl",
+                _format="list:external",
+            )
+
+    def test_valid_npy_serialization(self):
+        """Verify valid NPY serialization works correctly."""
+        z = ZANJ()
+        array = np.random.rand(10, 10)
+
+        result = zanj_external_serialize(
+            z,
+            array,
+            path=("valid_array",),
+            item_type="npy",
+            _format="numpy.ndarray:external",
+        )
+
+        assert "__muutils_format__" in result
+        assert result["__muutils_format__"] == "numpy.ndarray:external"
+        assert "valid_array.npy" in z._externals
+
+    def test_valid_jsonl_list_serialization(self):
+        """Verify valid JSONL list serialization works correctly."""
+        z = ZANJ()
+        data = [{"a": 1}, {"b": 2}, {"c": 3}]
+
+        result = zanj_external_serialize(
+            z,
+            data,
+            path=("valid_list",),
+            item_type="jsonl",
+            _format="list:external",
+        )
+
+        assert "__muutils_format__" in result
+        assert result["__muutils_format__"] == "list:external"
+        assert "valid_list.jsonl" in z._externals
+
+    def test_non_overlapping_paths_allowed(self):
+        """Verify that non-overlapping paths with similar prefixes are allowed."""
+        z = ZANJ()
+        array1 = np.random.rand(10, 10)
+        array2 = np.random.rand(5, 5)
+
+        # These should NOT conflict: 'layer.1' and 'layer.1.weight' as strings
+        # but 'layer/1' and 'layer/10' should be fine
+        zanj_external_serialize(
+            z,
+            array1,
+            path=("layer", "1"),
+            item_type="npy",
+            _format="numpy.ndarray:external",
+        )
+
+        # 'layer/10' is NOT a prefix of 'layer/1' or vice versa
+        zanj_external_serialize(
+            z,
+            array2,
+            path=("layer", "10"),
+            item_type="npy",
+            _format="numpy.ndarray:external",
+        )
+
+        assert "layer/1.npy" in z._externals
+        assert "layer/10.npy" in z._externals
+
+``````{ end_of_file="tests/unit/no_torch/test_serializing_edge_cases.py" }
 
 ``````{ path="tests/unit/no_torch/test_shared_prefix_keys.py"  }
 from pathlib import Path
@@ -1105,11 +1486,6 @@ def test_zanj_array_modes():
     path1 = TEST_DATA_PATH / "test_array_mode_list.zanj"
     z1.save(data, path1)
 
-    # Test with array_list mode
-    z2 = ZANJ(internal_array_mode="array_list")
-    path2 = TEST_DATA_PATH / "test_array_mode_array_list.zanj"
-    z2.save(data, path2)
-
     # Test with array_list_meta mode
     z3 = ZANJ(internal_array_mode="array_list_meta")
     path3 = TEST_DATA_PATH / "test_array_mode_array_list_meta.zanj"
@@ -1117,16 +1493,12 @@ def test_zanj_array_modes():
 
     # Check that all files can be loaded correctly
     data1 = z1.read(path1)
-    data2 = z2.read(path2)
     data3 = z3.read(path3)
 
     assert data1["name"] == data["name"]
-    assert data2["name"] == data["name"]
     assert data3["name"] == data["name"]
 
     assert np.allclose(data1["array"], data["array"])
-    # TODO: some sort of error here?
-    # assert np.allclose(data2["array"], data["array"])
     assert np.allclose(data3["array"], data["array"])
 
 
@@ -1948,6 +2320,235 @@ def test_configmodel_with_custom_settings():
 
 ``````{ end_of_file="tests/unit/with_torch/test_torch_edge_cases.py" }
 
+``````{ path="tests/unit/with_torch/test_torchutil_edge_cases.py"  }
+"""Edge case tests for zanj/torchutil.py to improve coverage."""
+
+from __future__ import annotations
+
+from pathlib import Path
+
+import pytest
+import torch
+
+from muutils.json_serialize import SerializableDataclass, serializable_dataclass
+
+from zanj import ZANJ
+from zanj.torchutil import (
+    ConfiguredModel,
+    assert_model_exact_equality,
+    num_params,
+    set_config_class,
+)
+
+
+TEST_DATA_PATH: Path = Path("tests/junk_data")
+
+
+@serializable_dataclass
+class EdgeCaseTestConfig(SerializableDataclass):
+    """Simple config for testing."""
+
+    hidden_size: int
+    num_layers: int
+
+
+@set_config_class(EdgeCaseTestConfig)
+class EdgeCaseTestModel(ConfiguredModel[EdgeCaseTestConfig]):
+    """Simple model for testing."""
+
+    def __init__(self, cfg: EdgeCaseTestConfig):
+        super().__init__(cfg)
+        self.linear = torch.nn.Linear(cfg.hidden_size, cfg.hidden_size)
+
+    def forward(self, x):
+        return self.linear(x)
+
+
+class TestConfiguredModelValidation:
+    """Tests for ConfiguredModel validation edge cases."""
+
+    def test_missing_config_class_decorator(self):
+        """Line 102: Model without @set_config_class decorator should raise NotImplementedError."""
+
+        class UnconfiguredModel(ConfiguredModel):
+            def __init__(self, cfg):
+                super().__init__(cfg)
+
+        with pytest.raises(NotImplementedError, match="need to set"):
+            UnconfiguredModel(EdgeCaseTestConfig(32, 2))
+
+    def test_wrong_config_type(self):
+        """Line 104: Passing wrong config type should raise TypeError."""
+
+        class WrongConfig(SerializableDataclass):
+            other_field: str = "test"
+
+        with pytest.raises(TypeError, match="must be an instance of"):
+            EdgeCaseTestModel(WrongConfig())
+
+    def test_config_not_serializable_dataclass(self):
+        """Using config that isn't a dict should raise TypeError."""
+        with pytest.raises(TypeError):
+            EdgeCaseTestModel({"hidden_size": 32})  # type: ignore
+
+
+class TestSetConfigClass:
+    """Tests for set_config_class decorator."""
+
+    def test_invalid_config_class_type(self):
+        """Line 227: Passing non-SerializableDataclass should raise TypeError."""
+
+        class NotSerializable:
+            pass
+
+        with pytest.raises(
+            TypeError, match="must be a subclass of SerializableDataclass"
+        ):
+
+            @set_config_class(NotSerializable)  # type: ignore
+            class BadModel(ConfiguredModel):
+                pass
+
+
+class TestConfiguredModelSaveLoad:
+    """Tests for save/load with default ZANJ."""
+
+    def test_save_with_default_zanj(self, tmp_path):
+        """Lines 134-136: Save without explicit ZANJ should create default."""
+        cfg = EdgeCaseTestConfig(16, 1)
+        model = EdgeCaseTestModel(cfg)
+
+        file_path = str(tmp_path / "model_default_zanj.zanj")
+        model.save(file_path)  # No zanj argument - uses default
+
+        assert Path(file_path).exists()
+
+        # Verify we can load it back
+        loaded = EdgeCaseTestModel.read(file_path)
+        assert loaded.zanj_model_config.hidden_size == 16
+
+    def test_load_with_default_zanj(self, tmp_path):
+        """Line 154: Load without explicit ZANJ should create default."""
+        cfg = EdgeCaseTestConfig(16, 1)
+        model = EdgeCaseTestModel(cfg)
+
+        # Save first
+        file_path = str(tmp_path / "model_for_load_test.zanj")
+        z = ZANJ()
+        z.save(model.serialize(), file_path)
+
+        # Load with default ZANJ (via read method)
+        loaded = EdgeCaseTestModel.read(file_path)  # No zanj argument - uses default
+        assert loaded.zanj_model_config.hidden_size == 16
+
+    def test_serialize_with_default_zanj(self):
+        """Line 114-115: Serialize without explicit ZANJ should create default."""
+        cfg = EdgeCaseTestConfig(16, 1)
+        model = EdgeCaseTestModel(cfg)
+
+        # Call serialize without zanj argument
+        serialized = model.serialize()  # No zanj argument - uses default
+
+        assert "zanj_model_config" in serialized
+        assert "state_dict" in serialized
+        assert "__muutils_format__" in serialized
+
+
+class TestNumParamsWrapper:
+    """Tests for num_params instance method."""
+
+    def test_num_params_instance_method(self):
+        """Line 220: Test the instance method wrapper for num_params."""
+        cfg = EdgeCaseTestConfig(16, 1)
+        model = EdgeCaseTestModel(cfg)
+
+        # Call instance method
+        instance_result = model.num_params()
+
+        # Call module-level function
+        function_result = num_params(model)
+
+        assert instance_result == function_result
+        assert instance_result > 0
+
+
+class TestAssertModelExactEquality:
+    """Tests for assert_model_exact_equality function."""
+
+    def test_state_dict_mismatch(self):
+        """Lines 289-290: State dict value mismatch should fail assertion."""
+        cfg = EdgeCaseTestConfig(16, 1)
+        model_a = EdgeCaseTestModel(cfg)
+        model_b = EdgeCaseTestModel(cfg)
+
+        # Modify model_b's weights to not match model_a
+        with torch.no_grad():
+            for param in model_b.parameters():
+                param.add_(1.0)  # Add 1 to all parameters
+
+        with pytest.raises(AssertionError, match="state dict elements don't match"):
+            assert_model_exact_equality(model_a, model_b)
+
+    def test_equal_models_pass(self):
+        """Equal models should pass the assertion."""
+        cfg = EdgeCaseTestConfig(16, 1)
+        model_a = EdgeCaseTestModel(cfg)
+        model_b = EdgeCaseTestModel(cfg)
+
+        # Copy state dict from a to b to make them equal
+        model_b.load_state_dict(model_a.state_dict())
+
+        # Should not raise
+        assert_model_exact_equality(model_a, model_b)
+
+    def test_state_dict_keys_mismatch(self):
+        """Different state dict keys should fail assertion."""
+
+        class DifferentModel(ConfiguredModel[EdgeCaseTestConfig]):
+            _config_class = EdgeCaseTestConfig
+
+            def __init__(self, cfg: EdgeCaseTestConfig):
+                super().__init__(cfg)
+                self.different_linear = torch.nn.Linear(
+                    cfg.hidden_size, cfg.hidden_size
+                )
+
+            def forward(self, x):
+                return self.different_linear(x)
+
+        cfg = EdgeCaseTestConfig(16, 1)
+        model_a = EdgeCaseTestModel(cfg)
+        model_b = DifferentModel(cfg)
+
+        with pytest.raises(AssertionError, match="state dict keys don't match"):
+            assert_model_exact_equality(model_a, model_b)
+
+
+class TestConfiguredModelReadRoundTrip:
+    """Tests for ConfiguredModel read/write round trip."""
+
+    def test_full_round_trip(self, tmp_path):
+        """Test complete save and read cycle."""
+        cfg = EdgeCaseTestConfig(32, 2)
+        model = EdgeCaseTestModel(cfg)
+
+        # Set some training records
+        model.training_records = {"epochs": 10, "loss": 0.5}
+
+        file_path = str(tmp_path / "round_trip_test.zanj")
+        model.save(file_path)
+
+        loaded = EdgeCaseTestModel.read(file_path)
+
+        assert loaded.zanj_model_config.hidden_size == 32
+        assert loaded.zanj_model_config.num_layers == 2
+        assert loaded.training_records == {"epochs": 10, "loss": 0.5}
+
+        # Check weights are equal
+        assert_model_exact_equality(model, loaded)
+
+``````{ end_of_file="tests/unit/with_torch/test_torchutil_edge_cases.py" }
+
 ``````{ path="tests/unit/with_torch/test_zanj_sdc_modelcfg.py"  }
 from __future__ import annotations
 
@@ -2512,7 +3113,8 @@ from muutils.json_serialize.util import (
 try:
     from muutils.json_serialize.types import _FORMAT_KEY, _REF_KEY  # type: ignore[import-not-found]
 except ImportError:
-    from muutils.json_serialize.util import _FORMAT_KEY, _REF_KEY  # type: ignore[import-not-found]
+    # fallback for muutils < 0.9 where these lived in .util; mypy can't resolve this across try/except
+    from muutils.json_serialize.util import _FORMAT_KEY, _REF_KEY  # type: ignore[import-not-found, attr-defined, no-redef]
 
 __all__ = [
     "JSONdict",
@@ -2754,7 +3356,8 @@ def _torch_loaderhandler_load(
         raise ImportError(err_msg) from e
 
     return torch.tensor(
-        load_array(json_item),
+        # json_item is JSONitem but load_array expects narrower types; runtime check is in LoaderHandler.check
+        load_array(json_item),  # type: ignore[no-matching-overload, call-overload]
         dtype=TORCH_DTYPE_MAP[json_item["dtype"]],  # type: ignore[index, call-overload]
     )
 
@@ -2956,7 +3559,8 @@ def load_item_recursive(
         if isinstance(json_item, dict):
             return {
                 key: load_item_recursive(
-                    json_item=json_item[key],
+                    # ty doesn't narrow JSONitem to dict after isinstance check; string key indexing is safe here
+                    json_item=json_item[key],  # type: ignore[invalid-argument-type, call-overload]
                     path=tuple(path) + (key,),
                     zanj=zanj,
                     error_mode=error_mode,

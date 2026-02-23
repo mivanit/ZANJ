@@ -45,9 +45,9 @@
 ## [`tests/unit/no_torch/test_load_item_recursive.py`](/tests/unit/no_torch/test_load_item_recursive.py)
 
 - this doesn't raise any errors  
-  local link: [`/tests/unit/no_torch/test_load_item_recursive.py:144`](/tests/unit/no_torch/test_load_item_recursive.py#L144) 
-  | view on GitHub: [tests/unit/no_torch/test_load_item_recursive.py#L144](https://github.com/mivanit/zanj/blob/main/tests/unit/no_torch/test_load_item_recursive.py#L144)
-  | [Make Issue](https://github.com/mivanit/zanj/issues/new?title=this%20doesn%27t%20raise%20any%20errors&body=%23%20source%0A%0A%5B%60tests%2Funit%2Fno_torch%2Ftest_load_item_recursive.py%23L144%60%5D%28https%3A%2F%2Fgithub.com%2Fmivanit%2Fzanj%2Fblob%2Fmain%2Ftests%2Funit%2Fno_torch%2Ftest_load_item_recursive.py%23L144%29%0A%0A%23%20context%0A%60%60%60python%0A%20%20%20%20assert%20result%20%3D%3D%20json_data%0A%0A%20%20%20%20%23%20TODO%3A%20this%20doesn%27t%20raise%20any%20errors%0A%20%20%20%20%23%20Test%20with%20allow_not_loading%3DFalse%20%28should%20raise%20an%20error%29%0A%20%20%20%20%23%20Create%20a%20ZANJ%20with%20EXCEPT%20error%20mode%20to%20ensure%20value%20errors%20are%20raised%0A%60%60%60&labels=enhancement)
+  local link: [`/tests/unit/no_torch/test_load_item_recursive.py:143`](/tests/unit/no_torch/test_load_item_recursive.py#L143) 
+  | view on GitHub: [tests/unit/no_torch/test_load_item_recursive.py#L143](https://github.com/mivanit/zanj/blob/main/tests/unit/no_torch/test_load_item_recursive.py#L143)
+  | [Make Issue](https://github.com/mivanit/zanj/issues/new?title=this%20doesn%27t%20raise%20any%20errors&body=%23%20source%0A%0A%5B%60tests%2Funit%2Fno_torch%2Ftest_load_item_recursive.py%23L143%60%5D%28https%3A%2F%2Fgithub.com%2Fmivanit%2Fzanj%2Fblob%2Fmain%2Ftests%2Funit%2Fno_torch%2Ftest_load_item_recursive.py%23L143%29%0A%0A%23%20context%0A%60%60%60python%0A%20%20%20%20assert%20result%20%3D%3D%20json_data%0A%0A%20%20%20%20%23%20TODO%3A%20this%20doesn%27t%20raise%20any%20errors%0A%20%20%20%20%23%20Test%20with%20allow_not_loading%3DFalse%20%28should%20raise%20an%20error%29%0A%20%20%20%20%23%20Create%20a%20ZANJ%20with%20EXCEPT%20error%20mode%20to%20ensure%20value%20errors%20are%20raised%0A%60%60%60&labels=enhancement)
 
   ```python
   assert result == json_data
@@ -55,23 +55,6 @@
   # TODO: this doesn't raise any errors
   # Test with allow_not_loading=False (should raise an error)
   # Create a ZANJ with EXCEPT error mode to ensure value errors are raised
-  ```
-
-
-
-
-## [`tests/unit/no_torch/test_zanj_edge_cases.py`](/tests/unit/no_torch/test_zanj_edge_cases.py)
-
-- some sort of error here?  
-  local link: [`/tests/unit/no_torch/test_zanj_edge_cases.py:159`](/tests/unit/no_torch/test_zanj_edge_cases.py#L159) 
-  | view on GitHub: [tests/unit/no_torch/test_zanj_edge_cases.py#L159](https://github.com/mivanit/zanj/blob/main/tests/unit/no_torch/test_zanj_edge_cases.py#L159)
-  | [Make Issue](https://github.com/mivanit/zanj/issues/new?title=some%20sort%20of%20error%20here%3F&body=%23%20source%0A%0A%5B%60tests%2Funit%2Fno_torch%2Ftest_zanj_edge_cases.py%23L159%60%5D%28https%3A%2F%2Fgithub.com%2Fmivanit%2Fzanj%2Fblob%2Fmain%2Ftests%2Funit%2Fno_torch%2Ftest_zanj_edge_cases.py%23L159%29%0A%0A%23%20context%0A%60%60%60python%0A%20%20%20%20assert%20np.allclose%28data1%5B%22array%22%5D%2C%20data%5B%22array%22%5D%29%0A%20%20%20%20%23%20TODO%3A%20some%20sort%20of%20error%20here%3F%0A%20%20%20%20%23%20assert%20np.allclose%28data2%5B%22array%22%5D%2C%20data%5B%22array%22%5D%29%0A%20%20%20%20assert%20np.allclose%28data3%5B%22array%22%5D%2C%20data%5B%22array%22%5D%29%0A%60%60%60&labels=enhancement)
-
-  ```python
-  assert np.allclose(data1["array"], data["array"])
-  # TODO: some sort of error here?
-  # assert np.allclose(data2["array"], data["array"])
-  assert np.allclose(data3["array"], data["array"])
   ```
 
 

@@ -4,7 +4,7 @@
 ## Contents
 [![PyPI](https://img.shields.io/pypi/v/zanj)](https://pypi.org/project/zanj/)
 [![Checks](https://github.com/mivanit/zanj/actions/workflows/checks.yml/badge.svg)](https://github.com/mivanit/zanj/actions/workflows/checks.yml)
-[![Coverage](data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMjAiPgogICAgPGNsaXBQYXRoIGlkPSJyIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjIwIiByeD0iMyIvPjwvY2xpcFBhdGg+CiAgICA8ZyBjbGlwLXBhdGg9InVybCgjcikiPgogICAgICAgIDxyZWN0IHdpZHRoPSI2NiIgaGVpZ2h0PSIyMCIgZmlsbD0iIzU1NSIvPgogICAgICAgIDxyZWN0IHg9IjY2IiB3aWR0aD0iMzQiIGhlaWdodD0iMjAiIGZpbGw9IiM0YzEiLz4KICAgIDwvZz4KICAgIDxnIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJEZWphVnUgU2FucyxWZXJkYW5hLEdlbmV2YSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIj4KICAgICAgICA8dGV4dCB4PSIzMy4wIiB5PSIxNCI+Y292ZXJhZ2U8L3RleHQ+CiAgICAgICAgPHRleHQgeD0iODMuMCIgeT0iMTQiPjk1JTwvdGV4dD4KICAgIDwvZz4KPC9zdmc+Cgo=)](docs/coverage/coverage.txt)
+[![Coverage](data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMjAiPgogICAgPGNsaXBQYXRoIGlkPSJyIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjIwIiByeD0iMyIvPjwvY2xpcFBhdGg+CiAgICA8ZyBjbGlwLXBhdGg9InVybCgjcikiPgogICAgICAgIDxyZWN0IHdpZHRoPSI2NiIgaGVpZ2h0PSIyMCIgZmlsbD0iIzU1NSIvPgogICAgICAgIDxyZWN0IHg9IjY2IiB3aWR0aD0iMzQiIGhlaWdodD0iMjAiIGZpbGw9IiM0YzEiLz4KICAgIDwvZz4KICAgIDxnIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJEZWphVnUgU2FucyxWZXJkYW5hLEdlbmV2YSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIj4KICAgICAgICA8dGV4dCB4PSIzMy4wIiB5PSIxNCI+Y292ZXJhZ2U8L3RleHQ+CiAgICAgICAgPHRleHQgeD0iODMuMCIgeT0iMTQiPjk3JTwvdGV4dD4KICAgIDwvZz4KPC9zdmc+Cgo=)](docs/coverage/coverage.txt)
 ![code size, bytes](https://img.shields.io/github/languages/code-size/mivanit/zanj)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/zanj)
 [![DOI](https://zenodo.org/badge/618623453.svg)](https://doi.org/10.5281/zenodo.15540392)
@@ -262,7 +262,7 @@ The on-disk format is a file `<filename>.zanj` is a zip file containing:
 
 [![PyPI](https://img.shields.io/pypi/v/zanj)](https://pypi.org/project/zanj/)
 [![Checks](https://github.com/mivanit/zanj/actions/workflows/checks.yml/badge.svg)](https://github.com/mivanit/zanj/actions/workflows/checks.yml)
-[![Coverage](data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMjAiPgogICAgPGNsaXBQYXRoIGlkPSJyIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjIwIiByeD0iMyIvPjwvY2xpcFBhdGg+CiAgICA8ZyBjbGlwLXBhdGg9InVybCgjcikiPgogICAgICAgIDxyZWN0IHdpZHRoPSI2NiIgaGVpZ2h0PSIyMCIgZmlsbD0iIzU1NSIvPgogICAgICAgIDxyZWN0IHg9IjY2IiB3aWR0aD0iMzQiIGhlaWdodD0iMjAiIGZpbGw9IiM0YzEiLz4KICAgIDwvZz4KICAgIDxnIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJEZWphVnUgU2FucyxWZXJkYW5hLEdlbmV2YSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIj4KICAgICAgICA8dGV4dCB4PSIzMy4wIiB5PSIxNCI+Y292ZXJhZ2U8L3RleHQ+CiAgICAgICAgPHRleHQgeD0iODMuMCIgeT0iMTQiPjk1JTwvdGV4dD4KICAgIDwvZz4KPC9zdmc+Cgo=)](docs/coverage/coverage.txt)
+[![Coverage](data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMjAiPgogICAgPGNsaXBQYXRoIGlkPSJyIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjIwIiByeD0iMyIvPjwvY2xpcFBhdGg+CiAgICA8ZyBjbGlwLXBhdGg9InVybCgjcikiPgogICAgICAgIDxyZWN0IHdpZHRoPSI2NiIgaGVpZ2h0PSIyMCIgZmlsbD0iIzU1NSIvPgogICAgICAgIDxyZWN0IHg9IjY2IiB3aWR0aD0iMzQiIGhlaWdodD0iMjAiIGZpbGw9IiM0YzEiLz4KICAgIDwvZz4KICAgIDxnIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJEZWphVnUgU2FucyxWZXJkYW5hLEdlbmV2YSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIj4KICAgICAgICA8dGV4dCB4PSIzMy4wIiB5PSIxNCI+Y292ZXJhZ2U8L3RleHQ+CiAgICAgICAgPHRleHQgeD0iODMuMCIgeT0iMTQiPjk3JTwvdGV4dD4KICAgIDwvZz4KPC9zdmc+Cgo=)](docs/coverage/coverage.txt)
 ![code size, bytes](https://img.shields.io/github/languages/code-size/mivanit/zanj)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/zanj)
 [![DOI](https://zenodo.org/badge/618623453.svg)](https://doi.org/10.5281/zenodo.15540392)
@@ -508,7 +508,7 @@ The on-disk format is a file `<filename><a href="zanj/zanj.html">zanj.zanj</a>` 
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.6.0__init__.py#L287-L291)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.6.0__init__.py#L288-L292)
 
 
 register a custom loader handler
@@ -542,7 +542,7 @@ create a ZANJ-class via `z_cls = ZANJ().create(obj)`, and save/read instances of
     compress: bool | int = True,
     custom_settings: dict[str, typing.Any] | None = None,
     handlers_pre: None = (),
-    handlers_default: None = (ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='numpy.ndarray:external', desc='external numpy array', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='torch.Tensor:external', desc='external torch tensor', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='list:external', desc='external list', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='tuple:external', desc='external tuple', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='pandas.DataFrame:external', desc='external pandas DataFrame', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='polars.DataFrame:external', desc='external polars DataFrame', source_pckg='zanj'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='base types', desc='base types (bool, int, float, str, None)'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='dictionaries', desc='dictionaries'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='(list, tuple) -> list', desc='lists and tuples as lists'), SerializerHandler(check=<function <lambda>>, serialize_func=<function _serialize_override_serialize_func>, uid='.serialize override', desc='objects with .serialize method'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='namedtuple -> dict', desc='namedtuples as dicts'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='dataclass -> dict', desc='dataclasses as dicts'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='path -> str', desc='Path objects as posix strings'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='obj -> str(obj)', desc='directly serialize objects in `SERIALIZE_DIRECT_AS_STR` to strings'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='numpy.ndarray', desc='numpy arrays'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='torch.Tensor', desc='pytorch tensors'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='pandas.DataFrame', desc='pandas DataFrames'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='(set, list, tuple, Iterable) -> list', desc='sets, lists, tuples, and Iterables as lists'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='fallback', desc='fallback handler -- serialize object attributes and special functions as strings'))
+    handlers_default: None = (ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='numpy.ndarray:external', desc='external numpy array', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='torch.Tensor:external', desc='external torch tensor', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='list:external', desc='external list', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='tuple:external', desc='external tuple', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='pandas.DataFrame:external', desc='external pandas DataFrame', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='polars.DataFrame:external', desc='external polars DataFrame', source_pckg='zanj'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='base types', desc='base types (bool, int, float, str, None)'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='dictionaries', desc='dictionaries'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='namedtuple -> dict', desc='namedtuples as dicts'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='(list, tuple) -> list', desc='lists and tuples as lists'), SerializerHandler(check=<function <lambda>>, serialize_func=<function _serialize_override_serialize_func>, uid='.serialize override', desc='objects with .serialize method'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='dataclass -> dict', desc='dataclasses as dicts'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='path -> str', desc='Path objects as posix strings'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='obj -> str(obj)', desc='directly serialize objects in `SERIALIZE_DIRECT_AS_STR` to strings'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='numpy.ndarray', desc='numpy arrays'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='torch.Tensor', desc='pytorch tensors'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='pandas.DataFrame', desc='pandas DataFrames'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid="set -> dict[_FORMAT_KEY: 'set', data: list(...)]", desc='sets as dicts with format key'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='Iterable -> list', desc='Iterables (not lists/tuples/strings) as lists'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='fallback', desc='fallback handler -- serialize object attributes and special functions as strings'))
 )
 ```
 
@@ -587,7 +587,7 @@ return information about the current externals
 ```python
 (
     self
-) -> Union[bool, int, float, str, NoneType, List[Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]], Dict[str, Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]]]
+) -> Union[bool, int, float, str, NoneType, Sequence[ForwardRef('JSONitem')], Dict[str, ForwardRef('JSONitem')]]
 ```
 
 
@@ -734,7 +734,7 @@ Alias for field number 2
 (
     zanj: "'LoadedZANJ'",
     fp: IO[bytes]
-) -> list[typing.Union[bool, int, float, str, NoneType, typing.List[typing.Union[bool, int, float, str, NoneType, typing.List[typing.Any], typing.Dict[str, typing.Any]]], typing.Dict[str, typing.Union[bool, int, float, str, NoneType, typing.List[typing.Any], typing.Dict[str, typing.Any]]]]]
+) -> list[typing.Union[bool, int, float, str, NoneType, typing.Sequence[typing.Union[bool, int, float, str, NoneType, typing.Sequence[ForwardRef('JSONitem')], typing.Dict[str, ForwardRef('JSONitem')]]], typing.Dict[str, typing.Union[bool, int, float, str, NoneType, typing.Sequence[ForwardRef('JSONitem')], typing.Dict[str, ForwardRef('JSONitem')]]]]]
 ```
 
 
@@ -795,7 +795,7 @@ Alias for field number 2
 # `zanj.loading` { #zanj.loading }
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.6.0loading.py#L0-L485)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.6.0loading.py#L0-L487)
 
 
 
@@ -810,8 +810,8 @@ handler for loading an object from a json file or a ZANJ archive
 ### `LoaderHandler` { #LoaderHandler.__init__ }
 ```python
 (
-    check: Callable[[Union[bool, int, float, str, NoneType, List[Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]], Dict[str, Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]]], tuple[Union[str, int], ...], Any], bool],
-    load: Callable[[Union[bool, int, float, str, NoneType, List[Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]], Dict[str, Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]]], tuple[Union[str, int], ...], Any], Any],
+    check: Callable[[Union[bool, int, float, str, NoneType, Sequence[Union[bool, int, float, str, NoneType, Sequence[ForwardRef('JSONitem')], Dict[str, ForwardRef('JSONitem')]]], Dict[str, Union[bool, int, float, str, NoneType, Sequence[ForwardRef('JSONitem')], Dict[str, ForwardRef('JSONitem')]]]], tuple[Union[str, int], ...], Any], bool],
+    load: Callable[[Union[bool, int, float, str, NoneType, Sequence[Union[bool, int, float, str, NoneType, Sequence[ForwardRef('JSONitem')], Dict[str, ForwardRef('JSONitem')]]], Dict[str, Union[bool, int, float, str, NoneType, Sequence[ForwardRef('JSONitem')], Dict[str, ForwardRef('JSONitem')]]]], tuple[Union[str, int], ...], Any], Any],
     uid: str,
     source_pckg: str,
     priority: int = 0,
@@ -822,12 +822,12 @@ handler for loading an object from a json file or a ZANJ archive
 
 
 
-- `check: Callable[[Union[bool, int, float, str, NoneType, List[Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]], Dict[str, Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]]], tuple[Union[str, int], ...], Any], bool] `
+- `check: Callable[[Union[bool, int, float, str, NoneType, Sequence[Union[bool, int, float, str, NoneType, Sequence[ForwardRef('JSONitem')], Dict[str, ForwardRef('JSONitem')]]], Dict[str, Union[bool, int, float, str, NoneType, Sequence[ForwardRef('JSONitem')], Dict[str, ForwardRef('JSONitem')]]]], tuple[Union[str, int], ...], Any], bool] `
 
 
 
 
-- `load: Callable[[Union[bool, int, float, str, NoneType, List[Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]], Dict[str, Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]]], tuple[Union[str, int], ...], Any], Any] `
+- `load: Callable[[Union[bool, int, float, str, NoneType, Sequence[Union[bool, int, float, str, NoneType, Sequence[ForwardRef('JSONitem')], Dict[str, ForwardRef('JSONitem')]]], Dict[str, Union[bool, int, float, str, NoneType, Sequence[ForwardRef('JSONitem')], Dict[str, ForwardRef('JSONitem')]]]], tuple[Union[str, int], ...], Any], Any] `
 
 
 
@@ -856,7 +856,7 @@ handler for loading an object from a json file or a ZANJ archive
 ```python
 (
     self
-) -> Dict[str, Union[bool, int, float, str, NoneType, List[Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]], Dict[str, Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]]]]
+) -> Dict[str, Union[bool, int, float, str, NoneType, Sequence[Union[bool, int, float, str, NoneType, Sequence[ForwardRef('JSONitem')], Dict[str, ForwardRef('JSONitem')]]], Dict[str, Union[bool, int, float, str, NoneType, Sequence[ForwardRef('JSONitem')], Dict[str, ForwardRef('JSONitem')]]]]]
 ```
 
 
@@ -894,7 +894,7 @@ create a loader from a class with `serialize`, `load` methods and `__muutils_for
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.6.0loading.py#L287-L291)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.6.0loading.py#L288-L292)
 
 
 register a custom loader handler
@@ -903,7 +903,7 @@ register a custom loader handler
 ### `def get_item_loader` { #get_item_loader }
 ```python
 (
-    json_item: Union[bool, int, float, str, NoneType, List[Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]], Dict[str, Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]]],
+    json_item: Union[bool, int, float, str, NoneType, Sequence[ForwardRef('JSONitem')], Dict[str, ForwardRef('JSONitem')]],
     path: tuple[typing.Union[str, int], ...],
     zanj: typing.Any | None = None,
     error_mode: muutils.errormode.ErrorMode = ErrorMode.Warn
@@ -911,7 +911,7 @@ register a custom loader handler
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.6.0loading.py#L294-L319)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.6.0loading.py#L295-L320)
 
 
 get the loader for a json item
@@ -920,7 +920,7 @@ get the loader for a json item
 ### `def load_item_recursive` { #load_item_recursive }
 ```python
 (
-    json_item: Union[bool, int, float, str, NoneType, List[Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]], Dict[str, Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]]],
+    json_item: Union[bool, int, float, str, NoneType, Sequence[ForwardRef('JSONitem')], Dict[str, ForwardRef('JSONitem')]],
     path: tuple[typing.Union[str, int], ...],
     zanj: typing.Any | None = None,
     error_mode: muutils.errormode.ErrorMode = ErrorMode.Warn,
@@ -929,14 +929,14 @@ get the loader for a json item
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.6.0loading.py#L322-L400)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.6.0loading.py#L323-L402)
 
 
 
 
 ### `class LoadedZANJ:` { #LoadedZANJ }
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.6.0loading.py#L442-L486)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.6.0loading.py#L444-L488)
 
 
 for loading a zanj file
@@ -947,7 +947,7 @@ for loading a zanj file
 (path: str | pathlib._local.Path, zanj: Any)
 ```
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.6.0loading.py#L445-L474)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.6.0loading.py#L447-L476)
 
 
 
@@ -958,7 +958,7 @@ for loading a zanj file
 ```
 
 
-[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.6.0loading.py#L476-L486)
+[View Source on GitHub](https://github.com/mivanit/zanj/blob/0.6.0loading.py#L478-L488)
 
 
 put all external items into the main json data
@@ -1002,7 +1002,7 @@ put all external items into the main json data
 ### `def jsonl_metadata` { #jsonl_metadata }
 ```python
 (
-    data: list[typing.Dict[str, typing.Union[bool, int, float, str, NoneType, typing.List[typing.Union[bool, int, float, str, NoneType, typing.List[typing.Any], typing.Dict[str, typing.Any]]], typing.Dict[str, typing.Union[bool, int, float, str, NoneType, typing.List[typing.Any], typing.Dict[str, typing.Any]]]]]]
+    data: list[typing.Dict[str, typing.Union[bool, int, float, str, NoneType, typing.Sequence[typing.Union[bool, int, float, str, NoneType, typing.Sequence[ForwardRef('JSONitem')], typing.Dict[str, ForwardRef('JSONitem')]]], typing.Dict[str, typing.Union[bool, int, float, str, NoneType, typing.Sequence[ForwardRef('JSONitem')], typing.Dict[str, ForwardRef('JSONitem')]]]]]]
 ) -> dict[str, typing.Any]
 ```
 
@@ -1030,7 +1030,7 @@ store numpy array to given file as .npy
 (
     self: Any,
     fp: IO[bytes],
-    data: Sequence[Union[bool, int, float, str, NoneType, List[Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]], Dict[str, Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]]]]
+    data: Sequence[Union[bool, int, float, str, NoneType, Sequence[Union[bool, int, float, str, NoneType, Sequence[ForwardRef('JSONitem')], Dict[str, ForwardRef('JSONitem')]]], Dict[str, Union[bool, int, float, str, NoneType, Sequence[ForwardRef('JSONitem')], Dict[str, ForwardRef('JSONitem')]]]]]
 ) -> None
 ```
 
@@ -1061,7 +1061,7 @@ a handler for ZANJ serialization
     desc: str,
     *,
     check: Callable[[Any, Any, tuple[Union[str, int], ...]], bool],
-    serialize_func: Callable[[Any, Any, tuple[Union[str, int], ...]], Union[bool, int, float, str, NoneType, List[Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]], Dict[str, Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]]]],
+    serialize_func: Callable[[Any, Any, tuple[Union[str, int], ...]], Union[bool, int, float, str, NoneType, Sequence[Union[bool, int, float, str, NoneType, Sequence[ForwardRef('JSONitem')], Dict[str, ForwardRef('JSONitem')]]], Dict[str, Union[bool, int, float, str, NoneType, Sequence[ForwardRef('JSONitem')], Dict[str, ForwardRef('JSONitem')]]]]],
     source_pckg: str
 )
 ```
@@ -1079,7 +1079,7 @@ a handler for ZANJ serialization
 
 
 
-- `serialize_func: Callable[[Any, Any, tuple[Union[str, int], ...]], Union[bool, int, float, str, NoneType, List[Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]], Dict[str, Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]]]] `
+- `serialize_func: Callable[[Any, Any, tuple[Union[str, int], ...]], Union[bool, int, float, str, NoneType, Sequence[Union[bool, int, float, str, NoneType, Sequence[ForwardRef('JSONitem')], Dict[str, ForwardRef('JSONitem')]]], Dict[str, Union[bool, int, float, str, NoneType, Sequence[ForwardRef('JSONitem')], Dict[str, ForwardRef('JSONitem')]]]]] `
 
 
 
@@ -1099,7 +1099,7 @@ a handler for ZANJ serialization
     path: tuple[typing.Union[str, int], ...],
     item_type: Literal['jsonl', 'npy'],
     _format: str
-) -> Union[bool, int, float, str, NoneType, List[Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]], Dict[str, Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]]]
+) -> Union[bool, int, float, str, NoneType, Sequence[ForwardRef('JSONitem')], Dict[str, ForwardRef('JSONitem')]]
 ```
 
 
@@ -1122,7 +1122,7 @@ stores a numpy array or jsonl externally in a ZANJ object
  - modifies `jser._externals`
 
 
-- `DEFAULT_SERIALIZER_HANDLERS_ZANJ: None = (ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='numpy.ndarray:external', desc='external numpy array', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='torch.Tensor:external', desc='external torch tensor', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='list:external', desc='external list', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='tuple:external', desc='external tuple', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='pandas.DataFrame:external', desc='external pandas DataFrame', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='polars.DataFrame:external', desc='external polars DataFrame', source_pckg='zanj'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='base types', desc='base types (bool, int, float, str, None)'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='dictionaries', desc='dictionaries'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='(list, tuple) -> list', desc='lists and tuples as lists'), SerializerHandler(check=<function <lambda>>, serialize_func=<function _serialize_override_serialize_func>, uid='.serialize override', desc='objects with .serialize method'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='namedtuple -> dict', desc='namedtuples as dicts'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='dataclass -> dict', desc='dataclasses as dicts'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='path -> str', desc='Path objects as posix strings'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='obj -> str(obj)', desc='directly serialize objects in `SERIALIZE_DIRECT_AS_STR` to strings'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='numpy.ndarray', desc='numpy arrays'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='torch.Tensor', desc='pytorch tensors'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='pandas.DataFrame', desc='pandas DataFrames'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='(set, list, tuple, Iterable) -> list', desc='sets, lists, tuples, and Iterables as lists'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='fallback', desc='fallback handler -- serialize object attributes and special functions as strings'))`
+- `DEFAULT_SERIALIZER_HANDLERS_ZANJ: None = (ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='numpy.ndarray:external', desc='external numpy array', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='torch.Tensor:external', desc='external torch tensor', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='list:external', desc='external list', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='tuple:external', desc='external tuple', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='pandas.DataFrame:external', desc='external pandas DataFrame', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='polars.DataFrame:external', desc='external polars DataFrame', source_pckg='zanj'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='base types', desc='base types (bool, int, float, str, None)'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='dictionaries', desc='dictionaries'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='namedtuple -> dict', desc='namedtuples as dicts'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='(list, tuple) -> list', desc='lists and tuples as lists'), SerializerHandler(check=<function <lambda>>, serialize_func=<function _serialize_override_serialize_func>, uid='.serialize override', desc='objects with .serialize method'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='dataclass -> dict', desc='dataclasses as dicts'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='path -> str', desc='Path objects as posix strings'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='obj -> str(obj)', desc='directly serialize objects in `SERIALIZE_DIRECT_AS_STR` to strings'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='numpy.ndarray', desc='numpy arrays'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='torch.Tensor', desc='pytorch tensors'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='pandas.DataFrame', desc='pandas DataFrames'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid="set -> dict[_FORMAT_KEY: 'set', data: list(...)]", desc='sets as dicts with format key'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='Iterable -> list', desc='Iterables (not lists/tuples/strings) as lists'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='fallback', desc='fallback handler -- serialize object attributes and special functions as strings'))`
 
 
 
@@ -1513,7 +1513,7 @@ for large arrays, the output is a .tar.gz file with most data in a json file, bu
 
 
 
-- `ZANJitem = typing.Union[bool, int, float, str, NoneType, typing.List[typing.Union[bool, int, float, str, NoneType, typing.List[typing.Any], typing.Dict[str, typing.Any]]], typing.Dict[str, typing.Union[bool, int, float, str, NoneType, typing.List[typing.Any], typing.Dict[str, typing.Any]]], numpy.ndarray, ForwardRef('pd.DataFrame')]`
+- `ZANJitem = typing.Union[bool, int, float, str, NoneType, typing.Sequence[ForwardRef('JSONitem')], typing.Dict[str, ForwardRef('JSONitem')], numpy.ndarray, ForwardRef('pd.DataFrame')]`
 
 
 
@@ -1551,7 +1551,7 @@ create a ZANJ-class via `z_cls = ZANJ().create(obj)`, and save/read instances of
     compress: bool | int = True,
     custom_settings: dict[str, typing.Any] | None = None,
     handlers_pre: None = (),
-    handlers_default: None = (ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='numpy.ndarray:external', desc='external numpy array', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='torch.Tensor:external', desc='external torch tensor', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='list:external', desc='external list', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='tuple:external', desc='external tuple', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='pandas.DataFrame:external', desc='external pandas DataFrame', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='polars.DataFrame:external', desc='external polars DataFrame', source_pckg='zanj'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='base types', desc='base types (bool, int, float, str, None)'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='dictionaries', desc='dictionaries'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='(list, tuple) -> list', desc='lists and tuples as lists'), SerializerHandler(check=<function <lambda>>, serialize_func=<function _serialize_override_serialize_func>, uid='.serialize override', desc='objects with .serialize method'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='namedtuple -> dict', desc='namedtuples as dicts'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='dataclass -> dict', desc='dataclasses as dicts'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='path -> str', desc='Path objects as posix strings'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='obj -> str(obj)', desc='directly serialize objects in `SERIALIZE_DIRECT_AS_STR` to strings'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='numpy.ndarray', desc='numpy arrays'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='torch.Tensor', desc='pytorch tensors'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='pandas.DataFrame', desc='pandas DataFrames'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='(set, list, tuple, Iterable) -> list', desc='sets, lists, tuples, and Iterables as lists'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='fallback', desc='fallback handler -- serialize object attributes and special functions as strings'))
+    handlers_default: None = (ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='numpy.ndarray:external', desc='external numpy array', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='torch.Tensor:external', desc='external torch tensor', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='list:external', desc='external list', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='tuple:external', desc='external tuple', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='pandas.DataFrame:external', desc='external pandas DataFrame', source_pckg='zanj'), ZANJSerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='polars.DataFrame:external', desc='external polars DataFrame', source_pckg='zanj'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='base types', desc='base types (bool, int, float, str, None)'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='dictionaries', desc='dictionaries'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='namedtuple -> dict', desc='namedtuples as dicts'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='(list, tuple) -> list', desc='lists and tuples as lists'), SerializerHandler(check=<function <lambda>>, serialize_func=<function _serialize_override_serialize_func>, uid='.serialize override', desc='objects with .serialize method'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='dataclass -> dict', desc='dataclasses as dicts'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='path -> str', desc='Path objects as posix strings'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='obj -> str(obj)', desc='directly serialize objects in `SERIALIZE_DIRECT_AS_STR` to strings'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='numpy.ndarray', desc='numpy arrays'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='torch.Tensor', desc='pytorch tensors'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='pandas.DataFrame', desc='pandas DataFrames'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid="set -> dict[_FORMAT_KEY: 'set', data: list(...)]", desc='sets as dicts with format key'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='Iterable -> list', desc='Iterables (not lists/tuples/strings) as lists'), SerializerHandler(check=<function <lambda>>, serialize_func=<function <lambda>>, uid='fallback', desc='fallback handler -- serialize object attributes and special functions as strings'))
 )
 ```
 
@@ -1596,7 +1596,7 @@ return information about the current externals
 ```python
 (
     self
-) -> Union[bool, int, float, str, NoneType, List[Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]], Dict[str, Union[bool, int, float, str, NoneType, List[Any], Dict[str, Any]]]]
+) -> Union[bool, int, float, str, NoneType, Sequence[ForwardRef('JSONitem')], Dict[str, ForwardRef('JSONitem')]]
 ```
 
 
