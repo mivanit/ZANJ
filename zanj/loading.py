@@ -170,7 +170,7 @@ def _torch_loaderhandler_load(
     return torch.tensor(
         # json_item is JSONitem but load_array expects narrower types; runtime check is in LoaderHandler.check
         load_array(json_item),  # type: ignore[no-matching-overload, call-overload]
-        dtype=TORCH_DTYPE_MAP[json_item["dtype"]],  # type: ignore[index]
+        dtype=TORCH_DTYPE_MAP[json_item["dtype"]],  # type: ignore[index, call-overload]
     )
 
 
