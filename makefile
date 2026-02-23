@@ -2,7 +2,7 @@
 #| python project makefile template                                 |
 #| originally by Michael Ivanitskiy (mivanits@umich.edu)            |
 #| https://github.com/mivanit/python-project-makefile-template      |
-#| version: v0.5.1                                                  |
+#| version: v0.5.2                                                  |
 #| license: https://creativecommons.org/licenses/by-sa/4.0/         |
 #|==================================================================|
 #| CUSTOMIZATION:                                                   |
@@ -26,6 +26,9 @@
 # ==================================================
 
 
+# !!! MODIFY AT LEAST THIS PART TO SUIT YOUR PROJECT !!!
+# it assumes that the source is in a directory named the same as the package name
+# this also gets passed to some other places
 PACKAGE_NAME := zanj
 
 # for checking you are on the right branch when publishing
@@ -232,9 +235,9 @@ write-proj-version:
 .PHONY: gen-version-info
 gen-version-info: write-proj-version
 	@mkdir -p $(LOCAL_DIR)
-	$(eval PROJ_VERSION := $(shell cat $(VERSION_FILE)) )
-	$(eval LAST_VERSION := $(shell [ -f $(LAST_VERSION_FILE) ] && cat $(LAST_VERSION_FILE) || echo NULL) )
-	$(eval PYTHON_VERSION := $(shell $(PYTHON) -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}')") )
+	$(eval PROJ_VERSION := $(shell cat $(VERSION_FILE)))
+	$(eval LAST_VERSION := $(shell [ -f $(LAST_VERSION_FILE) ] && cat $(LAST_VERSION_FILE) || echo NULL))
+	$(eval PYTHON_VERSION := $(shell $(PYTHON) -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}')"))
 
 # getting commit log since the tag specified in $(LAST_VERSION_FILE)
 # will write to $(COMMIT_LOG_FILE)
@@ -491,6 +494,7 @@ docs: cov docs-html docs-md todo lmcat
 .PHONY: docs-clean
 docs-clean:
 	@echo "remove generated docs except resources"
+	rm -rf $(TYPE_ERRORS_DIR)
 	$(PYTHON) $(SCRIPTS_DIR)/docs_clean.py $(PYPROJECT) $(DOCS_DIR) $(DOCS_RESOURCES_DIR)
 
 
@@ -611,17 +615,19 @@ publish: check version build verify-git
 
 
 # cleans up temporary files:
-# - caches: .mypy_cache, .ruff_cache, .pytest_cache, .coverage
+# - caches: .ruff_cache, .pytest_cache, .coverage
 # - build artifacts: dist/, build/, *.egg-info
 # - test temp files: $(TESTS_TEMP_DIR)
-# - __pycache__ directories and *.pyc/*.pyo files in $(PACKAGE_NAME), $(TESTS_DIR), $(DOCS_DIR)
+# - __pycache__ and .mypy_cache directories (recursive)
+# - *.pyc/*.pyo files in $(PACKAGE_NAME), $(TESTS_DIR), $(DOCS_DIR)
 # uses `-` prefix on find commands to continue even if directories don't exist
 # distinct from `make docs-clean`, which removes generated documentation
 .PHONY: clean
 clean:
 	@echo "clean up temporary files"
-	rm -rf .mypy_cache .ruff_cache .pytest_cache .coverage dist build $(PACKAGE_NAME).egg-info $(TESTS_TEMP_DIR) $(TYPE_ERRORS_DIR)
-	-find $(PACKAGE_NAME) $(TESTS_DIR) $(DOCS_DIR) -type d -name '__pycache__' -exec rm -rf {} +
+	rm -rf .ruff_cache .pytest_cache .coverage dist build $(PACKAGE_NAME).egg-info $(TESTS_TEMP_DIR)
+	-find . -type d -name '__pycache__' -exec rm -rf {} +
+	-find . -type d -name '.mypy_cache' -exec rm -rf {} +
 	-find $(PACKAGE_NAME) $(TESTS_DIR) $(DOCS_DIR) -type f -name '*.py[co]' -delete
 
 # remove all generated/build files including .venv
@@ -724,5 +730,3 @@ help:
 # custom targets
 # ==================================================
 # (put them down here, or delimit with ~~~~~)
-
-
