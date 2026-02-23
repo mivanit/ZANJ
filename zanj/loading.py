@@ -168,8 +168,9 @@ def _torch_loaderhandler_load(
         raise ImportError(err_msg) from e
 
     return torch.tensor(
-        load_array(json_item),
-        dtype=TORCH_DTYPE_MAP[json_item["dtype"]],  # type: ignore[index, call-overload]
+        # json_item is JSONitem but load_array expects narrower types; runtime check is in LoaderHandler.check
+        load_array(json_item),  # type: ignore[no-matching-overload, call-overload]
+        dtype=TORCH_DTYPE_MAP[json_item["dtype"]],  # type: ignore[index]
     )
 
 
@@ -370,7 +371,8 @@ def load_item_recursive(
         if isinstance(json_item, dict):
             return {
                 key: load_item_recursive(
-                    json_item=json_item[key],
+                    # ty doesn't narrow JSONitem to dict after isinstance check; string key indexing is safe here
+                    json_item=json_item[key],  # type: ignore[invalid-argument-type, call-overload]
                     path=tuple(path) + (key,),
                     zanj=zanj,
                     error_mode=error_mode,

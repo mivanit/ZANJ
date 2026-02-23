@@ -15,7 +15,8 @@ from muutils.json_serialize.util import (
 try:
     from muutils.json_serialize.types import _FORMAT_KEY, _REF_KEY  # type: ignore[import-not-found]
 except ImportError:
-    from muutils.json_serialize.util import _FORMAT_KEY, _REF_KEY  # type: ignore[import-not-found]
+    # fallback for muutils < 0.9 where these lived in .util; mypy can't resolve this across try/except
+    from muutils.json_serialize.util import _FORMAT_KEY, _REF_KEY  # type: ignore[import-not-found, attr-defined, no-redef]
 
 __all__ = [
     "JSONdict",

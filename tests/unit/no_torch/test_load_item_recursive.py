@@ -11,9 +11,8 @@ from muutils.json_serialize import (
     serializable_dataclass,
     serializable_field,
 )
-from muutils.json_serialize.util import _FORMAT_KEY
-
 from zanj import ZANJ
+from zanj.consts import _FORMAT_KEY
 from zanj.loading import LoadedZANJ, load_item_recursive
 
 TEST_DATA_PATH: Path = Path("tests/junk_data")

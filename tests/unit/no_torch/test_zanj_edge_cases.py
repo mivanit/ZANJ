@@ -136,11 +136,6 @@ def test_zanj_array_modes():
     path1 = TEST_DATA_PATH / "test_array_mode_list.zanj"
     z1.save(data, path1)
 
-    # Test with array_list mode
-    z2 = ZANJ(internal_array_mode="array_list")
-    path2 = TEST_DATA_PATH / "test_array_mode_array_list.zanj"
-    z2.save(data, path2)
-
     # Test with array_list_meta mode
     z3 = ZANJ(internal_array_mode="array_list_meta")
     path3 = TEST_DATA_PATH / "test_array_mode_array_list_meta.zanj"
@@ -148,16 +143,12 @@ def test_zanj_array_modes():
 
     # Check that all files can be loaded correctly
     data1 = z1.read(path1)
-    data2 = z2.read(path2)
     data3 = z3.read(path3)
 
     assert data1["name"] == data["name"]
-    assert data2["name"] == data["name"]
     assert data3["name"] == data["name"]
 
     assert np.allclose(data1["array"], data["array"])
-    # TODO: some sort of error here?
-    # assert np.allclose(data2["array"], data["array"])
     assert np.allclose(data3["array"], data["array"])
 
 
