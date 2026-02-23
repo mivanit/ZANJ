@@ -430,7 +430,7 @@ more-itertools==10.8.0 ; python_full_version >= '3.9' and platform_machine != 'p
     #   jaraco-functools
 mpmath==1.3.0 ; python_full_version >= '3.9'
     # via sympy
-muutils==0.8.12
+muutils==0.9.0
     # via
     #   lmcat
     #   zanj

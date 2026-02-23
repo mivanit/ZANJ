@@ -4107,11 +4107,11 @@ wheels = [
 
 [[package]]
 name = "muutils"
-version = "0.8.12"
+version = "0.9.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/0c/c8/556e999e5e5662ca2d74aa486962b2e7a955e58723af6cadca293be0bd37/muutils-0.8.12.tar.gz", hash = "sha256:ffc0d2c5b0e3bbf4c442dd810880aec7d9f95995e7677e14dc72f0a5ef12b993", size = 3348223, upload-time = "2025-10-28T17:52:25.769Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/72/cb/a81532433190529a620f3a76d804dee173d1c823cbe74b3af2b5927c54f9/muutils-0.9.0.tar.gz", hash = "sha256:26bbd54081892b04fa427c65e73d28fba7d81a7af1e68927d69256a6178187c5", size = 3143236, upload-time = "2026-02-23T01:36:52.138Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/0a/65/d6e07cbff0caf10b2c77fad77e9138973c689dbe50c5ecb3b96764630276/muutils-0.8.12-py3-none-any.whl", hash = "sha256:19ecc6f2cab6e162d6f84f6f0d96377dc387a0e7105334c0b6d8eb90934eaeea", size = 129087, upload-time = "2025-10-28T17:52:23.013Z" },
+    { url = "https://files.pythonhosted.org/packages/4f/30/28b8e024d8e5070d5ed737f43674ec2920132bb658060d8dfcbe1cfec858/muutils-0.9.0-py3-none-any.whl", hash = "sha256:4703f33bcac64096a3572e6e58ff1b03c8bc6a5de96e46eccc7017afc0e44f18", size = 144261, upload-time = "2026-02-23T01:36:45.745Z" },
 ]
 
 [[package]]
